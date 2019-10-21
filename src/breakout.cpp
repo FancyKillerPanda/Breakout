@@ -8,13 +8,13 @@ constexpr int SCREEN_HEIGHT = 540;
 SDL_Window* g_Window = nullptr;
 SDL_Renderer* g_Renderer = nullptr;
 
-// TODO(fkp): Change return type to bool
-int init()
+// NOTE: Returns true on success, false on fail
+bool init()
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
-		printf("It does not work.");
-		return -1;
+		printf("Failed to Initialise SDL2");
+		return false;
 	}
 
 	g_Window = SDL_CreateWindow("Breakout", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -22,7 +22,7 @@ int init()
 	if (g_Window == nullptr)
 	{
 		printf("Failed to Create Window");
-		return -1;
+		return false;
 	}
 
 	g_Renderer = SDL_CreateRenderer(g_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -30,10 +30,10 @@ int init()
 	if (g_Renderer == nullptr)
 	{
 		printf("Failed to Create Renderer");
-		return -1;
+		return false;
 	}
 
-	return 0;
+	return true;
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
@@ -75,12 +75,7 @@ void gameDraw()
 
 int main(int argc, char* argv[])
 {
-	if (init() != 0)
-	{
-		return -1;
-	}
-	
-	bool running = true;
+	bool running = init();
 
 	while (running)
 	{
