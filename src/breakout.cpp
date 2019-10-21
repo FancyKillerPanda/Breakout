@@ -42,6 +42,25 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	
-	SDL_Delay(2000);
+	bool running = true;
+	SDL_Event event = {};
+
+	while (running)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+				case SDL_QUIT:
+				{
+					running = false;
+				} break;
+			}
+		}
+
+		SDL_RenderClear(g_Renderer);
+		SDL_RenderPresent(g_Renderer);
+	}
+	
 	return 0;
 }
