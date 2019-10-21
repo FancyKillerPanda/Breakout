@@ -61,7 +61,7 @@ GameState init()
 bool gameInit(GameState& gameState)
 {
 	gameState.paddle.colour = SDL_Colour { 255, 255, 255, 255 };
-	gameState.paddle.rect = SDL_Rect { 0, SCREEN_HEIGHT * 7 / 8, PADDLE_WIDTH, PADDLE_HEIGHT };
+	gameState.paddle.rect = SDL_Rect { (SCREEN_WIDTH - PADDLE_WIDTH) / 2, (SCREEN_HEIGHT * 9 / 10) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT };
 
 	return true;
 }
