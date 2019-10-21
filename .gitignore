@@ -1,2 +1,9 @@
 .vscode/
 .git/
+
+*.exe
+*.pdb
+*.obj
+*.iobj
+*.ipdb
+*.ilk
