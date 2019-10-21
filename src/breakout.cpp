@@ -5,45 +5,53 @@
 constexpr int SCREEN_WIDTH = 960;
 constexpr int SCREEN_HEIGHT = 540;
 
-SDL_Window* g_Window = nullptr;
-SDL_Renderer* g_Renderer = nullptr;
-
-// NOTE: Returns true on success, false on fail
-bool init()
+struct GameState
 {
+	bool running = false;
+	
+	// SDL2 data
+	SDL_Window* window = nullptr;
+	SDL_Renderer* renderer = nullptr;
+	SDL_Event event = {};
+};
+
+// NOTE(fkp): Returns true on success, false on fail
+GameState init()
+{
+	GameState result = {};
+	result.running = true;  // Set to false if init fails
+	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
 		printf("Failed to Initialise SDL2");
-		return false;
+		result.running = false;
 	}
 
-	g_Window = SDL_CreateWindow("Breakout", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	result.window = SDL_CreateWindow("Breakout", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
-	if (g_Window == nullptr)
+	if (result.window == nullptr)
 	{
 		printf("Failed to Create Window");
-		return false;
+		result.running = false;
 	}
 
-	g_Renderer = SDL_CreateRenderer(g_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	result.renderer = SDL_CreateRenderer(result.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	if (g_Renderer == nullptr)
+	if (result.renderer == nullptr)
 	{
 		printf("Failed to Create Renderer");
-		return false;
+		result.running = false;
 	}
 
-	return true;
+	return result;
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
-bool gameHandleEvents()
+bool gameHandleEvents(GameState& gameState)
 {
-	SDL_Event event = {};
-
-	while (SDL_PollEvent(&event))
+	while (SDL_PollEvent(&gameState.event))
 	{
-		switch (event.type)
+		switch (gameState.event.type)
 		{
 			case SDL_QUIT:
 			{
@@ -58,7 +66,7 @@ bool gameHandleEvents()
 // NOTE(fkp): Returns true if success, false if games needs to exit
 // TODO(fkp): Take delta-time
 // TODO(fkp): Potentially take game state in an object
-bool gameUpdate()
+bool gameUpdate(GameState& gameState)
 {
 	// TODO(fkp): Implement game update
 	return true;
@@ -66,22 +74,22 @@ bool gameUpdate()
 
 // Draws the game state
 // TODO(fkp): Potentially take game state in an object
-void gameDraw()
+void gameDraw(GameState& gameState)
 {
-	SDL_RenderClear(g_Renderer);
+	SDL_RenderClear(gameState.renderer);
 	// Draw code goes here
-	SDL_RenderPresent(g_Renderer);
+	SDL_RenderPresent(gameState.renderer);
 }
 
 int main(int argc, char* argv[])
 {
-	bool running = init();
+	GameState gameState = init();
 
-	while (running)
+	while (gameState.running)
 	{
-		running = gameHandleEvents();
-		if (running) running = gameUpdate();
-		gameDraw();
+		gameState.running = gameHandleEvents(gameState);
+		if (gameState.running) gameState.running = gameUpdate(gameState);
+		gameDraw(gameState);
 	}
 	
 	return 0;
