@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <chrono>
+#include <math.h>
 
 #include <SDL/SDL.h>
+
+#define PI 3.14159265
 
 constexpr int SCREEN_WIDTH = 960;
 constexpr int SCREEN_HEIGHT = 540;
@@ -122,10 +125,6 @@ bool gameHandleEvents(GameState& gameState)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameUpdate(GameState& gameState)
 {
-	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * (gameState.deltaTime / 1000.0));
-	gameState.ball.rect.x += (int) (gameState.ball.velocity.x * (gameState.deltaTime / 1000.0));
-	gameState.ball.rect.y += (int) (gameState.ball.velocity.y * (gameState.deltaTime / 1000.0));
-
 	// Left/right bounds checking for paddle
 	if (gameState.paddle.rect.x < 0)
 	{
@@ -150,14 +149,22 @@ bool gameUpdate(GameState& gameState)
 
 	if (gameState.ball.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
 	{
-		gameState.ball.velocity.x, gameState.ball.velocity.y = 0;
+		gameState.ball.velocity.x = 0;
+		gameState.ball.velocity.y = 0;
 	}
 
-	// TODO(lucky962): Make the ball bouncing algorithm off paddle better. (The further left of the paddle the ball is on, the more the ball should go left)
 	if (SDL_HasIntersection(&gameState.ball.rect, &gameState.paddle.rect) == SDL_TRUE)
 	{
-		gameState.ball.velocity.y = -gameState.ball.velocity.y;
+		// gameState.ball.velocity.y = -gameState.ball.velocity.y;
+		float ball_angle = (float)((((((float) gameState.ball.rect.x + (float) BALL_WIDTH / 2.0) - ((float) gameState.paddle.rect.x + (float) PADDLE_WIDTH / 2.0)) / ((float) PADDLE_WIDTH / 2.0)) * 90.0) + 90.0);
+		gameState.ball.velocity.x = (int) (-cos(ball_angle * PI / 180) * BALL_VELOCITY);
+		gameState.ball.velocity.y = (int) (-sin(ball_angle * PI / 180) * BALL_VELOCITY);
+		printf("%f", ball_angle);
 	}
+	
+	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * (gameState.deltaTime / 1000.0));
+	gameState.ball.rect.x += (int) (gameState.ball.velocity.x * (gameState.deltaTime / 1000.0));
+	gameState.ball.rect.y += (int) (gameState.ball.velocity.y * (gameState.deltaTime / 1000.0));
 
 	return true;
 }
