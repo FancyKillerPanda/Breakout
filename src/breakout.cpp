@@ -105,8 +105,6 @@ bool gameHandleEvents(GameState& gameState)
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
-// TODO(fkp): Take delta-time
-// TODO(fkp): Potentially take game state in an object
 bool gameUpdate(GameState& gameState)
 {
 	gameState.paddle.rect.x += (int) (gameState.paddle.velocity * (gameState.deltaTime / 1000.0));
@@ -126,7 +124,6 @@ bool gameUpdate(GameState& gameState)
 }
 
 // Draws the game state
-// TODO(fkp): Potentially take game state in an object
 void gameDraw(GameState& gameState)
 {
 	SDL_SetRenderDrawColor(gameState.renderer, 0, 0, 0, 255);
