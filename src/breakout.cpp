@@ -24,6 +24,7 @@ struct GameState
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	SDL_Event event = {};
+	const uint8_t* keyboardState = nullptr;
 	
 	// Paddle data
 	Paddle paddle = {};
@@ -33,6 +34,7 @@ struct GameState
 GameState init()
 {
 	GameState result = {};
+	result.keyboardState = SDL_GetKeyboardState(NULL);
 	result.running = true;  // Set to false if init fails
 	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
@@ -79,35 +81,19 @@ bool gameHandleEvents(GameState& gameState)
 			{
 				return false;
 			} break;
-
-			case SDL_KEYDOWN:
-			{
-				switch (gameState.event.key.keysym.sym)
-				{
-					case SDLK_RIGHT:
-					{
-						gameState.paddle.velocity = PADDLE_VELOCITY;
-					} break;
-
-					case SDLK_LEFT:
-					{
-						gameState.paddle.velocity = -PADDLE_VELOCITY;
-					} break;
-				}
-			} break;
-			
-			case SDL_KEYUP:
-			{
-				switch (gameState.event.key.keysym.sym)
-				{
-					case SDLK_RIGHT:
-					case SDLK_LEFT:
-					{
-						gameState.paddle.velocity = 0;
-					} break;
-				}
-			} break;
 		}
+	}
+
+	gameState.paddle.velocity = 0;
+
+	if (gameState.keyboardState[SDL_SCANCODE_RIGHT])
+	{
+		gameState.paddle.velocity += PADDLE_VELOCITY;
+	}
+
+	if (gameState.keyboardState[SDL_SCANCODE_LEFT])
+	{
+		gameState.paddle.velocity -= PADDLE_VELOCITY;
 	}
 
 	return true;
