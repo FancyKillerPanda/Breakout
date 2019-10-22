@@ -10,11 +10,17 @@ constexpr int PADDLE_WIDTH = SCREEN_WIDTH / 6;
 constexpr int PADDLE_HEIGHT = SCREEN_HEIGHT / 30;
 constexpr int PADDLE_VELOCITY = SCREEN_WIDTH / 2;
 
-struct Paddle
+struct Velocity
+{
+	int x = 0;
+	int y = 0;
+};
+
+struct Entity
 {
 	SDL_Rect rect = {};
 	SDL_Color colour = {};
-	int velocity = 0;
+	Velocity velocity = {};
 };
 
 struct GameState
@@ -32,7 +38,7 @@ struct GameState
 	const uint8_t* keyboardState = nullptr;
 	
 	// Paddle data
-	Paddle paddle = {};
+	Entity paddle = {};
 };
 
 // NOTE(fkp): Returns true on success, false on fail
@@ -89,16 +95,16 @@ bool gameHandleEvents(GameState& gameState)
 		}
 	}
 
-	gameState.paddle.velocity = 0;
+	gameState.paddle.velocity.x = 0;
 
 	if (gameState.keyboardState[SDL_SCANCODE_RIGHT])
 	{
-		gameState.paddle.velocity += PADDLE_VELOCITY;
+		gameState.paddle.velocity.x += PADDLE_VELOCITY;
 	}
 
 	if (gameState.keyboardState[SDL_SCANCODE_LEFT])
 	{
-		gameState.paddle.velocity -= PADDLE_VELOCITY;
+		gameState.paddle.velocity.x -= PADDLE_VELOCITY;
 	}
 
 	return true;
@@ -107,7 +113,7 @@ bool gameHandleEvents(GameState& gameState)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameUpdate(GameState& gameState)
 {
-	gameState.paddle.rect.x += (int) (gameState.paddle.velocity * (gameState.deltaTime / 1000.0));
+	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * (gameState.deltaTime / 1000.0));
 
 	// Left/right bounds checking for paddle
 	if (gameState.paddle.rect.x < 0)
