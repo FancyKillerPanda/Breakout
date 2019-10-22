@@ -137,6 +137,7 @@ bool gameUpdate(GameState& gameState)
 		gameState.paddle.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
 	}
 
+	// Ball Bouncing off side of window
 	if ((gameState.ball.rect.x < 0) || (gameState.ball.rect.x + BALL_WIDTH > SCREEN_WIDTH))
 	{
 		gameState.ball.velocity.x = -gameState.ball.velocity.x;
@@ -150,6 +151,12 @@ bool gameUpdate(GameState& gameState)
 	if (gameState.ball.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
 	{
 		gameState.ball.velocity.x, gameState.ball.velocity.y = 0;
+	}
+
+	// TODO(lucky962): Make the ball bouncing algorithm off paddle better. (The further left of the paddle the ball is on, the more the ball should go left)
+	if (SDL_HasIntersection(&gameState.ball.rect, &gameState.paddle.rect) == SDL_TRUE)
+	{
+		gameState.ball.velocity.y = -gameState.ball.velocity.y;
 	}
 
 	return true;
