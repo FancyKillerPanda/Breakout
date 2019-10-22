@@ -137,14 +137,14 @@ bool gameUpdate(GameState& gameState)
 		gameState.paddle.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
 	}
 
-	if (gameState.ball.rect.y < 0)
-	{
-		gameState.ball.velocity.y = -gameState.ball.velocity.y;
-	}
-
 	if ((gameState.ball.rect.x < 0) || (gameState.ball.rect.x + BALL_WIDTH > SCREEN_WIDTH))
 	{
 		gameState.ball.velocity.x = -gameState.ball.velocity.x;
+	}
+	
+	if (gameState.ball.rect.y < 0)
+	{
+		gameState.ball.velocity.y = -gameState.ball.velocity.y;
 	}
 
 	if (gameState.ball.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
