@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <chrono>
 
 #include <SDL/SDL.h>
 
@@ -128,8 +129,19 @@ int main(int argc, char* argv[])
 	GameState gameState = init();
 	gameInit(gameState);
 
+	std::chrono::high_resolution_clock::time_point lastTime = std::chrono::high_resolution_clock::now();
+
 	while (gameState.running)
 	{
+		// Calculates deltaTime
+		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double, std::milli> diff = currentTime - lastTime;
+		double deltaTime = diff.count();
+		lastTime = currentTime;
+
+		// Test
+		printf("%fms\n", deltaTime);
+		
 		gameState.running = gameHandleEvents(gameState);
 		if (gameState.running) gameState.running = gameUpdate(gameState);
 		gameDraw(gameState);
