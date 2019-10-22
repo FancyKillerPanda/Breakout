@@ -110,6 +110,18 @@ bool gameHandleEvents(GameState& gameState)
 bool gameUpdate(GameState& gameState)
 {
 	gameState.paddle.rect.x += (int) (gameState.paddle.velocity * (gameState.deltaTime / 1000.0));
+
+	// Left/right bounds checking for paddle
+	if (gameState.paddle.rect.x < 0)
+	{
+		gameState.paddle.rect.x = 0;
+	}
+
+	if (gameState.paddle.rect.x + PADDLE_WIDTH > SCREEN_WIDTH)
+	{
+		gameState.paddle.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
+	}
+	
 	return true;
 }
 
