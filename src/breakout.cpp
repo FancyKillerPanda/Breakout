@@ -8,7 +8,7 @@ constexpr int SCREEN_HEIGHT = 540;
 
 constexpr int PADDLE_WIDTH = SCREEN_WIDTH / 6;
 constexpr int PADDLE_HEIGHT = SCREEN_HEIGHT / 30;
-constexpr int PADDLE_VELOCITY = 10;
+constexpr int PADDLE_VELOCITY = SCREEN_WIDTH / 2;
 
 struct Paddle
 {
@@ -20,6 +20,10 @@ struct Paddle
 struct GameState
 {
 	bool running = false;
+
+	// NOTE(fkp): Delta-time is in milliseconds
+	// TODO(fkp): Should this be in seconds?
+	double deltaTime = 0.0;
 	
 	// SDL2 data
 	SDL_Window* window = nullptr;
@@ -105,8 +109,7 @@ bool gameHandleEvents(GameState& gameState)
 // TODO(fkp): Potentially take game state in an object
 bool gameUpdate(GameState& gameState)
 {
-	gameState.paddle.rect.x += gameState.paddle.velocity;
-
+	gameState.paddle.rect.x += (int) (gameState.paddle.velocity * (gameState.deltaTime / 1000.0));
 	return true;
 }
 
@@ -136,12 +139,9 @@ int main(int argc, char* argv[])
 		// Calculates deltaTime
 		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double, std::milli> diff = currentTime - lastTime;
-		double deltaTime = diff.count();
+		gameState.deltaTime = diff.count();
 		lastTime = currentTime;
 
-		// Test
-		printf("%fms\n", deltaTime);
-		
 		gameState.running = gameHandleEvents(gameState);
 		if (gameState.running) gameState.running = gameUpdate(gameState);
 		gameDraw(gameState);
