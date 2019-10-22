@@ -7,11 +7,13 @@ constexpr int SCREEN_HEIGHT = 540;
 
 constexpr int PADDLE_WIDTH = SCREEN_WIDTH / 6;
 constexpr int PADDLE_HEIGHT = SCREEN_HEIGHT / 30;
+constexpr int PADDLE_VELOCITY = 10;
 
 struct Paddle
 {
 	SDL_Rect rect = {};
-	SDL_Color colour = {};	
+	SDL_Color colour = {};
+	int velocity = 0;
 };
 
 struct GameState
@@ -77,6 +79,34 @@ bool gameHandleEvents(GameState& gameState)
 			{
 				return false;
 			} break;
+
+			case SDL_KEYDOWN:
+			{
+				switch (gameState.event.key.keysym.sym)
+				{
+					case SDLK_RIGHT:
+					{
+						gameState.paddle.velocity = PADDLE_VELOCITY;
+					} break;
+
+					case SDLK_LEFT:
+					{
+						gameState.paddle.velocity = -PADDLE_VELOCITY;
+					} break;
+				}
+			} break;
+			
+			case SDL_KEYUP:
+			{
+				switch (gameState.event.key.keysym.sym)
+				{
+					case SDLK_RIGHT:
+					case SDLK_LEFT:
+					{
+						gameState.paddle.velocity = 0;
+					} break;
+				}
+			} break;
 		}
 	}
 
@@ -88,7 +118,8 @@ bool gameHandleEvents(GameState& gameState)
 // TODO(fkp): Potentially take game state in an object
 bool gameUpdate(GameState& gameState)
 {
-	// TODO(fkp): Implement game update
+	gameState.paddle.rect.x += gameState.paddle.velocity;
+
 	return true;
 }
 
