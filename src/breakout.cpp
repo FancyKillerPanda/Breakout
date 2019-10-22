@@ -10,6 +10,10 @@ constexpr int PADDLE_WIDTH = SCREEN_WIDTH / 6;
 constexpr int PADDLE_HEIGHT = SCREEN_HEIGHT / 30;
 constexpr int PADDLE_VELOCITY = SCREEN_WIDTH / 2;
 
+constexpr int BALL_WIDTH = SCREEN_WIDTH / 50;
+constexpr int BALL_HEIGHT = BALL_WIDTH;
+constexpr int BALL_VELOCITY = SCREEN_WIDTH / 2;
+
 struct Velocity
 {
 	int x = 0;
@@ -37,8 +41,9 @@ struct GameState
 	SDL_Event event = {};
 	const uint8_t* keyboardState = nullptr;
 	
-	// Paddle data
+	// Entities data
 	Entity paddle = {};
+	Entity ball = {};
 };
 
 // NOTE(fkp): Returns true on success, false on fail
@@ -78,6 +83,10 @@ bool gameInit(GameState& gameState)
 	gameState.paddle.colour = SDL_Colour { 255, 255, 255, 255 };
 	gameState.paddle.rect = SDL_Rect { (SCREEN_WIDTH - PADDLE_WIDTH) / 2, (SCREEN_HEIGHT * 9 / 10) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT };
 
+	gameState.ball.colour = SDL_Colour { 255, 255, 255, 255 };
+	gameState.ball.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
+	gameState.ball.velocity.y = BALL_VELOCITY;
+
 	return true;
 }
 
@@ -114,6 +123,8 @@ bool gameHandleEvents(GameState& gameState)
 bool gameUpdate(GameState& gameState)
 {
 	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * (gameState.deltaTime / 1000.0));
+	gameState.ball.rect.x += (int) (gameState.ball.velocity.x * (gameState.deltaTime / 1000.0));
+	gameState.ball.rect.y += (int) (gameState.ball.velocity.y * (gameState.deltaTime / 1000.0));
 
 	// Left/right bounds checking for paddle
 	if (gameState.paddle.rect.x < 0)
@@ -135,9 +146,15 @@ void gameDraw(GameState& gameState)
 	SDL_SetRenderDrawColor(gameState.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameState.renderer);
 
-	SDL_Color colour = gameState.paddle.colour;
+	SDL_Color colour;
+	
+	colour = gameState.paddle.colour;
 	SDL_SetRenderDrawColor(gameState.renderer, colour.r, colour.g, colour.b, colour.a);
 	SDL_RenderFillRect(gameState.renderer, &gameState.paddle.rect);
+	
+	colour = gameState.ball.colour;
+	SDL_SetRenderDrawColor(gameState.renderer, colour.r, colour.g, colour.b, colour.a);
+	SDL_RenderFillRect(gameState.renderer, &gameState.ball.rect);
 
 	SDL_RenderPresent(gameState.renderer);
 }
