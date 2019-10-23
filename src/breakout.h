@@ -2,6 +2,8 @@
 
 #include <SDL/SDL.h>
 
+#include "entity.h"
+
 constexpr double PI = 3.14159265358979323846;
 
 constexpr int SCREEN_WIDTH = 960;
@@ -14,19 +16,6 @@ constexpr int PADDLE_VELOCITY = SCREEN_WIDTH / 2;
 constexpr int BALL_WIDTH = SCREEN_WIDTH / 50;
 constexpr int BALL_HEIGHT = BALL_WIDTH;
 constexpr int BALL_VELOCITY = SCREEN_WIDTH / 2;
-
-struct Velocity
-{
-	int x = 0;
-	int y = 0;
-};
-
-struct Entity
-{
-	SDL_Rect rect = {};
-	SDL_Color colour = {};
-	Velocity velocity = {};
-};
 
 struct GameState
 {
