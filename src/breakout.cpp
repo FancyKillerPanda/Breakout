@@ -34,8 +34,7 @@ struct GameState
 {
 	bool running = false;
 
-	// NOTE(fkp): Delta-time is in milliseconds
-	// TODO(fkp): Should this be in seconds?
+	// NOTE(fkp): Delta-time is in seconds
 	double deltaTime = 0.0;
 	
 	// SDL2 data
@@ -155,16 +154,17 @@ bool gameUpdate(GameState& gameState)
 
 	if (SDL_HasIntersection(&gameState.ball.rect, &gameState.paddle.rect) == SDL_TRUE)
 	{
-		// gameState.ball.velocity.y = -gameState.ball.velocity.y;
+		// TODO(fkp): Clean this up
+		// TODO(fkp): Angle should always be between 0 and 180
 		float ball_angle = (float)((((((float) gameState.ball.rect.x + (float) BALL_WIDTH / 2.0) - ((float) gameState.paddle.rect.x + (float) PADDLE_WIDTH / 2.0)) / ((float) PADDLE_WIDTH / 2.0)) * 90.0) + 90.0);
 		gameState.ball.velocity.x = (int) (-cos(ball_angle * PI / 180) * BALL_VELOCITY);
 		gameState.ball.velocity.y = (int) (-sin(ball_angle * PI / 180) * BALL_VELOCITY);
 		printf("%f", ball_angle);
 	}
 	
-	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * (gameState.deltaTime / 1000.0));
-	gameState.ball.rect.x += (int) (gameState.ball.velocity.x * (gameState.deltaTime / 1000.0));
-	gameState.ball.rect.y += (int) (gameState.ball.velocity.y * (gameState.deltaTime / 1000.0));
+	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * gameState.deltaTime);
+	gameState.ball.rect.x += (int) (gameState.ball.velocity.x * gameState.deltaTime);
+	gameState.ball.rect.y += (int) (gameState.ball.velocity.y * gameState.deltaTime);
 
 	return true;
 }
@@ -200,7 +200,7 @@ int main(int argc, char* argv[])
 		// Calculates deltaTime
 		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double, std::milli> diff = currentTime - lastTime;
-		gameState.deltaTime = diff.count();
+		gameState.deltaTime = diff.count() / 1000.0;
 		lastTime = currentTime;
 
 		gameState.running = gameHandleEvents(gameState);
