@@ -57,6 +57,15 @@ void ballReset(Entity& ball)
 	ball.velocity.y = BALL_VELOCITY;
 }
 
+void paddleReset(Entity& paddle)
+{
+	paddle.colour = SDL_Colour { 255, 255, 255, 255 };
+	
+	paddle.rect = SDL_Rect { (SCREEN_WIDTH - PADDLE_WIDTH) / 2, (SCREEN_HEIGHT * 9 / 10) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT };
+	paddle.velocity.x = 0;
+	paddle.velocity.y = 0;
+}
+
 // NOTE(fkp): Returns true on success, false on fail
 GameState init()
 {
@@ -91,9 +100,7 @@ GameState init()
 
 bool gameInit(GameState& gameState)
 {
-	gameState.paddle.colour = SDL_Colour { 255, 255, 255, 255 };
-	gameState.paddle.rect = SDL_Rect { (SCREEN_WIDTH - PADDLE_WIDTH) / 2, (SCREEN_HEIGHT * 9 / 10) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT };
-
+	paddleReset(gameState.paddle);
 	ballReset(gameState.ball);
 
 	return true;
@@ -158,10 +165,7 @@ bool gameUpdate(GameState& gameState)
 		// NOTE(fkp): Game over
 		// TODO(fkp): Splash screen instead of just restarting ball
 		ballReset(gameState.ball);
-
-		// TODO(fkp): Function for paddle reset
-		gameState.paddle.velocity = { 0, 0 };
-		gameState.paddle.rect.x = (SCREEN_WIDTH - PADDLE_WIDTH) / 2;
+		paddleReset(gameState.paddle);
 	}
 
 	if (SDL_HasIntersection(&gameState.ball.rect, &gameState.paddle.rect) == SDL_TRUE)
