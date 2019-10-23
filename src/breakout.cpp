@@ -111,10 +111,13 @@ bool gameUpdate(GameState& gameState)
 
 	if (SDL_HasIntersection(&gameState.ball.rect, &gameState.paddle.rect) == SDL_TRUE)
 	{
-		// TODO(fkp): Clean this up
-		float ball_angle = (float)((((((float) gameState.ball.rect.x + (float) BALL_WIDTH / 2.0) - ((float) gameState.paddle.rect.x + (float) PADDLE_WIDTH / 2.0)) / ((float) PADDLE_WIDTH / 2.0 + (float) BALL_WIDTH / 2.0)) * 90.0) + 90.0);
-		gameState.ball.velocity.x = (int) (-cos(ball_angle * PI / 180) * BALL_VELOCITY);
-		gameState.ball.velocity.y = (int) (-sin(ball_angle * PI / 180) * BALL_VELOCITY);
+		const float maxBallBounceAngle = 60;
+		float ballCenterX = gameState.ball.rect.x + (BALL_WIDTH / 2.0f);
+		float paddleCenterX = gameState.paddle.rect.x + (PADDLE_WIDTH / 2.0f);
+		float maxTouchingDistance = (PADDLE_WIDTH / 2.0f) + (BALL_WIDTH / 2.0f);
+		float ballAngle = (((ballCenterX - paddleCenterX) / maxTouchingDistance) * maxBallBounceAngle) + 90;
+		gameState.ball.velocity.x = (int) (-cos(ballAngle * PI / 180) * BALL_VELOCITY);
+		gameState.ball.velocity.y = (int) (-sin(ballAngle * PI / 180) * BALL_VELOCITY);
 	}
 	
 	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * gameState.deltaTime);
