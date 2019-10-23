@@ -124,17 +124,6 @@ bool gameHandleEvents(GameState& gameState)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameUpdate(GameState& gameState)
 {
-	// Left/right bounds checking for paddle
-	if (gameState.paddle.rect.x < 0)
-	{
-		gameState.paddle.rect.x = 0;
-	}
-
-	if (gameState.paddle.rect.x + PADDLE_WIDTH > SCREEN_WIDTH)
-	{
-		gameState.paddle.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
-	}
-
 	// Ball Bouncing off side of window
 	if ((gameState.ball.rect.x < 0) || (gameState.ball.rect.x + BALL_WIDTH > SCREEN_WIDTH))
 	{
@@ -159,7 +148,6 @@ bool gameUpdate(GameState& gameState)
 		float ball_angle = (float)((((((float) gameState.ball.rect.x + (float) BALL_WIDTH / 2.0) - ((float) gameState.paddle.rect.x + (float) PADDLE_WIDTH / 2.0)) / ((float) PADDLE_WIDTH / 2.0)) * 90.0) + 90.0);
 		gameState.ball.velocity.x = (int) (-cos(ball_angle * PI / 180) * BALL_VELOCITY);
 		gameState.ball.velocity.y = (int) (-sin(ball_angle * PI / 180) * BALL_VELOCITY);
-		printf("%f", ball_angle);
 	}
 	
 	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * gameState.deltaTime);
