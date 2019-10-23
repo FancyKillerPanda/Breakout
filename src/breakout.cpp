@@ -4,49 +4,7 @@
 
 #include <SDL/SDL.h>
 
-#define PI 3.14159265
-
-constexpr int SCREEN_WIDTH = 960;
-constexpr int SCREEN_HEIGHT = 540;
-
-constexpr int PADDLE_WIDTH = SCREEN_WIDTH / 6;
-constexpr int PADDLE_HEIGHT = SCREEN_HEIGHT / 30;
-constexpr int PADDLE_VELOCITY = SCREEN_WIDTH / 2;
-
-constexpr int BALL_WIDTH = SCREEN_WIDTH / 50;
-constexpr int BALL_HEIGHT = BALL_WIDTH;
-constexpr int BALL_VELOCITY = SCREEN_WIDTH / 2;
-
-struct Velocity
-{
-	int x = 0;
-	int y = 0;
-};
-
-struct Entity
-{
-	SDL_Rect rect = {};
-	SDL_Color colour = {};
-	Velocity velocity = {};
-};
-
-struct GameState
-{
-	bool running = false;
-
-	// NOTE(fkp): Delta-time is in seconds
-	double deltaTime = 0.0;
-	
-	// SDL2 data
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
-	SDL_Event event = {};
-	const uint8_t* keyboardState = nullptr;
-	
-	// Entities data
-	Entity paddle = {};
-	Entity ball = {};
-};
+#include "breakout.h"
 
 void ballReset(Entity& ball)
 {
