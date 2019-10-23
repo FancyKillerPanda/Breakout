@@ -124,6 +124,17 @@ bool gameHandleEvents(GameState& gameState)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameUpdate(GameState& gameState)
 {
+	// Left/right bounds checking for paddle
+	if (gameState.paddle.rect.x < 0)
+	{
+		gameState.paddle.rect.x = 0;
+	}
+
+	if (gameState.paddle.rect.x + PADDLE_WIDTH > SCREEN_WIDTH)
+	{
+		gameState.paddle.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
+	}
+	
 	// Ball Bouncing off side of window
 	if ((gameState.ball.rect.x < 0) || (gameState.ball.rect.x + BALL_WIDTH > SCREEN_WIDTH))
 	{
