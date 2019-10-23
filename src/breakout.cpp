@@ -48,6 +48,15 @@ struct GameState
 	Entity ball = {};
 };
 
+void ballReset(Entity& ball)
+{
+	ball.colour = SDL_Colour { 255, 255, 255, 255 };
+	
+	ball.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
+	ball.velocity.x = 0;
+	ball.velocity.y = BALL_VELOCITY;
+}
+
 // NOTE(fkp): Returns true on success, false on fail
 GameState init()
 {
@@ -85,9 +94,7 @@ bool gameInit(GameState& gameState)
 	gameState.paddle.colour = SDL_Colour { 255, 255, 255, 255 };
 	gameState.paddle.rect = SDL_Rect { (SCREEN_WIDTH - PADDLE_WIDTH) / 2, (SCREEN_HEIGHT * 9 / 10) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT };
 
-	gameState.ball.colour = SDL_Colour { 255, 255, 255, 255 };
-	gameState.ball.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
-	gameState.ball.velocity.y = BALL_VELOCITY;
+	ballReset(gameState.ball);
 
 	return true;
 }
@@ -150,11 +157,7 @@ bool gameUpdate(GameState& gameState)
 	{
 		// NOTE(fkp): Game over
 		// TODO(fkp): Splash screen instead of just restarting ball
-		// TODO(fkp): Function for ball reset
-		gameState.ball.rect.x = (SCREEN_WIDTH - BALL_WIDTH) / 2;
-		gameState.ball.rect.y = (SCREEN_HEIGHT - BALL_WIDTH) / 2;
-		gameState.ball.velocity.x = 0;
-		gameState.ball.velocity.y = BALL_VELOCITY;
+		ballReset(gameState.ball);
 
 		// TODO(fkp): Function for paddle reset
 		gameState.paddle.velocity = { 0, 0 };
