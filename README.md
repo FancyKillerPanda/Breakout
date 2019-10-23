@@ -2,5 +2,7 @@
 
 A Breakout game.
 
-Link to Trello:
-https://trello.com/b/88pmG1kj
+- [x] Initialise Window
+- [x] Make Paddle
+- [x] Make Ball
+- [ ] Make Bricks
