@@ -112,8 +112,7 @@ bool gameUpdate(GameState& gameState)
 	if (SDL_HasIntersection(&gameState.ball.rect, &gameState.paddle.rect) == SDL_TRUE)
 	{
 		// TODO(fkp): Clean this up
-		// TODO(fkp): Angle should always be between 0 and 180
-		float ball_angle = (float)((((((float) gameState.ball.rect.x + (float) BALL_WIDTH / 2.0) - ((float) gameState.paddle.rect.x + (float) PADDLE_WIDTH / 2.0)) / ((float) PADDLE_WIDTH / 2.0)) * 90.0) + 90.0);
+		float ball_angle = (float)((((((float) gameState.ball.rect.x + (float) BALL_WIDTH / 2.0) - ((float) gameState.paddle.rect.x + (float) PADDLE_WIDTH / 2.0)) / ((float) PADDLE_WIDTH / 2.0 + (float) BALL_WIDTH / 2.0)) * 90.0) + 90.0);
 		gameState.ball.velocity.x = (int) (-cos(ball_angle * PI / 180) * BALL_VELOCITY);
 		gameState.ball.velocity.y = (int) (-sin(ball_angle * PI / 180) * BALL_VELOCITY);
 	}
