@@ -137,8 +137,17 @@ bool gameUpdate(GameState& gameState)
 
 	if (gameState.ball.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
 	{
+		// NOTE(fkp): Game over
+		// TODO(fkp): Splash screen instead of just restarting ball
+		// TODO(fkp): Function for ball reset
+		gameState.ball.rect.x = (SCREEN_WIDTH - BALL_WIDTH) / 2;
+		gameState.ball.rect.y = (SCREEN_HEIGHT - BALL_WIDTH) / 2;
 		gameState.ball.velocity.x = 0;
-		gameState.ball.velocity.y = 0;
+		gameState.ball.velocity.y = BALL_VELOCITY;
+
+		// TODO(fkp): Function for paddle reset
+		gameState.paddle.velocity = { 0, 0 };
+		gameState.paddle.rect.x = (SCREEN_WIDTH - PADDLE_WIDTH) / 2;
 	}
 
 	if (SDL_HasIntersection(&gameState.ball.rect, &gameState.paddle.rect) == SDL_TRUE)
