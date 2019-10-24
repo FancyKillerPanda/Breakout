@@ -10,7 +10,7 @@ struct Text
 	SDL_Texture* texture = nullptr;
 	SDL_Rect rect = {};
 	
-	const char* text = "Text";
+	char* text = "Text";
 	unsigned int size = 14;
 	SDL_Color colour = SDL_Color { 255, 0, 0, 255 };
 };

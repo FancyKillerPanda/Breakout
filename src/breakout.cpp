@@ -48,8 +48,10 @@ GameState init()
 bool gameInit(GameState& gameState)
 {
 	// Text init
-	gameState.testText.text = "Test Text!";
-	updateTextTexture(gameState.renderer, ARIAL_FONT_PATH, gameState.testText);
+	gameState.fpsText.text = "Breakout V0.1.0 | 0.00 FPS";
+	gameState.fpsText.rect.x = SCREEN_WIDTH * 4 / 5;
+	gameState.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
+	updateTextTexture(gameState.renderer, ARIAL_FONT_PATH, gameState.fpsText);
 	
 	paddleReset(gameState.paddle);
 	ballReset(gameState.ball);
@@ -197,7 +199,7 @@ void gameDraw(GameState& gameState)
 	SDL_SetRenderDrawColor(gameState.renderer, colour.r, colour.g, colour.b, colour.a);
 	SDL_RenderFillRect(gameState.renderer, &gameState.ball.rect);
 
-	SDL_RenderCopy(gameState.renderer, gameState.testText.texture, nullptr, &gameState.testText.rect);
+	SDL_RenderCopy(gameState.renderer, gameState.fpsText.texture, nullptr, &gameState.fpsText.rect);
 
 	SDL_RenderPresent(gameState.renderer);
 }
@@ -211,11 +213,17 @@ int main(int argc, char* argv[])
 
 	while (gameState.running)
 	{
-		// Calculates deltaTime
+		// Calculates delta time
 		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double, std::milli> diff = currentTime - lastTime;
 		gameState.deltaTime = diff.count() / 1000.0;
 		lastTime = currentTime;
+
+		// Text for frame rate
+		char newFpsText[256];
+		sprintf_s(newFpsText, 256, "Breakout V0.1.0 | %.2fFPS", 1.0 / gameState.deltaTime);
+		gameState.fpsText.text = newFpsText;
+		updateTextTexture(gameState.renderer, gameState.fpsText);
 
 		gameState.running = gameHandleEvents(gameState);
 		if (gameState.running) gameState.running = gameUpdate(gameState);

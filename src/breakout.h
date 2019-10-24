@@ -27,5 +27,5 @@ struct GameState
 	std::array<Entity, 4> bricks = {};
 
 	// Text data
-	Text testText = {};
+	Text fpsText = {};
 };
