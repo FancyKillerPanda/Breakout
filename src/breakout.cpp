@@ -44,6 +44,17 @@ bool gameInit(GameState& gameState)
 	paddleReset(gameState.paddle);
 	ballReset(gameState.ball);
 
+	int brickX = SCREEN_WIDTH / 24;
+	int brickY = SCREEN_HEIGHT / 10;
+
+	for (Entity& brick : gameState.bricks)
+	{
+		brick.colour = SDL_Color { 255, 255, 255, 255 };
+		brick.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
+
+		brickX += BRICK_WIDTH + (SCREEN_WIDTH / 12);
+	}
+
 	return true;
 }
 
@@ -138,6 +149,13 @@ void gameDraw(GameState& gameState)
 	colour = gameState.paddle.colour;
 	SDL_SetRenderDrawColor(gameState.renderer, colour.r, colour.g, colour.b, colour.a);
 	SDL_RenderFillRect(gameState.renderer, &gameState.paddle.rect);
+
+	for (Entity& brick : gameState.bricks)
+	{
+		colour = brick.colour;
+		SDL_SetRenderDrawColor(gameState.renderer, colour.r, colour.g, colour.b, colour.a);
+		SDL_RenderFillRect(gameState.renderer, &brick.rect);
+	}
 	
 	colour = gameState.ball.colour;
 	SDL_SetRenderDrawColor(gameState.renderer, colour.r, colour.g, colour.b, colour.a);

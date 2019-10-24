@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include <SDL/SDL.h>
 
 #include "entity.h"
@@ -17,6 +19,9 @@ constexpr int BALL_WIDTH = SCREEN_WIDTH / 50;
 constexpr int BALL_HEIGHT = BALL_WIDTH;
 constexpr int BALL_VELOCITY = SCREEN_WIDTH / 2;
 
+constexpr int BRICK_WIDTH = SCREEN_WIDTH / 6;
+constexpr int BRICK_HEIGHT = SCREEN_HEIGHT / 15;
+
 struct GameState
 {
 	bool running = false;
@@ -33,4 +38,5 @@ struct GameState
 	// Entities data
 	Entity paddle = {};
 	Entity ball = {};
+	std::array<Entity, 4> bricks = {};
 };
