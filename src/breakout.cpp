@@ -209,6 +209,7 @@ int main(int argc, char* argv[])
 	GameState gameState = init();
 	gameInit(gameState);
 
+	unsigned int frameCounter = 0;
 	std::chrono::high_resolution_clock::time_point lastTime = std::chrono::high_resolution_clock::now();
 
 	while (gameState.running)
@@ -219,11 +220,19 @@ int main(int argc, char* argv[])
 		gameState.deltaTime = diff.count() / 1000.0;
 		lastTime = currentTime;
 
-		// Text for frame rate
-		char newFpsText[256];
-		sprintf_s(newFpsText, 256, "Breakout V0.1.0 | %.2fFPS", 1.0 / gameState.deltaTime);
-		gameState.fpsText.text = newFpsText;
-		updateTextTexture(gameState.renderer, gameState.fpsText);
+		frameCounter += 1;
+		if (frameCounter % 20 == 0)
+		{
+			// Text for frame rate
+			char newFpsText[256];
+			sprintf_s(newFpsText, 256, "Breakout V0.1.0 | %dFPS", (int) (1.0 / gameState.deltaTime));
+			gameState.fpsText.text = newFpsText;
+			updateTextTexture(gameState.renderer, gameState.fpsText);
+
+			printf("Updated\n");
+
+			frameCounter = 0;
+		}
 
 		gameState.running = gameHandleEvents(gameState);
 		if (gameState.running) gameState.running = gameUpdate(gameState);
