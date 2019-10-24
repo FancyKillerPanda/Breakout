@@ -104,12 +104,12 @@ bool gameUpdate(GameState& gameState)
 	// Ball Bouncing off side of window
 	if ((gameState.ball.rect.x < 0) || (gameState.ball.rect.x + BALL_WIDTH > SCREEN_WIDTH))
 	{
-		gameState.ball.velocity.x = -gameState.ball.velocity.x;
+		gameState.ball.velocity.x *= -1;
 	}
 	
 	if (gameState.ball.rect.y < 0)
 	{
-		gameState.ball.velocity.y = -gameState.ball.velocity.y;
+		gameState.ball.velocity.y *= -1;
 	}
 
 	if (gameState.ball.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
@@ -141,7 +141,7 @@ bool gameUpdate(GameState& gameState)
 			// Moves back outside the rect
 			gameState.ball.rect.x -= (int) (gameState.ball.velocity.x * gameState.deltaTime);
 			// Switches x-axis direction
-			gameState.ball.velocity.x = -gameState.ball.velocity.x;
+			gameState.ball.velocity.x *= -1;
 		}
 	}
 
@@ -155,7 +155,7 @@ bool gameUpdate(GameState& gameState)
 			// Moves back outside the rect
 			gameState.ball.rect.y -= (int) (gameState.ball.velocity.y * gameState.deltaTime);
 			// Switches y-axis direction
-			gameState.ball.velocity.y = -gameState.ball.velocity.y;
+			gameState.ball.velocity.y *= -1;
 		}
 	}
 	
