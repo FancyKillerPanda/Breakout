@@ -7,3 +7,5 @@ A Breakout game.
 - [x] Make Ball
 - [x] Make Ball Bouncing Mechanics
 - [ ] Make Bricks
+- [ ] Fullscreen
+- [ ] Resolution scaling with text and objects
