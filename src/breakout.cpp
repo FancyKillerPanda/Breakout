@@ -130,10 +130,36 @@ bool gameUpdate(GameState& gameState)
 		gameState.ball.velocity.x = (int) (-cos(ballAngle * PI / 180) * BALL_VELOCITY);
 		gameState.ball.velocity.y = (int) (-sin(ballAngle * PI / 180) * BALL_VELOCITY);
 	}
+
+	// Moves ball on x-axis and checks for collision
+	gameState.ball.rect.x += (int) (gameState.ball.velocity.x * gameState.deltaTime);
+
+	for (Entity& brick : gameState.bricks)
+	{
+		if (SDL_HasIntersection(&gameState.ball.rect, &brick.rect))
+		{
+			// Moves back outside the rect
+			gameState.ball.rect.x -= (int) (gameState.ball.velocity.x * gameState.deltaTime);
+			// Switches x-axis direction
+			gameState.ball.velocity.x = -gameState.ball.velocity.x;
+		}
+	}
+
+	// Moves ball on y-axis and checks for collision
+	gameState.ball.rect.y += (int) (gameState.ball.velocity.y * gameState.deltaTime);
+
+	for (Entity& brick : gameState.bricks)
+	{
+		if (SDL_HasIntersection(&gameState.ball.rect, &brick.rect))
+		{
+			// Moves back outside the rect
+			gameState.ball.rect.y -= (int) (gameState.ball.velocity.y * gameState.deltaTime);
+			// Switches y-axis direction
+			gameState.ball.velocity.y = -gameState.ball.velocity.y;
+		}
+	}
 	
 	gameState.paddle.rect.x += (int) (gameState.paddle.velocity.x * gameState.deltaTime);
-	gameState.ball.rect.x += (int) (gameState.ball.velocity.x * gameState.deltaTime);
-	gameState.ball.rect.y += (int) (gameState.ball.velocity.y * gameState.deltaTime);
 
 	return true;
 }
