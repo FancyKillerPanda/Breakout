@@ -1,4 +1,7 @@
 @echo off
 
 call build.bat
-build\breakout.exe
+
+pushd build
+breakout.exe
+popd

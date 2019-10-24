@@ -16,7 +16,13 @@ GameState init()
 	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
-		printf("Failed to Initialise SDL2");
+		printf("Failed to Initialise SDL2\n");
+		result.running = false;
+	}
+
+	if (TTF_Init() != 0)
+	{
+		printf("Failed to initialise TTF\n");
 		result.running = false;
 	}
 
@@ -24,7 +30,7 @@ GameState init()
 
 	if (result.window == nullptr)
 	{
-		printf("Failed to Create Window");
+		printf("Failed to Create Window\n");
 		result.running = false;
 	}
 
@@ -32,7 +38,7 @@ GameState init()
 
 	if (result.renderer == nullptr)
 	{
-		printf("Failed to Create Renderer");
+		printf("Failed to Create Renderer\n");
 		result.running = false;
 	}
 
@@ -41,6 +47,10 @@ GameState init()
 
 bool gameInit(GameState& gameState)
 {
+	// Text init
+	gameState.testText.text = "Test Text!";
+	updateTextTexture(gameState.renderer, ARIAL_FONT_PATH, gameState.testText);
+	
 	paddleReset(gameState.paddle);
 	ballReset(gameState.ball);
 
@@ -186,6 +196,8 @@ void gameDraw(GameState& gameState)
 	colour = gameState.ball.colour;
 	SDL_SetRenderDrawColor(gameState.renderer, colour.r, colour.g, colour.b, colour.a);
 	SDL_RenderFillRect(gameState.renderer, &gameState.ball.rect);
+
+	SDL_RenderCopy(gameState.renderer, gameState.testText.texture, nullptr, &gameState.testText.rect);
 
 	SDL_RenderPresent(gameState.renderer);
 }
