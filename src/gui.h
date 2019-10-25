@@ -13,6 +13,7 @@ struct Texture
 };
 
 Texture createTexture(SDL_Renderer* renderer, const char* filepath);
+void destroyTexture(Texture& texture);
 
 struct Text
 {

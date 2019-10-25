@@ -22,6 +22,17 @@ Texture createTexture(SDL_Renderer* renderer, const char* filepath)
 	return result;
 }
 
+// NOTE(fkp): Do not need to call at the very end of the program
+// Only necessary to call if textures will be created/destroyed
+// multiple times during a program.
+// Windows will clean up memory at the end of the program
+void destroyTexture(Texture& texture)
+{
+	SDL_DestroyTexture(texture.texture);
+	texture.texture = nullptr;
+	texture.filepath = "";
+}
+
 void updateTextTexture(SDL_Renderer* renderer, Text& text)
 {
 	// Destroys the last texture if there was one
