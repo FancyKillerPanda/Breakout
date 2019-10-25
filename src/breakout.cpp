@@ -53,6 +53,9 @@ bool gameInit(GameState& gameState)
 	gameState.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
 	updateTextTexture(gameState.renderer, ARIAL_FONT_PATH, gameState.fpsText);
 	
+	// TEST
+	gameState.testTexture = createTexture(gameState.renderer, "res/test-texture.png");
+	
 	paddleReset(gameState.paddle);
 	ballReset(gameState.ball);
 
@@ -201,6 +204,9 @@ void gameDraw(GameState& gameState)
 
 	SDL_RenderCopy(gameState.renderer, gameState.fpsText.texture, nullptr, &gameState.fpsText.rect);
 
+	// TEST
+	SDL_RenderCopy(gameState.renderer, gameState.testTexture.texture, nullptr, &gameState.testTexture.rect);
+
 	SDL_RenderPresent(gameState.renderer);
 }
 
@@ -228,7 +234,7 @@ int main(int argc, char* argv[])
 			sprintf_s(newFpsText, 256, "Breakout V0.1.0 | %dFPS", (int) (1.0 / gameState.deltaTime));
 			gameState.fpsText.text = newFpsText;
 			updateTextTexture(gameState.renderer, gameState.fpsText);
-			
+
 			frameCounter = 0;
 		}
 

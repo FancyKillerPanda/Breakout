@@ -2,6 +2,26 @@
 
 #include "gui.h"
 
+Texture createTexture(SDL_Renderer* renderer, const char* filepath)
+{
+	Texture result;
+	result.filepath = filepath;
+	result.texture = IMG_LoadTexture(renderer, result.filepath);
+
+	if (result.texture == nullptr)
+	{
+		printf("Texture creation failed (filepath: %s)\n%s\n", result.filepath, SDL_GetError());
+	}
+
+	// Checks for valid texture dimensions
+	if (SDL_QueryTexture(result.texture, nullptr, nullptr, &result.rect.w, &result.rect.h) == -1)
+	{
+		printf("Texture is invalid (filepath: %s)\n%s\n.", result.filepath, SDL_GetError());
+	}
+
+	return result;
+}
+
 void updateTextTexture(SDL_Renderer* renderer, Text& text)
 {
 	// Destroys the last texture if there was one

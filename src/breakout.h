@@ -28,4 +28,7 @@ struct GameState
 
 	// Text data
 	Text fpsText = {};
+
+	// Textures
+	Texture testTexture = {};
 };

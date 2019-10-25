@@ -1,7 +1,18 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 
 #include "constants.h"
+
+struct Texture
+{
+	const char* filepath = "";
+	
+	SDL_Texture* texture = nullptr;
+	SDL_Rect rect = {};
+};
+
+Texture createTexture(SDL_Renderer* renderer, const char* filepath);
 
 struct Text
 {
