@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "text.h"
+#include "gui.h"
 
 void updateTextTexture(SDL_Renderer* renderer, Text& text)
 {

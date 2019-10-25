@@ -6,7 +6,7 @@
 #include <SDL/SDL_ttf.h>
 
 #include "entity.h"
-#include "text.h"
+#include "gui.h"
 
 struct GameState
 {

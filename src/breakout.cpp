@@ -228,9 +228,7 @@ int main(int argc, char* argv[])
 			sprintf_s(newFpsText, 256, "Breakout V0.1.0 | %dFPS", (int) (1.0 / gameState.deltaTime));
 			gameState.fpsText.text = newFpsText;
 			updateTextTexture(gameState.renderer, gameState.fpsText);
-
-			printf("Updated\n");
-
+			
 			frameCounter = 0;
 		}
 
