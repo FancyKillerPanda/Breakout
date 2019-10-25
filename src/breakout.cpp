@@ -117,13 +117,20 @@ bool gameUpdate(GameState& gameState)
 	}
 	
 	// Ball Bouncing off side of window
-	if ((gameState.ball.rect.x < 0) || (gameState.ball.rect.x + BALL_WIDTH > SCREEN_WIDTH))
+	if (gameState.ball.rect.x < 0)
 	{
+		gameState.ball.rect.x = 0;
+		gameState.ball.velocity.x *= -1;
+	}
+	else if (gameState.ball.rect.x + BALL_WIDTH > SCREEN_WIDTH)
+	{
+		gameState.ball.rect.x = SCREEN_WIDTH - BALL_WIDTH;
 		gameState.ball.velocity.x *= -1;
 	}
 	
 	if (gameState.ball.rect.y < 0)
 	{
+		gameState.ball.rect.y = 0;
 		gameState.ball.velocity.y *= -1;
 	}
 
