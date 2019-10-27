@@ -8,6 +8,11 @@
 #include "entity.h"
 #include "gui.h"
 
+enum class GameState
+{
+	GamePlay,
+};
+
 struct GameData
 {
 	bool running = false;
@@ -20,7 +25,10 @@ struct GameData
 	SDL_Renderer* renderer = nullptr;
 	SDL_Event event = {};
 	const uint8_t* keyboardState = nullptr;
-	
+
+	// TODO(lucky962): Start Screen
+	GameState gameState = GameState::GamePlay;
+
 	// Entities data
 	Entity paddle = {};
 	Entity ball = {};
