@@ -8,7 +8,7 @@
 #include "entity.h"
 #include "gui.h"
 
-struct GameState
+struct GameData
 {
 	bool running = false;
 
