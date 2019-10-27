@@ -228,28 +228,28 @@ int main(int argc, char* argv[])
 
 	while (gameData.running)
 	{
+		// Calculates delta time
+		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double, std::milli> diff = currentTime - lastTime;
+		gameData.deltaTime = diff.count() / 1000.0;
+		lastTime = currentTime;
+
+		// Text for frame rate
+		frameCounter += 1;
+		if (frameCounter % 20 == 0)
+		{
+			char newFpsText[256];
+			sprintf_s(newFpsText, 256, "Breakout V0.1.0 | %dFPS", (int) (1.0 / gameData.deltaTime));
+			gameData.fpsText.text = newFpsText;
+			updateTextTexture(gameData.renderer, gameData.fpsText);
+
+			frameCounter = 0;
+		}
+
 		switch (gameData.gameState)
 		{
 			case GameState::Gameplay: 
 			{
-				// Calculates delta time
-				std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
-				std::chrono::duration<double, std::milli> diff = currentTime - lastTime;
-				gameData.deltaTime = diff.count() / 1000.0;
-				lastTime = currentTime;
-
-				frameCounter += 1;
-				if (frameCounter % 20 == 0)
-				{
-					// Text for frame rate
-					char newFpsText[256];
-					sprintf_s(newFpsText, 256, "Breakout V0.1.0 | %dFPS", (int) (1.0 / gameData.deltaTime));
-					gameData.fpsText.text = newFpsText;
-					updateTextTexture(gameData.renderer, gameData.fpsText);
-
-					frameCounter = 0;
-				}
-
 				gameData.running = gameplayHandleEvents(gameData);
 				if (gameData.running) gameData.running = gameplayUpdate(gameData);
 				gameplayDraw(gameData);
