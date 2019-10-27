@@ -10,7 +10,7 @@
 
 enum class GameState
 {
-	GamePlay,
+	Gameplay,
 };
 
 struct GameData
@@ -27,7 +27,7 @@ struct GameData
 	const uint8_t* keyboardState = nullptr;
 
 	// TODO(lucky962): Start Screen
-	GameState gameState = GameState::GamePlay;
+	GameState gameState = GameState::Gameplay;
 
 	// Entities data
 	Entity paddle = {};

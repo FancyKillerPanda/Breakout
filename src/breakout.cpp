@@ -45,6 +45,7 @@ GameData init()
 	return result;
 }
 
+// TODO(lucky962): Should this be separate for each game state?
 bool gameInit(GameData& gameData)
 {
 	// Text init
@@ -74,7 +75,7 @@ bool gameInit(GameData& gameData)
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
-bool gameHandleEvents(GameData& gameData)
+bool gameplayHandleEvents(GameData& gameData)
 {
 	while (SDL_PollEvent(&gameData.event))
 	{
@@ -103,7 +104,7 @@ bool gameHandleEvents(GameData& gameData)
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
-bool gameUpdate(GameData& gameData)
+bool gameplayUpdate(GameData& gameData)
 {
 	// Left/right bounds checking for paddle
 	if (gameData.paddle.rect.x < 0)
@@ -187,7 +188,7 @@ bool gameUpdate(GameData& gameData)
 }
 
 // Draws the game state
-void gameDraw(GameData& gameData)
+void gameplayDraw(GameData& gameData)
 {
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
@@ -229,7 +230,7 @@ int main(int argc, char* argv[])
 	{
 		switch (gameData.gameState)
 		{
-			case GameState::GamePlay: 
+			case GameState::Gameplay: 
 			{
 				// Calculates delta time
 				std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
@@ -249,9 +250,9 @@ int main(int argc, char* argv[])
 					frameCounter = 0;
 				}
 
-				gameData.running = gameHandleEvents(gameData);
-				if (gameData.running) gameData.running = gameUpdate(gameData);
-				gameDraw(gameData);
+				gameData.running = gameplayHandleEvents(gameData);
+				if (gameData.running) gameData.running = gameplayUpdate(gameData);
+				gameplayDraw(gameData);
 			} break;
 		}
 	}
