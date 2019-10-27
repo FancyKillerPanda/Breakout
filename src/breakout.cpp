@@ -54,9 +54,6 @@ bool gameInit(GameData& gameData)
 	gameData.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
 	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
 	
-	// TEST
-	gameData.testTexture = createTexture(gameData.renderer, "res/test-texture.png");
-	
 	paddleReset(gameData.paddle);
 	ballReset(gameData.ball);
 
@@ -211,9 +208,6 @@ void gameplayDraw(GameData& gameData)
 	SDL_RenderFillRect(gameData.renderer, &gameData.ball.rect);
 
 	SDL_RenderCopy(gameData.renderer, gameData.fpsText.texture, nullptr, &gameData.fpsText.rect);
-
-	// TEST
-	SDL_RenderCopy(gameData.renderer, gameData.testTexture.texture, nullptr, &gameData.testTexture.rect);
 
 	SDL_RenderPresent(gameData.renderer);
 }

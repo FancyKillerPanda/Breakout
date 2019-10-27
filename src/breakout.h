@@ -38,5 +38,4 @@ struct GameData
 	Text fpsText = {};
 
 	// Textures
-	Texture testTexture = {};
 };
