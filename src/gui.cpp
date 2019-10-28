@@ -16,7 +16,7 @@ Texture createTexture(SDL_Renderer* renderer, const char* filepath)
 	// Checks for valid texture dimensions
 	if (SDL_QueryTexture(result.texture, nullptr, nullptr, &result.rect.w, &result.rect.h) == -1)
 	{
-		printf("Texture is invalid (filepath: %s)\n%s\n.", result.filepath, SDL_GetError());
+		printf("Texture is invalid (filepath: %s)\n%s\n", result.filepath, SDL_GetError());
 	}
 
 	return result;

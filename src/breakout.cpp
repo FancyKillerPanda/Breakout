@@ -27,7 +27,7 @@ GameData init()
 		result.running = false;
 	}
 
-	result.window = SDL_CreateWindow("Breakout", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	result.window = SDL_CreateWindow("Breakout", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
 
 	if (result.window == nullptr)
 	{
@@ -42,6 +42,9 @@ GameData init()
 		printf("Failed to Create Renderer\n");
 		result.running = false;
 	}
+
+	// Sets the logical size that will be used for the game
+	SDL_RenderSetLogicalSize(result.renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	return result;
 }
