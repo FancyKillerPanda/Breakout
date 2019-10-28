@@ -55,9 +55,8 @@ bool gameInit(GameData& gameData)
 	gameData.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
 	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
 	
-	paddleReset(gameData.paddle);
-	gameData.ball.texture = createTexture(gameData.renderer, "res/whiteball.png");
-	ballReset(gameData.ball);
+	paddleReset(gameData.renderer, gameData.paddle);
+	ballReset(gameData.renderer, gameData.ball);
 
 	int brickX = SCREEN_WIDTH / 24;
 	int brickY = SCREEN_HEIGHT / 10;

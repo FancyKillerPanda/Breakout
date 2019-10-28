@@ -3,16 +3,24 @@
 #include "entity.h"
 #include "breakout.h"
 
-void ballReset(Entity& ball)
+void ballReset(SDL_Renderer* renderer, Entity& ball)
 {
+	if (ball.texture.texture)
+	{
+		SDL_DestroyTexture(ball.texture.texture);
+		ball.texture.texture = nullptr;
+	}
+
+	ball.texture = createTexture(renderer, "res/whiteball.png");
+	ball.texture.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
+	
 	ball.colour = SDL_Colour { 255, 255, 255, 255 };
 	
-	ball.texture.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
 	ball.velocity.x = 0;
 	ball.velocity.y = BALL_VELOCITY;
 }
 
-void paddleReset(Entity& paddle)
+void paddleReset(SDL_Renderer* renderer, Entity& paddle)
 {
 	paddle.colour = SDL_Colour { 255, 255, 255, 255 };
 	

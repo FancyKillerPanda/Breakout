@@ -17,5 +17,5 @@ struct Entity
 	Velocity velocity = {};
 };
 
-void ballReset(Entity& ball);
-void paddleReset(Entity& paddle);
+void ballReset(SDL_Renderer* renderer, Entity& ball);
+void paddleReset(SDL_Renderer* renderer, Entity& paddle);

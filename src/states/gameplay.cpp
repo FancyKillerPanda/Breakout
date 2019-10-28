@@ -67,8 +67,8 @@ bool gameplayUpdate(GameData& gameData)
 	{
 		// NOTE(fkp): Game over
 		// TODO(fkp): Splash screen instead of just restarting ball
-		ballReset(gameData.ball);
-		paddleReset(gameData.paddle);
+		ballReset(gameData.renderer, gameData.ball);
+		paddleReset(gameData.renderer, gameData.paddle);
 	}
 
 	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect) == SDL_TRUE)
