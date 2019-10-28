@@ -64,13 +64,13 @@ bool gameplayUpdate(GameData& gameData)
 
 	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect) == SDL_TRUE)
 	{
-		const float maxBallBounceAngle = 60;
+		const float maxBallBounceAngle = 75;
 		float ballCenterX = gameData.ball.texture.rect.x + (BALL_WIDTH / 2.0f);
 		float paddleCenterX = gameData.paddle.texture.rect.x + (PADDLE_WIDTH / 2.0f);
 		float maxTouchingDistance = (PADDLE_WIDTH / 2.0f) + (BALL_WIDTH / 2.0f);
 		float ballAngle = (((ballCenterX - paddleCenterX) / maxTouchingDistance) * maxBallBounceAngle) + 90;
-		gameData.ball.velocity.x = (int) (-cos(ballAngle * PI / 180) * BALL_VELOCITY);
-		gameData.ball.velocity.y = (int) (-sin(ballAngle * PI / 180) * BALL_VELOCITY);
+		gameData.ball.velocity.x = (float) -cos(ballAngle * PI / 180) * BALL_VELOCITY;
+		gameData.ball.velocity.y = (float) -sin(ballAngle * PI / 180) * BALL_VELOCITY;
 	}
 
 	// Moves ball on x-axis and checks for collision

@@ -7,11 +7,11 @@ constexpr int SCREEN_HEIGHT = 540;
 
 constexpr int PADDLE_WIDTH = SCREEN_WIDTH / 6;
 constexpr int PADDLE_HEIGHT = SCREEN_HEIGHT / 30;
-constexpr int PADDLE_VELOCITY = SCREEN_WIDTH / 2;
+constexpr float PADDLE_VELOCITY = SCREEN_WIDTH / 2.0f;
 
 constexpr int BALL_WIDTH = SCREEN_WIDTH / 50;
 constexpr int BALL_HEIGHT = BALL_WIDTH;
-constexpr int BALL_VELOCITY = SCREEN_WIDTH / 2;
+constexpr float BALL_VELOCITY = SCREEN_WIDTH / 1.5f;
 
 constexpr int BRICK_WIDTH = SCREEN_WIDTH / 6;
 constexpr int BRICK_HEIGHT = SCREEN_HEIGHT / 15;
