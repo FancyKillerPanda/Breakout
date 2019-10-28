@@ -17,6 +17,7 @@ enum class GameState
 struct GameData
 {
 	bool running = false;
+	bool fullscreen = false;
 
 	// NOTE(fkp): Delta-time is in seconds
 	double deltaTime = 0.0;

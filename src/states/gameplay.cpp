@@ -13,6 +13,27 @@ bool gameplayHandleEvents(GameData& gameData)
 			{
 				return false;
 			} break;
+
+			// TODO(fkp): Move this away
+			case SDL_KEYDOWN:
+			{
+				switch (gameData.event.key.keysym.sym)
+				{
+					case SDLK_f:
+					{
+						if (gameData.fullscreen)
+						{
+							SDL_SetWindowFullscreen(gameData.window, 0);
+						}
+						else
+						{
+							SDL_SetWindowFullscreen(gameData.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+						}
+						
+						gameData.fullscreen = !gameData.fullscreen;
+					} break;
+				}
+			} break;
 		}
 	}
 
