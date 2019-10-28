@@ -2,10 +2,16 @@
 
 A Breakout game.
 
+### Window
 - [x] Initialise Window
-- [x] Make Paddle
-- [x] Make Ball
-- [x] Make Ball Bouncing Mechanics
-- [ ] Make Bricks
 - [ ] Fullscreen
 - [ ] Resolution scaling with text and objects
+
+### Entities
+- [x] Make Paddle
+- [ ] Make Paddle a Texture
+- [x] Make Ball
+- [x] Make Ball Bouncing Mechanics
+- [x] Make Ball a Texture 
+- [ ] Make Bricks
+- [ ] Make Bricks a Texture
