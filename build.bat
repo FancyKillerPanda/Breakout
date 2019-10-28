@@ -14,5 +14,8 @@ IF %ERRORLEVEL% NEQ 0 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\
 
 IF NOT EXIST build\ mkdir build
 pushd build
+
 cl %compilerFlags% %files% /link %linkerFlags%
+IF %ERRORLEVEL% EQU 0 breakout.exe
+
 popd
