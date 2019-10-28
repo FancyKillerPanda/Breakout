@@ -19,6 +19,11 @@ bool gameplayHandleEvents(GameData& gameData)
 			{
 				switch (gameData.event.key.keysym.sym)
 				{
+					case SDLK_ESCAPE:
+					{
+						return false;
+					} break;
+
 					case SDLK_f:
 					{
 						if (gameData.fullscreen)
