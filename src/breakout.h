@@ -7,6 +7,7 @@
 
 #include "entity.h"
 #include "gui.h"
+#include "vector"
 
 enum class GameState
 {

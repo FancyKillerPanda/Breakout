@@ -2,6 +2,8 @@
 
 #include <SDL/SDL.h>
 
+#include "gui.h"
+
 struct Velocity
 {
 	int x = 0;
@@ -10,7 +12,7 @@ struct Velocity
 
 struct Entity
 {
-	SDL_Rect rect = {};
+	Texture texture = {};
 	SDL_Color colour = {};
 	Velocity velocity = {};
 };

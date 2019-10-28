@@ -56,6 +56,7 @@ bool gameInit(GameData& gameData)
 	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
 	
 	paddleReset(gameData.paddle);
+	gameData.ball.texture = createTexture(gameData.renderer, "res/whiteball.png");
 	ballReset(gameData.ball);
 
 	int brickX = SCREEN_WIDTH / 24;
@@ -64,7 +65,7 @@ bool gameInit(GameData& gameData)
 	for (Entity& brick : gameData.bricks)
 	{
 		brick.colour = SDL_Color { 255, 255, 255, 255 };
-		brick.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
+		brick.texture.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
 
 		brickX += BRICK_WIDTH + (SCREEN_WIDTH / 12);
 	}
