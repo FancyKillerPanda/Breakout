@@ -75,6 +75,60 @@ bool gameInit(GameData& gameData)
 	return true;
 }
 
+// NOTE(fkp): Returns true if success, false if games needs to exit
+// This function is for common events
+bool gameHandleEvents(GameData& gameData)
+{
+	while (SDL_PollEvent(&gameData.event))
+	{
+		switch (gameData.event.type)
+		{
+			case SDL_QUIT:
+			{
+				return false;
+			} break;
+
+			case SDL_KEYDOWN:
+			{
+				switch (gameData.event.key.keysym.sym)
+				{
+					case SDLK_ESCAPE:
+					{
+						return false;
+					} break;
+
+					case SDLK_f:
+					{
+						if (gameData.fullscreen)
+						{
+							SDL_SetWindowFullscreen(gameData.window, 0);
+						}
+						else
+						{
+							SDL_SetWindowFullscreen(gameData.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+						}
+						
+						gameData.fullscreen = !gameData.fullscreen;
+					} break;
+				}
+			} break;
+		}
+
+		switch (gameData.gameState)
+		{
+			case GameState::Gameplay:
+			{
+				if (!gameplayHandleEvents(gameData))
+				{
+					return false;
+				}
+			} break;
+		}
+	}
+
+	return true;
+}
+
 int main(int argc, char* argv[])
 {
 	GameData gameData = init();
@@ -103,11 +157,12 @@ int main(int argc, char* argv[])
 			frameCounter = 0;
 		}
 
+		gameData.running = gameHandleEvents(gameData);
+
 		switch (gameData.gameState)
 		{
 			case GameState::Gameplay: 
 			{
-				gameData.running = gameplayHandleEvents(gameData);
 				if (gameData.running) gameData.running = gameplayUpdate(gameData);
 				gameplayDraw(gameData);
 			} break;
