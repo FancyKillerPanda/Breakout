@@ -80,7 +80,7 @@ bool gameplayUpdate(GameData& gameData)
 
 	for (Brick& brick : gameData.bricks)
 	{
-		if (SDL_HasIntersection(&gameData.ball.texture.rect, &brick.texture.rect))
+		if (brick.numOfHitsLeft > 0 && SDL_HasIntersection(&gameData.ball.texture.rect, &brick.texture.rect))
 		{
 			// Moves back outside the rect
 			gameData.ball.texture.rect.x -= (int) (gameData.ball.velocity.x * gameData.deltaTime);
@@ -96,7 +96,7 @@ bool gameplayUpdate(GameData& gameData)
 
 	for (Brick& brick : gameData.bricks)
 	{
-		if (SDL_HasIntersection(&gameData.ball.texture.rect, &brick.texture.rect))
+		if (brick.numOfHitsLeft > 0 && SDL_HasIntersection(&gameData.ball.texture.rect, &brick.texture.rect))
 		{
 			// Moves back outside the rect
 			gameData.ball.texture.rect.y -= (int) (gameData.ball.velocity.y * gameData.deltaTime);
@@ -112,10 +112,10 @@ bool gameplayUpdate(GameData& gameData)
 	{	
 		brickHit->numOfHitsLeft -= 1;
 
+		// Destroys brick
 		if (brickHit->numOfHitsLeft == 0)
 		{
-			// TODO(fkp): Handle this properly
-			printf("Killed brick.");
+			destroyTexture(brickHit->texture);
 		}
 	}
 	
@@ -132,6 +132,11 @@ void gameplayDraw(GameData& gameData)
 
 	for (Brick& brick : gameData.bricks)
 	{
+		if (brick.numOfHitsLeft == 0)
+		{
+			continue;
+		}
+		
 		SDL_RenderCopy(gameData.renderer, brick.texture.texture, nullptr, &brick.texture.rect);
 	}
 
