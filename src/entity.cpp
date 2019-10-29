@@ -25,3 +25,27 @@ void paddleReset(SDL_Renderer* renderer, Paddle& paddle)
 	paddle.velocity.x = 0;
 	paddle.velocity.y = 0;
 }
+
+void bricksReset(GameData& gameData)
+{
+	for (Brick& brick : gameData.bricks)
+	{
+		if (brick.texture.texture)
+		{
+			destroyTexture(brick.texture);
+		}
+
+		brick = {};
+	}
+	
+	int brickX = SCREEN_WIDTH / 24;
+	int brickY = SCREEN_HEIGHT / 10;
+
+	for (Brick& brick : gameData.bricks)
+	{
+		brick.texture = createTexture(gameData.renderer, "res/whitebrick.png");
+		brick.texture.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
+
+		brickX += BRICK_WIDTH + (SCREEN_WIDTH / 12);
+	}
+}

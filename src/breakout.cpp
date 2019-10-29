@@ -60,17 +60,7 @@ bool gameInit(GameData& gameData)
 	
 	paddleReset(gameData.renderer, gameData.paddle);
 	ballReset(gameData.renderer, gameData.ball);
-
-	int brickX = SCREEN_WIDTH / 24;
-	int brickY = SCREEN_HEIGHT / 10;
-
-	for (Brick& brick : gameData.bricks)
-	{
-		brick.texture = createTexture(gameData.renderer, "res/whitebrick.png");
-		brick.texture.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
-
-		brickX += BRICK_WIDTH + (SCREEN_WIDTH / 12);
-	}
+	bricksReset(gameData);
 
 	return true;
 }

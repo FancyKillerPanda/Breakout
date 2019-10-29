@@ -4,6 +4,8 @@
 
 #include "gui.h"
 
+struct GameData;
+
 struct Velocity
 {
 	float x = 0.0f;
@@ -32,3 +34,4 @@ struct Brick
 
 void ballReset(SDL_Renderer* renderer, Ball& ball);
 void paddleReset(SDL_Renderer* renderer, Paddle& paddle);
+void bricksReset(GameData& gameData);

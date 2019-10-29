@@ -58,6 +58,7 @@ bool gameplayUpdate(GameData& gameData)
 		// TODO(fkp): Splash screen instead of just restarting ball
 		ballReset(gameData.renderer, gameData.ball);
 		paddleReset(gameData.renderer, gameData.paddle);
+		bricksReset(gameData);
 	}
 
 	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect) == SDL_TRUE)
@@ -110,6 +111,7 @@ bool gameplayUpdate(GameData& gameData)
 	// Removes one hit from brick
 	if (brickHit)
 	{	
+		// TODO(fkp): Change brick texture
 		brickHit->numOfHitsLeft -= 1;
 
 		// Destroys brick
