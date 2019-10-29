@@ -11,7 +11,7 @@ void ballReset(SDL_Renderer* renderer, Ball& ball)
 		ball.texture.texture = nullptr;
 	}
 
-	ball.texture = createTexture(renderer, "res/ball_white.png");
+	ball.texture = createTexture(renderer, "res/ball.png");
 	ball.texture.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
 	
 	ball.velocity.x = 0;
