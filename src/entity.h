@@ -38,4 +38,6 @@ void ballReset(SDL_Renderer* renderer, Ball& ball);
 bool ballUpdate(GameData& gameData, Ball& ball);
 
 void paddleReset(SDL_Renderer* renderer, Paddle& paddle);
+void paddleUpdate(GameData& gameData, Paddle& paddle);
+
 void bricksReset(GameData& gameData);

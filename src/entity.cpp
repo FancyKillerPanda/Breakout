@@ -66,6 +66,22 @@ void paddleReset(SDL_Renderer* renderer, Paddle& paddle)
 	paddle.velocity.y = 0;
 }
 
+void paddleUpdate(GameData& gameData, Paddle& paddle)
+{
+	// Left/right bounds checking for paddle
+	if (paddle.texture.rect.x < 0)
+	{
+		paddle.texture.rect.x = 0;
+	}
+
+	if (paddle.texture.rect.x + PADDLE_WIDTH > SCREEN_WIDTH)
+	{
+		paddle.texture.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
+	}
+
+	paddle.texture.rect.x += (int) (paddle.velocity.x * gameData.deltaTime);
+}
+
 void bricksReset(GameData& gameData)
 {
 	for (Brick& brick : gameData.bricks)

@@ -23,17 +23,6 @@ bool gameplayHandleEvents(GameData& gameData)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayUpdate(GameData& gameData)
 {
-	// Left/right bounds checking for paddle
-	if (gameData.paddle.texture.rect.x < 0)
-	{
-		gameData.paddle.texture.rect.x = 0;
-	}
-
-	if (gameData.paddle.texture.rect.x + PADDLE_WIDTH > SCREEN_WIDTH)
-	{
-		gameData.paddle.texture.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
-	}
-	
 	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect))
 	{
 		const float maxBallBounceAngle = 75;
@@ -45,12 +34,12 @@ bool gameplayUpdate(GameData& gameData)
 		gameData.ball.velocity.y = (float) -sin(ballAngle * PI / 180) * BALL_VELOCITY;
 	}
 
-	// Moves ball on x-axis and checks for collision
-	gameData.ball.texture.rect.x += (int) (gameData.ball.velocity.x * gameData.deltaTime);
-
 	// TODO(fkp): Can there be more than one brick hit?
 	// The brick that was hit
 	Brick* brickHit = nullptr;
+
+	// Moves ball on x-axis and checks for collision
+	gameData.ball.texture.rect.x += (int) (gameData.ball.velocity.x * gameData.deltaTime);
 
 	for (Brick& brick : gameData.bricks)
 	{
@@ -94,6 +83,8 @@ bool gameplayUpdate(GameData& gameData)
 		}
 	}
 
+	paddleUpdate(gameData, gameData.paddle);
+
 	if (!ballUpdate(gameData, gameData.ball))
 	{
 		// NOTE(fkp): Game over
@@ -102,8 +93,6 @@ bool gameplayUpdate(GameData& gameData)
 		paddleReset(gameData.renderer, gameData.paddle);
 		bricksReset(gameData);
 	}
-	
-	gameData.paddle.texture.rect.x += (int) (gameData.paddle.velocity.x * gameData.deltaTime);
 
 	return true;
 }
