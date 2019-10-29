@@ -32,9 +32,9 @@ struct GameData
 	GameState gameState = GameState::Gameplay;
 
 	// Entities data
-	Entity paddle = {};
-	Entity ball = {};
-	std::array<Entity, 4> bricks = {};
+	Paddle paddle = {};
+	Ball ball = {};
+	std::array<Brick, 4> bricks = {};
 
 	// Text data
 	Text fpsText = {};

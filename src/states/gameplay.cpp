@@ -5,8 +5,6 @@
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData)
 {
-	
-
 	gameData.paddle.velocity.x = 0;
 
 	if (gameData.keyboardState[SDL_SCANCODE_RIGHT])
@@ -76,7 +74,7 @@ bool gameplayUpdate(GameData& gameData)
 	// Moves ball on x-axis and checks for collision
 	gameData.ball.texture.rect.x += (int) (gameData.ball.velocity.x * gameData.deltaTime);
 
-	for (Entity& brick : gameData.bricks)
+	for (Brick& brick : gameData.bricks)
 	{
 		if (SDL_HasIntersection(&gameData.ball.texture.rect, &brick.texture.rect))
 		{
@@ -90,7 +88,7 @@ bool gameplayUpdate(GameData& gameData)
 	// Moves ball on y-axis and checks for collision
 	gameData.ball.texture.rect.y += (int) (gameData.ball.velocity.y * gameData.deltaTime);
 
-	for (Entity& brick : gameData.bricks)
+	for (Brick& brick : gameData.bricks)
 	{
 		if (SDL_HasIntersection(&gameData.ball.texture.rect, &brick.texture.rect))
 		{
@@ -112,7 +110,7 @@ void gameplayDraw(GameData& gameData)
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
 
-	for (Entity& brick : gameData.bricks)
+	for (Brick& brick : gameData.bricks)
 	{
 		SDL_RenderCopy(gameData.renderer, brick.texture.texture, nullptr, &brick.texture.rect);
 	}

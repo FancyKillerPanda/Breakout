@@ -64,10 +64,9 @@ bool gameInit(GameData& gameData)
 	int brickX = SCREEN_WIDTH / 24;
 	int brickY = SCREEN_HEIGHT / 10;
 
-	for (Entity& brick : gameData.bricks)
+	for (Brick& brick : gameData.bricks)
 	{
 		brick.texture = createTexture(gameData.renderer, "res/whitebrick.png");
-		brick.colour = SDL_Color { 255, 255, 255, 255 };
 		brick.texture.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
 
 		brickX += BRICK_WIDTH + (SCREEN_WIDTH / 12);

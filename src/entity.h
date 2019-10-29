@@ -10,12 +10,23 @@ struct Velocity
 	float y = 0.0f;
 };
 
-struct Entity
+struct Paddle
 {
 	Texture texture = {};
-	SDL_Color colour = {};
 	Velocity velocity = {};
 };
 
-void ballReset(SDL_Renderer* renderer, Entity& ball);
-void paddleReset(SDL_Renderer* renderer, Entity& paddle);
+struct Ball
+{
+	Texture texture = {};
+	Velocity velocity = {};
+};
+
+struct Brick
+{
+	Texture texture = {};
+	Velocity velocity = {};
+};
+
+void ballReset(SDL_Renderer* renderer, Ball& ball);
+void paddleReset(SDL_Renderer* renderer, Paddle& paddle);
