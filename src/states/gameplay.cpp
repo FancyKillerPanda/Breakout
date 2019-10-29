@@ -113,10 +113,6 @@ void gameplayDraw(GameData& gameData)
 	SDL_RenderClear(gameData.renderer);
 
 	SDL_Color colour;
-	
-	colour = gameData.paddle.colour;
-	SDL_SetRenderDrawColor(gameData.renderer, colour.r, colour.g, colour.b, colour.a);
-	SDL_RenderFillRect(gameData.renderer, &gameData.paddle.texture.rect);
 
 	for (Entity& brick : gameData.bricks)
 	{
@@ -126,6 +122,7 @@ void gameplayDraw(GameData& gameData)
 	}
 
 	SDL_RenderCopy(gameData.renderer, gameData.ball.texture.texture, nullptr, &gameData.ball.texture.rect);
+	SDL_RenderCopy(gameData.renderer, gameData.paddle.texture.texture, nullptr, &gameData.paddle.texture.rect);
 	SDL_RenderCopy(gameData.renderer, gameData.fpsText.texture, nullptr, &gameData.fpsText.rect);
 
 	SDL_RenderPresent(gameData.renderer);

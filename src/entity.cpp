@@ -24,6 +24,7 @@ void paddleReset(SDL_Renderer* renderer, Entity& paddle)
 {
 	paddle.colour = SDL_Colour { 255, 255, 255, 255 };
 	
+	paddle.texture = createTexture(renderer, "res/whitepaddle.png");
 	paddle.texture.rect = SDL_Rect { (SCREEN_WIDTH - PADDLE_WIDTH) / 2, (SCREEN_HEIGHT * 9 / 10) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT };
 	paddle.velocity.x = 0;
 	paddle.velocity.y = 0;
