@@ -112,13 +112,9 @@ void gameplayDraw(GameData& gameData)
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
 
-	SDL_Color colour;
-
 	for (Entity& brick : gameData.bricks)
 	{
-		colour = brick.colour;
-		SDL_SetRenderDrawColor(gameData.renderer, colour.r, colour.g, colour.b, colour.a);
-		SDL_RenderFillRect(gameData.renderer, &brick.texture.rect);
+		SDL_RenderCopy(gameData.renderer, brick.texture.texture, nullptr, &brick.texture.rect);
 	}
 
 	SDL_RenderCopy(gameData.renderer, gameData.ball.texture.texture, nullptr, &gameData.ball.texture.rect);

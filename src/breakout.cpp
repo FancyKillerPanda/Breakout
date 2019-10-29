@@ -66,6 +66,7 @@ bool gameInit(GameData& gameData)
 
 	for (Entity& brick : gameData.bricks)
 	{
+		brick.texture = createTexture(gameData.renderer, "res/whitebrick.png");
 		brick.colour = SDL_Color { 255, 255, 255, 255 };
 		brick.texture.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
 
