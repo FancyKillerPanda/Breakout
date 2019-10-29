@@ -123,6 +123,16 @@ bool gameplayUpdate(GameData& gameData)
 	
 	gameData.paddle.texture.rect.x += (int) (gameData.paddle.velocity.x * gameData.deltaTime);
 
+	// Ball rotation
+	if (gameData.ball.velocity.x >= 0.0f)
+	{
+		gameData.ball.rotationAngle += BALL_ROTATION_SPEED;
+	}
+	else
+	{
+		gameData.ball.rotationAngle -= BALL_ROTATION_SPEED;
+	}
+
 	return true;
 }
 
@@ -142,7 +152,7 @@ void gameplayDraw(GameData& gameData)
 		SDL_RenderCopy(gameData.renderer, brick.texture.texture, nullptr, &brick.texture.rect);
 	}
 
-	SDL_RenderCopy(gameData.renderer, gameData.ball.texture.texture, nullptr, &gameData.ball.texture.rect);
+	SDL_RenderCopyEx(gameData.renderer, gameData.ball.texture.texture, nullptr, &gameData.ball.texture.rect, (double) gameData.ball.rotationAngle, nullptr, SDL_FLIP_NONE);
 	SDL_RenderCopy(gameData.renderer, gameData.paddle.texture.texture, nullptr, &gameData.paddle.texture.rect);
 	SDL_RenderCopy(gameData.renderer, gameData.fpsText.texture, nullptr, &gameData.fpsText.rect);
 

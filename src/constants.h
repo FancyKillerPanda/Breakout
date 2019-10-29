@@ -11,7 +11,9 @@ constexpr float PADDLE_VELOCITY = SCREEN_WIDTH / 2.0f;
 
 constexpr int BALL_WIDTH = SCREEN_WIDTH / 50;
 constexpr int BALL_HEIGHT = BALL_WIDTH;
-constexpr float BALL_VELOCITY = SCREEN_WIDTH / 1.5f;
+// constexpr float BALL_VELOCITY = SCREEN_WIDTH / 1.5f;
+constexpr float BALL_VELOCITY = SCREEN_WIDTH / 2.0f;
+constexpr float BALL_ROTATION_SPEED = 3.0f;  // Degrees per frame
 
 constexpr int BRICK_WIDTH = SCREEN_WIDTH / 6;
 constexpr int BRICK_HEIGHT = SCREEN_HEIGHT / 15;

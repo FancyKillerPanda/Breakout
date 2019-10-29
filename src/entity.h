@@ -22,6 +22,8 @@ struct Ball
 {
 	Texture texture = {};
 	Velocity velocity = {};
+
+	float rotationAngle = 0.0f;
 };
 
 struct Brick
