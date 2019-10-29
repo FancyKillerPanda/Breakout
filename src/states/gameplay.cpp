@@ -34,34 +34,7 @@ bool gameplayUpdate(GameData& gameData)
 		gameData.paddle.texture.rect.x = SCREEN_WIDTH - PADDLE_WIDTH;
 	}
 	
-	// Ball Bouncing off side of window
-	if (gameData.ball.texture.rect.x < 0)
-	{
-		gameData.ball.texture.rect.x = 0;
-		gameData.ball.velocity.x *= -1;
-	}
-	else if (gameData.ball.texture.rect.x + BALL_WIDTH > SCREEN_WIDTH)
-	{
-		gameData.ball.texture.rect.x = SCREEN_WIDTH - BALL_WIDTH;
-		gameData.ball.velocity.x *= -1;
-	}
-	
-	if (gameData.ball.texture.rect.y < 0)
-	{
-		gameData.ball.texture.rect.y = 0;
-		gameData.ball.velocity.y *= -1;
-	}
-
-	if (gameData.ball.texture.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
-	{
-		// NOTE(fkp): Game over
-		// TODO(fkp): Splash screen instead of just restarting ball
-		ballReset(gameData.renderer, gameData.ball);
-		paddleReset(gameData.renderer, gameData.paddle);
-		bricksReset(gameData);
-	}
-
-	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect) == SDL_TRUE)
+	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect))
 	{
 		const float maxBallBounceAngle = 75;
 		float ballCenterX = gameData.ball.texture.rect.x + (BALL_WIDTH / 2.0f);
@@ -120,18 +93,17 @@ bool gameplayUpdate(GameData& gameData)
 			destroyTexture(brickHit->texture);
 		}
 	}
+
+	if (!ballUpdate(gameData, gameData.ball))
+	{
+		// NOTE(fkp): Game over
+		// TODO(fkp): Splash screen instead of just restarting ball
+		ballReset(gameData.renderer, gameData.ball);
+		paddleReset(gameData.renderer, gameData.paddle);
+		bricksReset(gameData);
+	}
 	
 	gameData.paddle.texture.rect.x += (int) (gameData.paddle.velocity.x * gameData.deltaTime);
-
-	// Ball rotation
-	if (gameData.ball.velocity.x >= 0.0f)
-	{
-		gameData.ball.rotationAngle += BALL_ROTATION_SPEED;
-	}
-	else
-	{
-		gameData.ball.rotationAngle -= BALL_ROTATION_SPEED;
-	}
 
 	return true;
 }

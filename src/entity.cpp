@@ -18,6 +18,46 @@ void ballReset(SDL_Renderer* renderer, Ball& ball)
 	ball.velocity.y = BALL_VELOCITY;
 }
 
+// NOTE(fkp): Returns false if game over
+bool ballUpdate(GameData& gameData, Ball& ball)
+{
+	// Ball bouncing off side of window
+	if (ball.texture.rect.x < 0)
+	{
+		ball.texture.rect.x = 0;
+		ball.velocity.x *= -1;
+	}
+	else if (ball.texture.rect.x + BALL_WIDTH > SCREEN_WIDTH)
+	{
+		ball.texture.rect.x = SCREEN_WIDTH - BALL_WIDTH;
+		ball.velocity.x *= -1;
+	}
+	
+	// Ball bouncing off top of window
+	if (ball.texture.rect.y < 0)
+	{
+		ball.texture.rect.y = 0;
+		ball.velocity.y *= -1;
+	}
+
+	if (ball.texture.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
+	{
+		return false;
+	}
+
+	// Ball rotation
+	if (ball.velocity.x >= 0.0f)
+	{
+		ball.rotationAngle += BALL_ROTATION_SPEED;
+	}
+	else
+	{
+		ball.rotationAngle -= BALL_ROTATION_SPEED;
+	}
+
+	return true;
+}
+
 void paddleReset(SDL_Renderer* renderer, Paddle& paddle)
 {
 	paddle.texture = createTexture(renderer, "res/paddle_white.png");
