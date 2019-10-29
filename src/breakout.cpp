@@ -97,7 +97,7 @@ bool gameHandleEvents(GameData& gameData)
 						return false;
 					} break;
 
-					case SDLK_f:
+					case SDLK_F11:
 					{
 						if (gameData.fullscreen)
 						{
