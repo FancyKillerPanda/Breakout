@@ -74,6 +74,10 @@ bool gameplayUpdate(GameData& gameData)
 	// Moves ball on x-axis and checks for collision
 	gameData.ball.texture.rect.x += (int) (gameData.ball.velocity.x * gameData.deltaTime);
 
+	// TODO(fkp): Can there be more than one brick hit?
+	// The brick that was hit
+	Brick* brickHit = nullptr;
+
 	for (Brick& brick : gameData.bricks)
 	{
 		if (SDL_HasIntersection(&gameData.ball.texture.rect, &brick.texture.rect))
@@ -82,6 +86,8 @@ bool gameplayUpdate(GameData& gameData)
 			gameData.ball.texture.rect.x -= (int) (gameData.ball.velocity.x * gameData.deltaTime);
 			// Switches x-axis direction
 			gameData.ball.velocity.x *= -1;
+
+			brickHit = &brick;
 		}
 	}
 
@@ -96,6 +102,20 @@ bool gameplayUpdate(GameData& gameData)
 			gameData.ball.texture.rect.y -= (int) (gameData.ball.velocity.y * gameData.deltaTime);
 			// Switches y-axis direction
 			gameData.ball.velocity.y *= -1;
+
+			brickHit = &brick;
+		}
+	}
+
+	// Removes one hit from brick
+	if (brickHit)
+	{	
+		brickHit->numOfHitsLeft -= 1;
+
+		if (brickHit->numOfHitsLeft == 0)
+		{
+			// TODO(fkp): Handle this properly
+			printf("Killed brick.");
 		}
 	}
 	

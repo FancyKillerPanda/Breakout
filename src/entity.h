@@ -26,6 +26,8 @@ struct Brick
 {
 	Texture texture = {};
 	Velocity velocity = {};
+
+	int numOfHitsLeft = 1;
 };
 
 void ballReset(SDL_Renderer* renderer, Ball& ball);
