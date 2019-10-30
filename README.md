@@ -9,7 +9,7 @@ A Breakout game.
 
 ### Gameplay
 - [WIP] Make Main Menu
-- [] Make Game Over Screen
+- [ ] Make Game Over Screen
 
 ### Entities
 - [x] Make Paddle
