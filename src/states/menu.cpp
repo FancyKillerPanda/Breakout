@@ -2,12 +2,7 @@
 
 #include "state.h"
 
-int initMenu(GameData& gameData)
-{
-    return 0;
-}
-
-int menuUpdate(GameData &gameData)
+int menuHandleEvents(GameData &gameData)
 {
     int x, y;
     switch(gameData.event.type)
