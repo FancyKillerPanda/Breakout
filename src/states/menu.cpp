@@ -7,7 +7,7 @@ int initMenu(GameData& gameData)
     return 0;
 }
 
-bool menuUpdate(GameData &gameData)
+int menuUpdate(GameData &gameData)
 {
     int x, y;
     switch(gameData.event.type)
@@ -38,8 +38,18 @@ bool menuUpdate(GameData &gameData)
                 }
             }
         } break;
+        case SDL_MOUSEBUTTONDOWN:
+        {
+            for (int a = 0; a < NUMMENU; a++)
+            {
+                if(gameData.selected[a])
+                {
+                    return a + 1;
+                }
+            }
+        }
     } 
-    return true;
+    return 0;
 }
 
 void menuDraw(GameData& gameData)

@@ -129,9 +129,17 @@ bool gameHandleEvents(GameData& gameData)
 			} break;
 			case GameState::MainMenu:
 			{
-				if (!menuUpdate(gameData))
+				switch(menuUpdate(gameData))
 				{
-					return false;
+					case 1:
+					{
+						gameData.gameState = GameState::Gameplay;
+					} break;
+					case 3:
+					{
+						return false;
+					} break;
+					
 				}
 			} break;
 		}
