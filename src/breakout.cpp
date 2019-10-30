@@ -61,6 +61,19 @@ bool gameInit(GameData& gameData)
 	paddleReset(gameData.renderer, gameData.paddle);
 	ballReset(gameData.renderer, gameData.ball);
 	bricksReset(gameData);
+	
+    char* labels[NUMMENU] = {"Start", "Settings", "Exit"};
+    int position[NUMMENU][2] = {{SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2}, 
+                                {SCREEN_WIDTH/2 , SCREEN_HEIGHT/2}, 
+                                {SCREEN_WIDTH/2 + 10, SCREEN_HEIGHT/2}};
+
+    for (int a = 0; a < NUMMENU; a++)
+    {
+        gameData.menus[a].text = labels[a];
+        gameData.menus[a].rect.x = position[a][0];
+        gameData.menus[a].rect.y = position[a][1];
+		updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.menus[a]);
+    }
 
 	return true;
 }
@@ -113,6 +126,13 @@ bool gameHandleEvents(GameData& gameData)
 					return false;
 				}
 			} break;
+			case GameState::MainMenu:
+			{
+				if (!menuUpdate(gameData))
+				{
+					return false;
+				}
+			} break;
 		}
 	}
 
@@ -156,6 +176,11 @@ int main(int argc, char* argv[])
 				if (gameData.running) gameData.running = gameplayUpdate(gameData);
 				gameplayDraw(gameData);
 			} break;
+			case GameState::MainMenu:
+			{
+				// if(gameData.running) gameData.running = menuUpdate(gameData);
+				menuDraw(gameData);
+			}
 		}
 	}
 	

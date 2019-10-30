@@ -11,6 +11,7 @@
 
 enum class GameState
 {
+	MainMenu,
 	Gameplay,
 };
 
@@ -29,7 +30,7 @@ struct GameData
 	const uint8_t* keyboardState = nullptr;
 
 	// TODO(lucky962): Start Screen
-	GameState gameState = GameState::Gameplay;
+	GameState gameState = GameState::MainMenu;
 
 	// Entities data
 	Paddle paddle = {};
@@ -38,6 +39,8 @@ struct GameData
 
 	// Text data
 	Text fpsText = {};
+	Text menus[NUMMENU] = {};
+	bool selected[NUMMENU] = {0, 0, 0};
 
 	// Textures
 };

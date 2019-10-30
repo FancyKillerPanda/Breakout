@@ -19,4 +19,6 @@ constexpr int BRICK_WIDTH = SCREEN_WIDTH / 6;
 constexpr int BRICK_HEIGHT = SCREEN_HEIGHT / 15;
 
 // Text properties
+const int NUMMENU = 3;
+const SDL_Color MENUCOLOURS[3] = {{255, 255, 255, 255}, {255, 0, 0, 255}, {192, 192, 192, 255}};
 constexpr char ARIAL_FONT_PATH[] = "res/arial.ttf";
