@@ -19,7 +19,7 @@ int menuHandleEvents(GameData &gameData)
                     {
                         gameData.selected[a] = 1;
                         gameData.menus[a].colour = MENUCOLOURS[1];
-		                updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.menus[a]);
+		                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
                     }
                 }
                 else
@@ -28,7 +28,7 @@ int menuHandleEvents(GameData &gameData)
                     {
                         gameData.selected[a] = 0;
                         gameData.menus[a].colour = MENUCOLOURS[0];
-		                updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.menus[a]);
+		                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
                     }
                 }
             }
