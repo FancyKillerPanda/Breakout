@@ -63,9 +63,9 @@ bool gameInit(GameData& gameData)
 	bricksReset(gameData);
 	
     char* labels[NUMMENU] = {"Start", "Settings", "Exit"};
-    int position[NUMMENU][2] = {{SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2}, 
-                                {SCREEN_WIDTH/2 , SCREEN_HEIGHT/2}, 
-                                {SCREEN_WIDTH/2 + 10, SCREEN_HEIGHT/2}};
+    int position[NUMMENU][2] = {{SCREEN_WIDTH/4, SCREEN_HEIGHT/8*7}, 
+                                {SCREEN_WIDTH/4*2, SCREEN_HEIGHT/8*7}, 
+                                {SCREEN_WIDTH/4*3, SCREEN_HEIGHT/8*7}};
 
     for (int a = 0; a < NUMMENU; a++)
     {
