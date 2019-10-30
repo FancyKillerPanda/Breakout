@@ -72,6 +72,7 @@ bool gameInit(GameData& gameData)
         gameData.menus[a].text = labels[a];
         gameData.menus[a].rect.x = position[a][0];
         gameData.menus[a].rect.y = position[a][1];
+		gameData.menus[a].colour = MENUCOLOURS[0];
 		updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.menus[a]);
     }
 
