@@ -15,8 +15,6 @@ struct Texture
 };
 
 Texture createTexture(SDL_Renderer* renderer, const char* filepath);
-void drawTexture(SDL_Renderer* renderer, Texture& texture);
-void drawTexture(SDL_Renderer* renderer, Texture& texture, double angle);
 void destroyTexture(Texture& texture);
 
 struct Text
@@ -33,4 +31,18 @@ struct Text
 
 void updateTextTexture(SDL_Renderer* renderer, Text& text);
 void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text);
-void drawText(SDL_Renderer* renderer, Text& text);
+
+inline void drawTexture(SDL_Renderer* renderer, Texture& texture)
+{
+	SDL_RenderCopy(renderer, texture.texture, nullptr, &texture.rect);
+}
+
+inline void drawTexture(SDL_Renderer* renderer, Texture& texture, double angle)
+{
+	SDL_RenderCopyEx(renderer, texture.texture, nullptr, &texture.rect, angle, nullptr, SDL_FLIP_NONE);
+}
+
+inline void drawText(SDL_Renderer* renderer, Text& text)
+{
+	SDL_RenderCopy(renderer, text.texture, nullptr, &text.rect);
+}

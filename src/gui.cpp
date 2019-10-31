@@ -22,16 +22,6 @@ Texture createTexture(SDL_Renderer* renderer, const char* filepath)
 	return result;
 }
 
-void drawTexture(SDL_Renderer* renderer, Texture& texture)
-{
-	SDL_RenderCopy(renderer, texture.texture, nullptr, &texture.rect);
-}
-
-void drawTexture(SDL_Renderer* renderer, Texture& texture, double angle)
-{
-	SDL_RenderCopyEx(renderer, texture.texture, nullptr, &texture.rect, angle, nullptr, SDL_FLIP_NONE);
-}
-
 // NOTE(fkp): Do not need to call at the very end of the program
 // Only necessary to call if textures will be created/destroyed
 // multiple times during a program.
@@ -97,9 +87,4 @@ void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text)
 	}
 
 	updateTextTexture(renderer, text);
-}
-
-void drawText(SDL_Renderer* renderer, Text& text)
-{
-	SDL_RenderCopy(renderer, text.texture, nullptr, &text.rect);
 }
