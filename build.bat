@@ -4,10 +4,10 @@ rem TODO: Switch between x86 and x64
 
 set depsDir=P:\Breakout\dependencies
 
-set compilerFlags=/nologo /MT /GR- /Gm- /EHa- /Od /Oi /FC /Zi /WX /W4 /wd4100 /IP:\Breakout\src /I%depsDir%\sdl2\include\
+set compilerFlags=/nologo /Fe:breakout.exe /Fo:breakout.obj /MT /GR- /Gm- /EHa- /Od /Oi /FC /Zi /WX /W4 /wd4100 /IP:\Breakout\src /I%depsDir%\sdl2\include\
 set linkerFlags=/opt:ref /SUBSYSTEM:console /LIBPATH:%depsDir%\sdl2\lib\ sdl2.lib sdl2main.lib sdl2_image.lib sdl2_ttf.lib sdl2_mixer.lib
 
-set files=..\src\breakout.cpp ..\src\entity.cpp ..\src\gui.cpp ..\src\states\gameplay.cpp ..\src\states\menu.cpp
+set files=..\src\main.cpp
 
 WHERE cl.exe >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
