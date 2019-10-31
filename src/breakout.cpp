@@ -62,6 +62,7 @@ bool gameInit(GameData& gameData)
 	ballReset(gameData.renderer, gameData.ball);
 	bricksReset(gameData);
 	
+	// Initialises Menu
 	initMenu(gameData);
 
 	return true;
