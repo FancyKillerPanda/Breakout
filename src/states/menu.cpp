@@ -20,7 +20,7 @@ void initMenu(GameData& gameData)
     }
 }
 
-int menuHandleEvents(GameData &gameData)
+int menuHandleEvents(GameData& gameData)
 {
     int x, y;
     switch(gameData.event.type)
