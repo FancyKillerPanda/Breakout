@@ -8,8 +8,9 @@ A Breakout game.
 - [ ] Resolution scaling with text and objects
 
 ### Gameplay
-- [WIP] Make Main Menu
+- [x] Make Main Menu
 - [ ] Make Game Over Screen
+- [ ] Make Pause Screen
 
 ### Entities
 - [x] Make Paddle
