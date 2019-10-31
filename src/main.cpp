@@ -45,7 +45,6 @@ int main(int argc, char* argv[])
 			} break;
 			case GameState::MainMenu:
 			{
-				// if(gameData.running) gameData.running = menuUpdate(gameData);
 				menuDraw(gameData);
 			} break;
 		}
