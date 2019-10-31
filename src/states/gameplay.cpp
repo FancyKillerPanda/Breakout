@@ -134,5 +134,11 @@ void gameplayDraw(GameData& gameData)
 	SDL_RenderCopy(gameData.renderer, gameData.paddle.texture.texture, nullptr, &gameData.paddle.texture.rect);
 	SDL_RenderCopy(gameData.renderer, gameData.fpsText.texture, nullptr, &gameData.fpsText.rect);
 
+	// Paused text
+	if (gameData.paused)
+	{
+		SDL_RenderCopy(gameData.renderer, gameData.pausedText.texture, nullptr, &gameData.pausedText.rect);
+	}
+
 	SDL_RenderPresent(gameData.renderer);
 }

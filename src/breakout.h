@@ -40,8 +40,7 @@ struct GameData
 
 	// Text data
 	Text fpsText = {};
+	Text pausedText = {};
 	Text menus[NUM_ITEMS_IN_MENU] = {};
 	bool selected[NUM_ITEMS_IN_MENU] = {0, 0, 0};
-
-	// Textures
 };
