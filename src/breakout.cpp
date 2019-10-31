@@ -115,15 +115,17 @@ bool gameHandleEvents(GameData& gameData)
 					return false;
 				}
 			} break;
+			
 			case GameState::MainMenu:
 			{
 				switch(menuHandleEvents(gameData))
 				{
-					case 1:
+					case MenuButtonSelected::Start:
 					{
 						gameData.gameState = GameState::Gameplay;
 					} break;
-					case 3:
+
+					case MenuButtonSelected::Exit:
 					{
 						return false;
 					} break;
