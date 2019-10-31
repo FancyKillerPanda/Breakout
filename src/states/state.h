@@ -2,6 +2,8 @@
 
 #include "breakout.h"
 
+void initMenu(GameData& gameData);
+
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData);
 
