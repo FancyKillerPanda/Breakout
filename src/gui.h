@@ -33,3 +33,4 @@ struct Text
 
 void updateTextTexture(SDL_Renderer* renderer, Text& text);
 void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text);
+void drawText(SDL_Renderer* renderer, Text& text);

@@ -98,3 +98,8 @@ void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text)
 
 	updateTextTexture(renderer, text);
 }
+
+void drawText(SDL_Renderer* renderer, Text& text)
+{
+	SDL_RenderCopy(renderer, text.texture, nullptr, &text.rect);
+}

@@ -132,7 +132,7 @@ void gameplayDraw(GameData& gameData)
 
 	drawTexture(gameData.renderer, gameData.ball.texture, (double) gameData.ball.rotationAngle);
 	drawTexture(gameData.renderer, gameData.paddle.texture);
-	SDL_RenderCopy(gameData.renderer, gameData.fpsText.texture, nullptr, &gameData.fpsText.rect);
+	drawText(gameData.renderer, gameData.fpsText);
 
 	// Paused text
 	if (gameData.paused)
@@ -142,7 +142,7 @@ void gameplayDraw(GameData& gameData)
 		SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 170);
 		SDL_RenderFillRect(gameData.renderer, &dimRect);
 		
-		SDL_RenderCopy(gameData.renderer, gameData.pausedText.texture, nullptr, &gameData.pausedText.rect);
+		drawText(gameData.renderer, gameData.pausedText);
 
 	}
 

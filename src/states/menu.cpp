@@ -74,7 +74,7 @@ void menuDraw(GameData& gameData)
 
     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
     {
-        SDL_RenderCopy(gameData.renderer, gameData.menus[a].texture, nullptr, &gameData.menus[a].rect);
+        drawText(gameData.renderer, gameData.menus[a]);
     }
 
     SDL_RenderPresent(gameData.renderer);
