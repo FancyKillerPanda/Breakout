@@ -137,6 +137,11 @@ void gameplayDraw(GameData& gameData)
 	// Paused text
 	if (gameData.paused)
 	{
+		// Paused dim
+		SDL_Rect dimRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+		SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 170);
+		SDL_RenderFillRect(gameData.renderer, &dimRect);
+		
 		SDL_RenderCopy(gameData.renderer, gameData.pausedText.texture, nullptr, &gameData.pausedText.rect);
 	}
 

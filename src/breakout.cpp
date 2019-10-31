@@ -45,6 +45,9 @@ GameData init()
 	// Sets the logical size that will be used for the game
 	SDL_RenderSetLogicalSize(result.renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	// Sets the blend mode
+	SDL_SetRenderDrawBlendMode(result.renderer, SDL_BLENDMODE_BLEND);
+
 	return result;
 }
 
