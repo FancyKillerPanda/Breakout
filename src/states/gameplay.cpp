@@ -127,11 +127,11 @@ void gameplayDraw(GameData& gameData)
 			continue;
 		}
 		
-		SDL_RenderCopy(gameData.renderer, brick.texture.texture, nullptr, &brick.texture.rect);
+		drawTexture(gameData.renderer, brick.texture);
 	}
 
-	SDL_RenderCopyEx(gameData.renderer, gameData.ball.texture.texture, nullptr, &gameData.ball.texture.rect, (double) gameData.ball.rotationAngle, nullptr, SDL_FLIP_NONE);
-	SDL_RenderCopy(gameData.renderer, gameData.paddle.texture.texture, nullptr, &gameData.paddle.texture.rect);
+	drawTexture(gameData.renderer, gameData.ball.texture, (double) gameData.ball.rotationAngle);
+	drawTexture(gameData.renderer, gameData.paddle.texture);
 	SDL_RenderCopy(gameData.renderer, gameData.fpsText.texture, nullptr, &gameData.fpsText.rect);
 
 	// Paused text
@@ -143,6 +143,7 @@ void gameplayDraw(GameData& gameData)
 		SDL_RenderFillRect(gameData.renderer, &dimRect);
 		
 		SDL_RenderCopy(gameData.renderer, gameData.pausedText.texture, nullptr, &gameData.pausedText.rect);
+
 	}
 
 	SDL_RenderPresent(gameData.renderer);

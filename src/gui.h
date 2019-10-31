@@ -15,6 +15,8 @@ struct Texture
 };
 
 Texture createTexture(SDL_Renderer* renderer, const char* filepath);
+void drawTexture(SDL_Renderer* renderer, Texture& texture);
+void drawTexture(SDL_Renderer* renderer, Texture& texture, double angle);
 void destroyTexture(Texture& texture);
 
 struct Text
