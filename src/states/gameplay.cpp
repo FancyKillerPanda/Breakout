@@ -5,6 +5,18 @@
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData)
 {
+	// Toggles paused
+	if (gameData.event.type == SDL_KEYDOWN && gameData.event.key.keysym.sym == SDLK_p)
+	{
+		gameData.paused = !gameData.paused;
+	}
+
+	// Stops the rest of the function if paused
+	if (gameData.paused)
+	{
+		return true;
+	}
+
 	gameData.paddle.velocity.x = 0;
 
 	if (gameData.keyboardState[SDL_SCANCODE_RIGHT])
@@ -23,6 +35,11 @@ bool gameplayHandleEvents(GameData& gameData)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayUpdate(GameData& gameData)
 {
+	if (gameData.paused)
+	{
+		return true;
+	}
+	
 	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect))
 	{
 		const float maxBallBounceAngle = 75;
