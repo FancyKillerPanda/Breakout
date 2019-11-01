@@ -65,9 +65,10 @@ bool gameInit(GameData& gameData)
 	initMenu(gameData);
 
 	gameData.GameOverText.text = "Game Over";
-	gameData.GameOverText.rect.x = SCREEN_WIDTH * 1 / 2;
-	gameData.GameOverText.rect.y = SCREEN_WIDTH * 1 / 2;
+	gameData.GameOverText.size = 50;
 	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.GameOverText);
+	gameData.GameOverText.rect.x = SCREEN_WIDTH * 1 / 2 - gameData.GameOverText.rect.w / 2;
+	gameData.GameOverText.rect.y = SCREEN_HEIGHT * 1 / 2 - gameData.GameOverText.rect.h / 2;
 
 	return true;
 }

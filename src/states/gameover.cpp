@@ -13,7 +13,8 @@ void gameoverDraw(GameData& gameData)
     {
         destroyTexture(brick.texture);
     }
-    
+
+	SDL_RenderCopy(gameData.renderer, gameData.GameOverText.texture, nullptr, &gameData.GameOverText.rect);
 	SDL_RenderPresent(gameData.renderer);
 }
 
