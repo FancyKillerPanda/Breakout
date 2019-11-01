@@ -5,10 +5,20 @@
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData)
 {
-	// Toggles paused
-	if (gameData.event.type == SDL_KEYDOWN && gameData.event.key.keysym.sym == SDLK_p)
+	switch (gameData.event.type)
 	{
-		gameData.paused = !gameData.paused;
+		case SDL_KEYDOWN:
+		{
+			switch (gameData.event.key.keysym.sym)
+			{
+				// Toggles paused
+				case SDLK_ESCAPE:
+				case SDLK_p:
+				{
+					gameData.paused = !gameData.paused;
+				} break;
+			}
+		} break;
 	}
 
 	// Stops the rest of the function if paused

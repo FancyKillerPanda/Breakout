@@ -96,7 +96,10 @@ bool gameHandleEvents(GameData& gameData)
 				{
 					case SDLK_ESCAPE:
 					{
-						return false;
+						if (gameData.gameState != GameState::Gameplay)
+						{
+							return false;
+						}
 					} break;
 
 					case SDLK_F11:
