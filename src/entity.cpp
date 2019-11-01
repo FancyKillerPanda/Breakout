@@ -94,11 +94,11 @@ void bricksReset(GameData& gameData)
 		brick = {};
 	}
 
-	for (int brickX = 0; brickX < 10; brickX++)
+	for (int brickX = 0; brickX < NUM_BRICKS_X_AXIS; brickX++)
 	{
-		for (int brickY = 0; brickY < 3; brickY++)
+		for (int brickY = 0; brickY < NUM_BRICKS_Y_AXIS; brickY++)
 		{
-			Brick& brick = gameData.bricks[brickY * 10 + brickX];
+			Brick& brick = gameData.bricks[brickY * NUM_BRICKS_X_AXIS + brickX];
 
 			brick.texture = createTexture(gameData.renderer, "res/brick_white.png");
 			brick.texture.rect = { brickX * BRICK_WIDTH, (brickY * BRICK_HEIGHT) + BRICK_Y_OFFSET, BRICK_WIDTH, BRICK_HEIGHT };

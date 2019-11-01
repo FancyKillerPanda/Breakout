@@ -17,6 +17,8 @@ constexpr float BALL_ROTATION_SPEED = 3.0f;  // Degrees per frame
 constexpr int BRICK_WIDTH = SCREEN_WIDTH / 10;
 constexpr int BRICK_HEIGHT = SCREEN_HEIGHT / 15;
 constexpr int BRICK_Y_OFFSET = SCREEN_HEIGHT / 15;
+constexpr int NUM_BRICKS_X_AXIS = 10;
+constexpr int NUM_BRICKS_Y_AXIS = 3;
 
 // Text properties
 const int NUM_ITEMS_IN_MENU = 3;

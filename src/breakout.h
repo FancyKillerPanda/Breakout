@@ -1,13 +1,14 @@
 #pragma once
 
 #include <array>
+#include <vector>
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
 #include "entity.h"
 #include "gui.h"
-#include "vector"
+#include "constants.h"
 
 enum class GameState
 {
@@ -36,7 +37,7 @@ struct GameData
 	// Entities data
 	Paddle paddle = {};
 	Ball ball = {};
-	std::array<Brick, 10 * 3> bricks = {};
+	std::array<Brick, NUM_BRICKS_X_AXIS * NUM_BRICKS_Y_AXIS> bricks = {};
 
 	// Text data
 	Text fpsText = {};
