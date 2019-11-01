@@ -62,6 +62,17 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 }
             }
         }
+
+        case SDL_KEYDOWN:
+        {
+            switch (gameData.event.key.keysym.sym)
+            {
+                case SDLK_RETURN:
+                {
+                    return MenuButtonSelected::Start;
+                } break;
+            }
+        } break;
     }
 
     return MenuButtonSelected::None;
