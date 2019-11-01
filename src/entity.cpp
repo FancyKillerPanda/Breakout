@@ -100,7 +100,33 @@ void bricksReset(GameData& gameData)
 		{
 			Brick& brick = gameData.bricks[brickY * NUM_BRICKS_X_AXIS + brickX];
 
-			brick.texture = createTexture(gameData.renderer, "res/brick_white.png");
+			// TODO(fkp): Do we need to store the colour in Brick?
+			const char* brickTexturePath = "res/brick_white.png";
+
+			switch (brickY)
+			{
+				case 0:
+				{
+					brickTexturePath = "res/brick_red.png";
+				} break;
+
+				case 1:
+				{
+					brickTexturePath = "res/brick_green.png";
+				} break;
+
+				case 2:
+				{
+					brickTexturePath = "res/brick_blue.png";
+				} break;
+				
+				default:
+				{
+					printf("Brick texture not in rows.\n");
+				} break;
+			}
+
+			brick.texture = createTexture(gameData.renderer, brickTexturePath);
 			brick.texture.rect = { brickX * BRICK_WIDTH, (brickY * BRICK_HEIGHT) + BRICK_Y_OFFSET, BRICK_WIDTH, BRICK_HEIGHT };
 		}
 	}
