@@ -36,7 +36,7 @@ struct GameData
 	// Entities data
 	Paddle paddle = {};
 	Ball ball = {};
-	std::array<Brick, 4> bricks = {};
+	std::array<Brick, 10 * 3> bricks = {};
 
 	// Text data
 	Text fpsText = {};

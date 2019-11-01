@@ -93,15 +93,15 @@ void bricksReset(GameData& gameData)
 
 		brick = {};
 	}
-	
-	int brickX = SCREEN_WIDTH / 24;
-	int brickY = SCREEN_HEIGHT / 10;
 
-	for (Brick& brick : gameData.bricks)
+	for (int brickX = 0; brickX < 10; brickX++)
 	{
-		brick.texture = createTexture(gameData.renderer, "res/brick_white.png");
-		brick.texture.rect = { brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT };
+		for (int brickY = 0; brickY < 3; brickY++)
+		{
+			Brick& brick = gameData.bricks[brickY * 10 + brickX];
 
-		brickX += BRICK_WIDTH + (SCREEN_WIDTH / 12);
+			brick.texture = createTexture(gameData.renderer, "res/brick_white.png");
+			brick.texture.rect = { brickX * BRICK_WIDTH, (brickY * BRICK_HEIGHT) + BRICK_Y_OFFSET, BRICK_WIDTH, BRICK_HEIGHT };
+		}
 	}
 }
