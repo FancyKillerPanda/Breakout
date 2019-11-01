@@ -89,9 +89,10 @@ bool gameplayUpdate(GameData& gameData)
 	{
 		// NOTE(fkp): Game over
 		// TODO(fkp): Splash screen instead of just restarting ball
-		ballReset(gameData.renderer, gameData.ball);
-		paddleReset(gameData.renderer, gameData.paddle);
-		bricksReset(gameData);
+		// ballReset(gameData.renderer, gameData.ball);
+		// paddleReset(gameData.renderer, gameData.paddle);
+		// bricksReset(gameData);
+		gameData.gameState = GameState::GameOver;
 	}
 
 	return true;

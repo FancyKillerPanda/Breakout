@@ -22,3 +22,6 @@ void initMenu(GameData& gameData);
 MenuButtonSelected menuHandleEvents(GameData& gameData);
 // Draws menu
 void menuDraw(GameData& gameData);
+
+// Draws the gameover state
+void gameoverDraw(GameData& gameData);

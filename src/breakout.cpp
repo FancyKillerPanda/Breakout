@@ -64,6 +64,11 @@ bool gameInit(GameData& gameData)
 	// Initialises Menu
 	initMenu(gameData);
 
+	gameData.GameOverText.text = "Game Over";
+	gameData.GameOverText.rect.x = SCREEN_WIDTH * 1 / 2;
+	gameData.GameOverText.rect.y = SCREEN_WIDTH * 1 / 2;
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.GameOverText);
+
 	return true;
 }
 
@@ -132,6 +137,11 @@ bool gameHandleEvents(GameData& gameData)
 					
 				}
 			} break;
+
+			case GameState::GameOver:
+			{
+				menuHandleEvents(gameData);
+			}
 		}
 	}
 

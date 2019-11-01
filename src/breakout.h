@@ -13,6 +13,7 @@ enum class GameState
 {
 	MainMenu,
 	Gameplay,
+	GameOver,
 };
 
 struct GameData
@@ -39,6 +40,7 @@ struct GameData
 
 	// Text data
 	Text fpsText = {};
+	Text GameOverText = {};
 	Text menus[NUM_ITEMS_IN_MENU] = {};
 	bool selected[NUM_ITEMS_IN_MENU] = {0, 0, 0};
 
