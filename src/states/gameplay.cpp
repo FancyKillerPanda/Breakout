@@ -13,6 +13,15 @@ bool gameplayHandleEvents(GameData& gameData)
 			{
 				// Toggles paused
 				case SDLK_ESCAPE:
+				{
+					if (gameData.paused)
+					{
+						return false;
+					}
+
+					gameData.paused = true;
+				} break;
+				
 				case SDLK_p:
 				{
 					gameData.paused = !gameData.paused;
