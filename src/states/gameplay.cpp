@@ -17,6 +17,14 @@ bool gameplayHandleEvents(GameData& gameData)
 				{
 					gameData.paused = !gameData.paused;
 				} break;
+
+				case SDLK_RETURN:
+				{
+					if (gameData.paused)
+					{
+						gameData.paused = false;
+					}
+				} break;
 			}
 		} break;
 	}
