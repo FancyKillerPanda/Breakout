@@ -27,6 +27,9 @@ constexpr char ARIAL_FONT_PATH[] = "res/fonts/arial.ttf";
 constexpr char BAD_SIGNAL_FONT_PATH[] = "res/fonts/Bad-Signal.ttf";
 
 // Menu properties
+constexpr int MENU_CUSTOMISE_BALL_TEXT_X = SCREEN_WIDTH / 4;
+constexpr int MENU_CUSTOMISE_BALL_TEXT_CENTER_Y = SCREEN_HEIGHT / 3;
+
 constexpr int MENU_CUSTOMISE_BALL_IN_VIEW_WIDTH = 75;
 constexpr int MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH = 40;
 constexpr int MENU_CUSTOMISE_BALL_PREV_CENTER_X = SCREEN_WIDTH * 10 / 18;

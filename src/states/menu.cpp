@@ -25,6 +25,13 @@ void initMenu(GameData& gameData)
     }
 
     // Customise page init
+    gameData.menuData.ballsText.colour = MENU_COLOURS[0];
+    gameData.menuData.ballsText.text = "Ball:"; // TODO(fkp): Font does not render colon on the end
+    gameData.menuData.ballsText.size = 30; // TODO(fkp): Extract font size into constant
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.ballsText);
+    gameData.menuData.ballsText.rect.x = MENU_CUSTOMISE_BALL_TEXT_X;
+    gameData.menuData.ballsText.rect.y = MENU_CUSTOMISE_BALL_TEXT_CENTER_Y - gameData.menuData.ballsText.rect.h / 2;
+    
     ballReset(gameData.renderer, gameData.menuData.balls[0], "res/balls/default_ball.png");
     ballReset(gameData.renderer, gameData.menuData.balls[1], "res/balls/volleyball.png");
     ballReset(gameData.renderer, gameData.menuData.balls[2], "res/balls/basketball.png");
@@ -144,6 +151,8 @@ void menuDraw(GameData& gameData)
 
         case MenuState::Customise:
         {
+            drawText(gameData.renderer, gameData.menuData.ballsText);
+            
             for (Ball& ball : menuData.balls)
             {
                 if (ball.visible)
