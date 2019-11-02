@@ -4,10 +4,12 @@
 
 void initMenu(GameData& gameData)
 {
-    char* labels[NUM_ITEMS_IN_MENU] = {"Start", "Settings", "Exit"};
-    int position[NUM_ITEMS_IN_MENU][2] = {{SCREEN_WIDTH/4, SCREEN_HEIGHT/8*7}, 
-                                {SCREEN_WIDTH/4*2, SCREEN_HEIGHT/8*7}, 
-                                {SCREEN_WIDTH/4*3, SCREEN_HEIGHT/8*7}};
+    char* labels[NUM_ITEMS_IN_MENU] = { "Start", "Settings", "Exit" };
+    int position[NUM_ITEMS_IN_MENU][2] = {
+        { SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
+        { SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 8 * 7 }, 
+        { SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 8 * 7 }
+    };
 
     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
     {
@@ -15,23 +17,22 @@ void initMenu(GameData& gameData)
 		gameData.menus[a].size = 30;
 		gameData.menus[a].colour = MENU_COLOURS[0];
 		updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
-        gameData.menus[a].rect.x = position[a][0] - gameData.menus[a].rect.w/2;
-        gameData.menus[a].rect.y = position[a][1] - gameData.menus[a].rect.h/2;
+        gameData.menus[a].rect.x = position[a][0] - gameData.menus[a].rect.w / 2;
+        gameData.menus[a].rect.y = position[a][1] - gameData.menus[a].rect.h / 2;
     }
 }
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
 {
-    int x, y;
     switch(gameData.event.type)
     {
         case SDL_MOUSEMOTION:
         {
-            x = gameData.event.motion.x;
-            y = gameData.event.motion.y;
+            SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
+            
             for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
             {
-                if(x >= gameData.menus[a].rect.x && x <= gameData.menus[a].rect.x + gameData.menus[a].rect.w && y >= gameData.menus[a].rect.y && y <= gameData.menus[a].rect.y + gameData.menus[a].rect.h)
+                if (SDL_PointInRect(&mousePos, &gameData.menus[a].rect))
                 {
                     if(!gameData.selected[a])
                     {
@@ -61,7 +62,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     return (MenuButtonSelected) (a + 1);
                 }
             }
-        }
+        } break;
 
         case SDL_KEYDOWN:
         {
