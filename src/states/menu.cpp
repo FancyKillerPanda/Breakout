@@ -118,22 +118,23 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
         {
             switch(gameData.event.type)
             {
-                case SDL_KEYDOWN:
+                case SDL_MOUSEBUTTONDOWN:
                 {
-                    // TODO(fkp): Change the keys for this later
-                    if (gameData.event.key.keysym.sym == SDLK_RIGHT)
-                    {
-                        if (menuData.ballSelectedIndex < menuData.balls.size() - 1)
-                        {
-                            menuData.ballSelectedIndex += 1;
-                            updateSelectedBall(gameData);
-                        }
-                    }
-                    else if (gameData.event.key.keysym.sym == SDLK_LEFT)
+                    SDL_Point mousePos = { gameData.event.button.x, gameData.event.button.y };
+
+                    if (SDL_PointInRect(&mousePos, &menuData.ballLeftArrow.rect))
                     {
                         if (menuData.ballSelectedIndex > 0)
                         {
                             menuData.ballSelectedIndex -= 1;
+                            updateSelectedBall(gameData);
+                        }
+                    }
+                    else if (SDL_PointInRect(&mousePos, &menuData.ballRightArrow.rect))
+                    {
+                        if (menuData.ballSelectedIndex < menuData.balls.size() - 1)
+                        {
+                            menuData.ballSelectedIndex += 1;
                             updateSelectedBall(gameData);
                         }
                     }
