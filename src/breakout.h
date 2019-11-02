@@ -39,7 +39,7 @@ struct MenuData
 	// Ball customisation
 	Text ballsText = {};
 	int ballSelectedIndex = 0;
-	std::array<Ball, 3> balls = {};
+	std::array<Ball, MENU_CUSTOMISE_NUMBER_OF_BALLS> balls = {};
 };
 
 struct GameData

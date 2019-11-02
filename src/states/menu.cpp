@@ -44,7 +44,8 @@ void initMenu(GameData& gameData)
     
     ballReset(gameData.renderer, menuData.balls[0], "res/balls/default_ball.png");
     ballReset(gameData.renderer, menuData.balls[1], "res/balls/volleyball.png");
-    ballReset(gameData.renderer, menuData.balls[2], "res/balls/basketball.png");
+    ballReset(gameData.renderer, menuData.balls[2], "res/balls/tennisball.png");
+    ballReset(gameData.renderer, menuData.balls[3], "res/balls/basketball.png");
 
     updateSelectedBall(gameData);
 }
@@ -238,7 +239,7 @@ void menuDraw(GameData& gameData)
 
 void updateSelectedBall(GameData& gameData)
 {
-    std::array<Ball, 3Ui64>& balls = gameData.menuData.balls;
+    std::array<Ball, MENU_CUSTOMISE_NUMBER_OF_BALLS>& balls = gameData.menuData.balls;
     
     for (int i = 0; i < balls.size(); i++)
     {
