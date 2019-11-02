@@ -6,6 +6,9 @@ void initMenu(GameData& gameData)
 {
     MenuData& menuData = gameData.menuData;
     
+    // Highlighting texture
+    menuData.circleHighlight = createTexture(gameData.renderer, "res/circle_highlight.png");
+    
     // Home page init
     char* labels[NUM_ITEMS_IN_MENU] = { "Start", "Settings", "Exit" };
     int position[NUM_ITEMS_IN_MENU][2] = {
@@ -178,17 +181,17 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 {
                     if (menuData.ballLeftArrowSelected)
                     {
-                        if (menuData.ballSelectedIndex > 0)
+                        if (menuData.ballInViewIndex > 0)
                         {
-                            menuData.ballSelectedIndex -= 1;
+                            menuData.ballInViewIndex -= 1;
                             updateSelectedBall(gameData);
                         }
                     }
                     else if (menuData.ballRightArrowSelected)
                     {
-                        if (menuData.ballSelectedIndex < menuData.balls.size() - 1)
+                        if (menuData.ballInViewIndex < menuData.balls.size() - 1)
                         {
-                            menuData.ballSelectedIndex += 1;
+                            menuData.ballInViewIndex += 1;
                             updateSelectedBall(gameData);
                         }
                     }
@@ -224,10 +227,25 @@ void menuDraw(GameData& gameData)
             drawTexture(gameData.renderer, menuData.ballLeftArrow);
             drawTexture(gameData.renderer, menuData.ballRightArrow, 0.0, SDL_FLIP_HORIZONTAL);
             
-            for (Ball& ball : menuData.balls)
+            for (int i = 0; i < menuData.balls.size(); i++)
             {
+                Ball& ball = menuData.balls[i];
+                
                 if (ball.visible)
                 {
+                    // Should be highlighted
+                    if (i == menuData.ballCurrentlySelectedIndex)
+                    {
+                        // NOTE(fkp): Will have 5px border around ball
+                        int borderSize = 8;
+                        menuData.circleHighlight.rect.x = ball.texture.rect.x - borderSize;
+                        menuData.circleHighlight.rect.y = ball.texture.rect.y - borderSize;
+                        menuData.circleHighlight.rect.w = ball.texture.rect.w + (borderSize * 2);
+                        menuData.circleHighlight.rect.h = ball.texture.rect.h + (borderSize * 2);
+
+                        drawTexture(gameData.renderer, menuData.circleHighlight);
+                    }
+                    
                     drawTexture(gameData.renderer, ball.texture);
                 }
             }
@@ -244,7 +262,7 @@ void updateSelectedBall(GameData& gameData)
     for (int i = 0; i < balls.size(); i++)
     {
         // The previous ball
-        if (i == gameData.menuData.ballSelectedIndex - 1)
+        if (i == gameData.menuData.ballInViewIndex - 1)
         {
             balls[i].visible = true;
 
@@ -253,7 +271,7 @@ void updateSelectedBall(GameData& gameData)
             balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - (balls[i].texture.rect.h / 2);
         }
         // The selected ball
-        else if (i == gameData.menuData.ballSelectedIndex)
+        else if (i == gameData.menuData.ballInViewIndex)
         {
             balls[i].visible = true;
 
@@ -262,7 +280,7 @@ void updateSelectedBall(GameData& gameData)
             balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_Y - (balls[i].texture.rect.h / 2);
         }
         // The next ball
-        else if (i == gameData.menuData.ballSelectedIndex + 1)
+        else if (i == gameData.menuData.ballInViewIndex + 1)
         {
             balls[i].visible = true;
 

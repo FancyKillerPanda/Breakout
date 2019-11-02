@@ -30,6 +30,9 @@ struct MenuData
 	Text homeMenuItems[NUM_ITEMS_IN_MENU] = {};
 	bool homeMenuItemSelected[NUM_ITEMS_IN_MENU] = { 0, 0, 0 };
 
+	// Texture for highlighting
+	Texture circleHighlight = {};
+
 	// Arrows
 	Texture ballLeftArrow = {};
 	bool ballLeftArrowSelected = false;
@@ -37,8 +40,9 @@ struct MenuData
 	bool ballRightArrowSelected = false;
 
 	// Ball customisation
+	int ballCurrentlySelectedIndex = 0;
 	Text ballsText = {};
-	int ballSelectedIndex = 0;
+	int ballInViewIndex = 0;
 	std::array<Ball, MENU_CUSTOMISE_NUMBER_OF_BALLS> balls = {};
 };
 
