@@ -22,3 +22,6 @@ void initMenu(GameData& gameData);
 MenuButtonSelected menuHandleEvents(GameData& gameData);
 // Draws menu
 void menuDraw(GameData& gameData);
+
+// Updates the locations and sizes of the customisable balls
+void updateSelectedBall(GameData& gameData);

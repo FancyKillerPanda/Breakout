@@ -23,6 +23,7 @@ struct Ball
 	Texture texture = {};
 	Velocity velocity = {};
 
+	bool visible = true;
 	float rotationAngle = 0.0f;
 };
 

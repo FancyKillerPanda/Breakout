@@ -31,6 +31,7 @@ struct MenuData
 	bool homeMenuItemSelected[NUM_ITEMS_IN_MENU] = { 0, 0, 0 };
 
 	// Ball customisation
+	int ballSelectedIndex = 0;
 	std::array<Ball, 3> balls = {};
 };
 
