@@ -34,17 +34,13 @@ void initMenu(GameData& gameData)
     menuData.ballsText.rect.x = MENU_CUSTOMISE_BALL_TEXT_X;
     menuData.ballsText.rect.y = MENU_CUSTOMISE_BALL_TEXT_CENTER_Y - menuData.ballsText.rect.h / 2;
     
-    menuData.ballLeftArrow = createTexture(gameData.renderer, "res/arrow.png");
-    menuData.ballLeftArrow.rect.w = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2;
-    menuData.ballLeftArrow.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
-    menuData.ballLeftArrow.rect.x = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) - 30 - menuData.ballLeftArrow.rect.w;
-    menuData.ballLeftArrow.rect.y = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - menuData.ballLeftArrow.rect.h / 2;
-    
-    menuData.ballRightArrow = createTexture(gameData.renderer, "res/arrow.png");
-    menuData.ballRightArrow.rect.w = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2;
-    menuData.ballRightArrow.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
-    menuData.ballRightArrow.rect.x = MENU_CUSTOMISE_BALL_NEXT_CENTER_X + (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) + 30;
-    menuData.ballRightArrow.rect.y = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - menuData.ballRightArrow.rect.h / 2;
+    int ballLeftArrowX = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) - 30 - menuData.ballLeftArrow.rect.w;
+    int ballLeftArrowY = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - menuData.ballLeftArrow.rect.h / 2;
+    arrowReset(gameData.renderer, menuData.ballLeftArrow, ARROW_TEXTURE_PATH, ballLeftArrowX, ballLeftArrowY);
+
+    int ballRightArrowX = MENU_CUSTOMISE_BALL_NEXT_CENTER_X + (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) + 30;
+    int ballRightArrowY = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - menuData.ballRightArrow.rect.h / 2;
+    arrowReset(gameData.renderer, menuData.ballRightArrow, ARROW_TEXTURE_PATH, ballRightArrowX, ballRightArrowY);
     
     ballReset(gameData.renderer, menuData.balls[0], "res/balls/default_ball.png");
     ballReset(gameData.renderer, menuData.balls[1], "res/balls/volleyball.png");
@@ -118,6 +114,65 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
         {
             switch(gameData.event.type)
             {
+                case SDL_MOUSEMOTION:
+                {
+                    SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
+
+                    // TODO(fkp): Extract into a function
+                    // Highlighting for the left ball arrow
+                    if (SDL_PointInRect(&mousePos, &menuData.ballLeftArrow.rect))
+                    {
+                        if (!menuData.ballLeftArrowSelected)
+                        {
+                            menuData.ballLeftArrowSelected = true;
+                            destroyTexture(menuData.ballLeftArrow);
+
+                            int oldX = menuData.ballLeftArrow.rect.x;
+                            int oldY = menuData.ballLeftArrow.rect.y;
+                            arrowReset(gameData.renderer, menuData.ballLeftArrow, ARROW_HIGHLIGHT_TEXTURE_PATH, oldX, oldY);
+                        }
+                    }
+                    else
+                    {
+                        if (menuData.ballLeftArrowSelected)
+                        {
+                            menuData.ballLeftArrowSelected = false;
+                            destroyTexture(menuData.ballLeftArrow);
+
+                            int oldX = menuData.ballLeftArrow.rect.x;
+                            int oldY = menuData.ballLeftArrow.rect.y;
+                            arrowReset(gameData.renderer, menuData.ballLeftArrow, ARROW_TEXTURE_PATH, oldX, oldY);
+                        }
+                    }
+
+                    // Highlighting for the right ball arrow
+                    if (SDL_PointInRect(&mousePos, &menuData.ballRightArrow.rect))
+                    {
+                        if (!menuData.ballRightArrowSelected)
+                        {
+                            menuData.ballRightArrowSelected = true;
+                            destroyTexture(menuData.ballRightArrow);
+
+                            int oldX = menuData.ballRightArrow.rect.x;
+                            int oldY = menuData.ballRightArrow.rect.y;
+                            arrowReset(gameData.renderer, menuData.ballRightArrow, ARROW_HIGHLIGHT_TEXTURE_PATH, oldX, oldY);
+
+                        }
+                    }
+                    else
+                    {
+                        if (menuData.ballRightArrowSelected)
+                        {
+                            menuData.ballRightArrowSelected = false;
+                            destroyTexture(menuData.ballRightArrow);
+
+                            int oldX = menuData.ballRightArrow.rect.x;
+                            int oldY = menuData.ballRightArrow.rect.y;
+                            arrowReset(gameData.renderer, menuData.ballRightArrow, ARROW_TEXTURE_PATH, oldX, oldY);
+                        }
+                    }
+                } break;
+                
                 case SDL_MOUSEBUTTONDOWN:
                 {
                     SDL_Point mousePos = { gameData.event.button.x, gameData.event.button.y };

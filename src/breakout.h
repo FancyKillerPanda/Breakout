@@ -30,12 +30,16 @@ struct MenuData
 	Text homeMenuItems[NUM_ITEMS_IN_MENU] = {};
 	bool homeMenuItemSelected[NUM_ITEMS_IN_MENU] = { 0, 0, 0 };
 
+	// Arrows
+	Texture ballLeftArrow = {};
+	bool ballLeftArrowSelected = false;
+	Texture ballRightArrow = {};
+	bool ballRightArrowSelected = false;
+
 	// Ball customisation
 	Text ballsText = {};
 	int ballSelectedIndex = 0;
 	std::array<Ball, 3> balls = {};
-	Texture ballLeftArrow = {};
-	Texture ballRightArrow = {};
 };
 
 struct GameData

@@ -26,6 +26,10 @@ const SDL_Color MENU_COLOURS[3] = { {255, 255, 255, 255}, {255, 0, 0, 255}, {192
 constexpr char ARIAL_FONT_PATH[] = "res/fonts/arial.ttf";
 constexpr char BAD_SIGNAL_FONT_PATH[] = "res/fonts/Bad-Signal.ttf";
 
+// Arrow properties
+constexpr char ARROW_TEXTURE_PATH[] = "res/arrow.png";
+constexpr char ARROW_HIGHLIGHT_TEXTURE_PATH[] = "res/arrow_highlight.png";
+
 // Menu properties
 constexpr int MENU_CUSTOMISE_BALL_TEXT_X = SCREEN_WIDTH / 4;
 constexpr int MENU_CUSTOMISE_BALL_TEXT_CENTER_Y = SCREEN_HEIGHT / 3;

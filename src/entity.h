@@ -42,3 +42,4 @@ void paddleReset(SDL_Renderer* renderer, Paddle& paddle);
 void paddleUpdate(GameData& gameData, Paddle& paddle);
 
 void bricksReset(GameData& gameData);
+void arrowReset(SDL_Renderer* renderer, Texture& arrow, const char* texturePath, int x, int y);

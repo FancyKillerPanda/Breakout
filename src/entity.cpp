@@ -131,3 +131,12 @@ void bricksReset(GameData& gameData)
 		}
 	}
 }
+
+void arrowReset(SDL_Renderer* renderer, Texture& arrow, const char* texturePath, int x, int y)
+{
+	arrow = createTexture(renderer, texturePath);
+	arrow.rect.w = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2;
+	arrow.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
+	arrow.rect.x = x;
+	arrow.rect.y = y;
+}
