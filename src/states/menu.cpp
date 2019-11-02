@@ -34,13 +34,13 @@ void initMenu(GameData& gameData)
     menuData.ballsText.rect.x = MENU_CUSTOMISE_BALL_TEXT_X;
     menuData.ballsText.rect.y = MENU_CUSTOMISE_BALL_TEXT_CENTER_Y - menuData.ballsText.rect.h / 2;
     
-    int ballLeftArrowX = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) - 30 - menuData.ballLeftArrow.rect.w;
-    int ballLeftArrowY = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - menuData.ballLeftArrow.rect.h / 2;
-    arrowReset(gameData.renderer, menuData.ballLeftArrow, ARROW_TEXTURE_PATH, ballLeftArrowX, ballLeftArrowY);
+    arrowReset(gameData.renderer, menuData.ballLeftArrow, ARROW_TEXTURE_PATH);
+    menuData.ballLeftArrow.rect.x = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) - 30 - menuData.ballLeftArrow.rect.w;
+    menuData.ballLeftArrow.rect.y = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - menuData.ballLeftArrow.rect.h / 2;
 
-    int ballRightArrowX = MENU_CUSTOMISE_BALL_NEXT_CENTER_X + (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) + 30;
-    int ballRightArrowY = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - menuData.ballRightArrow.rect.h / 2;
-    arrowReset(gameData.renderer, menuData.ballRightArrow, ARROW_TEXTURE_PATH, ballRightArrowX, ballRightArrowY);
+    arrowReset(gameData.renderer, menuData.ballRightArrow, ARROW_TEXTURE_PATH);
+    menuData.ballRightArrow.rect.x = MENU_CUSTOMISE_BALL_NEXT_CENTER_X + (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) + 30;
+    menuData.ballRightArrow.rect.y = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - menuData.ballRightArrow.rect.h / 2;
     
     ballReset(gameData.renderer, menuData.balls[0], "res/balls/default_ball.png");
     ballReset(gameData.renderer, menuData.balls[1], "res/balls/volleyball.png");
