@@ -5,12 +5,12 @@ constexpr double PI = 3.14159265358979323846;
 constexpr int SCREEN_WIDTH = 960;
 constexpr int SCREEN_HEIGHT = 540;
 
+// Gameplay properties
 constexpr int PADDLE_WIDTH = SCREEN_WIDTH / 6;
 constexpr int PADDLE_HEIGHT = SCREEN_HEIGHT / 30;
 constexpr float PADDLE_VELOCITY = SCREEN_WIDTH / 2.0f;
 
 constexpr int BALL_WIDTH = SCREEN_WIDTH / 50;
-constexpr int BALL_HEIGHT = BALL_WIDTH;
 constexpr float BALL_VELOCITY = SCREEN_WIDTH / 1.3f;
 constexpr float BALL_ROTATION_SPEED = 3.0f;  // Degrees per frame
 
@@ -25,3 +25,11 @@ const int NUM_ITEMS_IN_MENU = 3;
 const SDL_Color MENU_COLOURS[3] = { {255, 255, 255, 255}, {255, 0, 0, 255}, {192, 192, 192, 255} };
 constexpr char ARIAL_FONT_PATH[] = "res/fonts/arial.ttf";
 constexpr char BAD_SIGNAL_FONT_PATH[] = "res/fonts/Bad-Signal.ttf";
+
+// Menu properties
+constexpr int MENU_CUSTOMISE_BALL_IN_VIEW_WIDTH = 75;
+constexpr int MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH = 50;
+constexpr int MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_X = SCREEN_WIDTH * 13 / 18;
+constexpr int MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_Y = SCREEN_HEIGHT / 3;
+constexpr int MENU_CUSTOMISE_BALL_NEXT_CENTER_X = SCREEN_WIDTH * 15 / 18;
+constexpr int MENU_CUSTOMISE_BALL_NEXT_CENTER_Y = SCREEN_HEIGHT / 3;

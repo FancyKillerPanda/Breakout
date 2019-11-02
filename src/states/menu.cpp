@@ -4,6 +4,7 @@
 
 void initMenu(GameData& gameData)
 {
+    // Home page init
     char* labels[NUM_ITEMS_IN_MENU] = { "Start", "Settings", "Exit" };
     int position[NUM_ITEMS_IN_MENU][2] = {
         { SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
@@ -20,6 +21,18 @@ void initMenu(GameData& gameData)
         gameData.menuData.homeMenuItems[a].rect.x = position[a][0] - gameData.menuData.homeMenuItems[a].rect.w / 2;
         gameData.menuData.homeMenuItems[a].rect.y = position[a][1] - gameData.menuData.homeMenuItems[a].rect.h / 2;
     }
+
+    // Customise page init
+    ballReset(gameData.renderer, gameData.menuData.balls[0], "res/balls/default_ball.png");
+    ballReset(gameData.renderer, gameData.menuData.balls[1], "res/balls/volleyball.png");
+    ballReset(gameData.renderer, gameData.menuData.balls[2], "res/balls/basketball.png");
+
+    gameData.menuData.balls[0].texture.rect.w = gameData.menuData.balls[0].texture.rect.h = MENU_CUSTOMISE_BALL_IN_VIEW_WIDTH;
+    gameData.menuData.balls[0].texture.rect.x = MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_X - (gameData.menuData.balls[0].texture.rect.w / 2);
+    gameData.menuData.balls[0].texture.rect.y = MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_Y - (gameData.menuData.balls[0].texture.rect.h / 2);
+    gameData.menuData.balls[1].texture.rect.w = gameData.menuData.balls[1].texture.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
+    gameData.menuData.balls[1].texture.rect.x = MENU_CUSTOMISE_BALL_NEXT_CENTER_X - (gameData.menuData.balls[1].texture.rect.w / 2);
+    gameData.menuData.balls[1].texture.rect.y = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - (gameData.menuData.balls[1].texture.rect.h / 2);
 }
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
@@ -108,9 +121,8 @@ void menuDraw(GameData& gameData)
 
         case MenuState::Customise:
         {
-            // TODO(fkp): Draw customization screen
-            SDL_SetRenderDrawColor(gameData.renderer, 255, 0, 0, 255);
-            SDL_RenderClear(gameData.renderer);
+            drawTexture(gameData.renderer, gameData.menuData.balls[0].texture);
+            drawTexture(gameData.renderer, gameData.menuData.balls[1].texture);
         } break;
     }
 

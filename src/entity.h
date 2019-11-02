@@ -34,7 +34,7 @@ struct Brick
 	Velocity velocity = {};
 };
 
-void ballReset(SDL_Renderer* renderer, Ball& ball);
+void ballReset(SDL_Renderer* renderer, Ball& ball, const char* filepath = "res/balls/default_ball.png");
 bool ballUpdate(GameData& gameData, Ball& ball);
 
 void paddleReset(SDL_Renderer* renderer, Paddle& paddle);

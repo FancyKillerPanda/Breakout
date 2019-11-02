@@ -26,9 +26,12 @@ struct MenuData
 {
 	MenuState state;
 
-	// Menu items
+	// Home page menu items
 	Text homeMenuItems[NUM_ITEMS_IN_MENU] = {};
 	bool homeMenuItemSelected[NUM_ITEMS_IN_MENU] = { 0, 0, 0 };
+
+	// Ball customisation
+	std::array<Ball, 3> balls = {};
 };
 
 struct GameData

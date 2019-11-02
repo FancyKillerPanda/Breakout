@@ -3,7 +3,7 @@
 #include "entity.h"
 #include "breakout.h"
 
-void ballReset(SDL_Renderer* renderer, Ball& ball)
+void ballReset(SDL_Renderer* renderer, Ball& ball, const char* filepath)
 {
 	if (ball.texture.texture)
 	{
@@ -11,8 +11,8 @@ void ballReset(SDL_Renderer* renderer, Ball& ball)
 		ball.texture.texture = nullptr;
 	}
 
-	ball.texture = createTexture(renderer, "res/balls/default_ball.png");
-	ball.texture.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
+	ball.texture = createTexture(renderer, filepath);
+	ball.texture.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_WIDTH) / 2, BALL_WIDTH, BALL_WIDTH };
 	
 	ball.velocity.x = 0;
 	ball.velocity.y = BALL_VELOCITY;
@@ -40,7 +40,7 @@ bool ballUpdate(GameData& gameData, Ball& ball)
 		ball.velocity.y *= -1;
 	}
 
-	if (ball.texture.rect.y + BALL_HEIGHT > SCREEN_HEIGHT)
+	if (ball.texture.rect.y + BALL_WIDTH > SCREEN_HEIGHT)
 	{
 		return false;
 	}
