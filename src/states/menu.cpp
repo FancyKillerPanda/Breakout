@@ -14,12 +14,14 @@ void initMenu(GameData& gameData)
 
     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
     {
-        gameData.menuData.homeMenuItems[a].text = labels[a];
-		gameData.menuData.homeMenuItems[a].size = 30;
-		gameData.menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
-		updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.homeMenuItems[a]);
-        gameData.menuData.homeMenuItems[a].rect.x = position[a][0] - gameData.menuData.homeMenuItems[a].rect.w / 2;
-        gameData.menuData.homeMenuItems[a].rect.y = position[a][1] - gameData.menuData.homeMenuItems[a].rect.h / 2;
+        Text& currentItem = gameData.menuData.homeMenuItems[a];
+        
+        currentItem.text = labels[a];
+        currentItem.size = 30;
+        currentItem.colour = MENU_COLOURS[0];
+		updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, currentItem);
+        currentItem.rect.x = position[a][0] - currentItem.rect.w / 2;
+        currentItem.rect.y = position[a][1] - currentItem.rect.h / 2;
     }
 
     // Customise page init
@@ -32,7 +34,9 @@ void initMenu(GameData& gameData)
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
 {
-    switch (gameData.menuData.state)
+    MenuData& menuData = gameData.menuData;
+    
+    switch (menuData.state)
     {
         case MenuState::Home:
         {
@@ -44,22 +48,22 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     
                     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
                     {
-                        if (SDL_PointInRect(&mousePos, &gameData.menuData.homeMenuItems[a].rect))
+                        if (SDL_PointInRect(&mousePos, &menuData.homeMenuItems[a].rect))
                         {
-                            if(!gameData.menuData.homeMenuItemSelected[a])
+                            if(!menuData.homeMenuItemSelected[a])
                             {
-                                gameData.menuData.homeMenuItemSelected[a] = 1;
-                                gameData.menuData.homeMenuItems[a].colour = MENU_COLOURS[1];
-                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.homeMenuItems[a]);
+                                menuData.homeMenuItemSelected[a] = 1;
+                                menuData.homeMenuItems[a].colour = MENU_COLOURS[1];
+                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.homeMenuItems[a]);
                             }
                         }
                         else
                         {
-                            if(gameData.menuData.homeMenuItemSelected[a])
+                            if(menuData.homeMenuItemSelected[a])
                             {
-                                gameData.menuData.homeMenuItemSelected[a] = 0;
-                                gameData.menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
-                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.homeMenuItems[a]);
+                                menuData.homeMenuItemSelected[a] = 0;
+                                menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
+                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.homeMenuItems[a]);
                             }
                         }
                     }
@@ -69,7 +73,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 {
                     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
                     {
-                        if(gameData.menuData.homeMenuItemSelected[a])
+                        if(menuData.homeMenuItemSelected[a])
                         {
                             return (MenuButtonSelected) (a + 1);
                         }
@@ -98,17 +102,17 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     // TODO(fkp): Change the keys for this later
                     if (gameData.event.key.keysym.sym == SDLK_RIGHT)
                     {
-                        if (gameData.menuData.ballSelectedIndex < gameData.menuData.balls.size() - 1)
+                        if (menuData.ballSelectedIndex < menuData.balls.size() - 1)
                         {
-                            gameData.menuData.ballSelectedIndex += 1;
+                            menuData.ballSelectedIndex += 1;
                             updateSelectedBall(gameData);
                         }
                     }
                     else if (gameData.event.key.keysym.sym == SDLK_LEFT)
                     {
-                        if (gameData.menuData.ballSelectedIndex > 0)
+                        if (menuData.ballSelectedIndex > 0)
                         {
-                            gameData.menuData.ballSelectedIndex -= 1;
+                            menuData.ballSelectedIndex -= 1;
                             updateSelectedBall(gameData);
                         }
                     }
@@ -123,22 +127,24 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
 
 void menuDraw(GameData& gameData)
 {
+    MenuData& menuData = gameData.menuData;
+    
     SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
     SDL_RenderClear(gameData.renderer);
 
-    switch (gameData.menuData.state)
+    switch (menuData.state)
     {
         case MenuState::Home:
         {
             for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
             {
-                drawText(gameData.renderer, gameData.menuData.homeMenuItems[a]);
+                drawText(gameData.renderer, menuData.homeMenuItems[a]);
             }
         } break;
 
         case MenuState::Customise:
         {
-            for (Ball& ball : gameData.menuData.balls)
+            for (Ball& ball : menuData.balls)
             {
                 if (ball.visible)
                 {
@@ -153,38 +159,40 @@ void menuDraw(GameData& gameData)
 
 void updateSelectedBall(GameData& gameData)
 {
-    for (int i = 0; i < gameData.menuData.balls.size(); i++)
+    std::array<Ball, 3Ui64>& balls = gameData.menuData.balls;
+    
+    for (int i = 0; i < balls.size(); i++)
     {
         // The previous ball
         if (i == gameData.menuData.ballSelectedIndex - 1)
         {
-            gameData.menuData.balls[i].visible = true;
+            balls[i].visible = true;
 
-            gameData.menuData.balls[i].texture.rect.w = gameData.menuData.balls[i].texture.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
-            gameData.menuData.balls[i].texture.rect.x = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (gameData.menuData.balls[i].texture.rect.w / 2);
-            gameData.menuData.balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - (gameData.menuData.balls[i].texture.rect.h / 2);
+            balls[i].texture.rect.w = balls[i].texture.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
+            balls[i].texture.rect.x = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (balls[i].texture.rect.w / 2);
+            balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - (balls[i].texture.rect.h / 2);
         }
         // The selected ball
         else if (i == gameData.menuData.ballSelectedIndex)
         {
-            gameData.menuData.balls[i].visible = true;
+            balls[i].visible = true;
 
-            gameData.menuData.balls[i].texture.rect.w = gameData.menuData.balls[i].texture.rect.h = MENU_CUSTOMISE_BALL_IN_VIEW_WIDTH;
-            gameData.menuData.balls[i].texture.rect.x = MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_X - (gameData.menuData.balls[i].texture.rect.w / 2);
-            gameData.menuData.balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_Y - (gameData.menuData.balls[i].texture.rect.h / 2);
+            balls[i].texture.rect.w = balls[i].texture.rect.h = MENU_CUSTOMISE_BALL_IN_VIEW_WIDTH;
+            balls[i].texture.rect.x = MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_X - (balls[i].texture.rect.w / 2);
+            balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_IN_VIEW_CENTER_Y - (balls[i].texture.rect.h / 2);
         }
         // The next ball
         else if (i == gameData.menuData.ballSelectedIndex + 1)
         {
-            gameData.menuData.balls[i].visible = true;
+            balls[i].visible = true;
 
-            gameData.menuData.balls[i].texture.rect.w = gameData.menuData.balls[i].texture.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
-            gameData.menuData.balls[i].texture.rect.x = MENU_CUSTOMISE_BALL_NEXT_CENTER_X - (gameData.menuData.balls[i].texture.rect.w / 2);
-            gameData.menuData.balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - (gameData.menuData.balls[i].texture.rect.h / 2);
+            balls[i].texture.rect.w = balls[i].texture.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
+            balls[i].texture.rect.x = MENU_CUSTOMISE_BALL_NEXT_CENTER_X - (balls[i].texture.rect.w / 2);
+            balls[i].texture.rect.y = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - (balls[i].texture.rect.h / 2);
         }
         else
         {
-            gameData.menuData.balls[i].visible = false;
+            balls[i].visible = false;
         }
     }
 }
