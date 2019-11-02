@@ -25,32 +25,33 @@ void initMenu(GameData& gameData)
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
 {
-    int x, y;
     switch(gameData.event.type)
     {
         case SDL_MOUSEMOTION:
         {
-            x = gameData.event.motion.x;
-            y = gameData.event.motion.y;
+            SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
+
+            // Removes old selection(s)
+            for (int i = 0; i < NUM_ITEMS_IN_MENU; i++)
+            {
+                if (gameData.selected[i] && !SDL_PointInRect(&mousePos, &gameData.menus[i].rect))
+                {
+                    gameData.selected[i] = 0;
+                    gameData.menus[i].colour = MENU_COLOURS[0];
+                    updateTextTexture(gameData.renderer, gameData.menus[i]);
+                }
+            }
+
             for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
             {
-                if(x >= gameData.menus[a].rect.x && x <= gameData.menus[a].rect.x + gameData.menus[a].rect.w && y >= gameData.menus[a].rect.y && y <= gameData.menus[a].rect.y + gameData.menus[a].rect.h)
+                if(!gameData.selected[a] && SDL_PointInRect(&mousePos, &gameData.menus[a].rect))
                 {
-                    for (int b = 0; b < NUM_ITEMS_IN_MENU; b++)
-                    {
-                        if (b == a)
-                        {
-                            gameData.selected[b] = 1;
-                            gameData.menus[b].colour = MENU_COLOURS[1];
-                            updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[b]);
-                        }
-                        else
-                        {
-                            gameData.selected[b] = 0;
-                            gameData.menus[b].colour = MENU_COLOURS[0];
-                            updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[b]);
-                        }
-                    }
+                    // Highlights new selection
+                    gameData.selected[a] = 1;
+                    gameData.menus[a].colour = MENU_COLOURS[1];
+                    updateTextTexture(gameData.renderer, gameData.menus[a]);
+
+                    break;
                 }
             }
         } break;
@@ -89,7 +90,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                         {
                             gameData.selected[a] = 0;
                             gameData.menus[a].colour = MENU_COLOURS[0];
-                            updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                            updateTextTexture(gameData.renderer, gameData.menus[a]);
 
                             if (a + 1 >= NUM_ITEMS_IN_MENU)
                             {
@@ -98,7 +99,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
 
                             gameData.selected[a + 1] = 1;
                             gameData.menus[a + 1].colour = MENU_COLOURS[1];
-                            updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a + 1]);
+                            updateTextTexture(gameData.renderer, gameData.menus[a + 1]);
                             break;
                         }
                     }
@@ -112,7 +113,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                         {
                             gameData.selected[a] = 0;
                             gameData.menus[a].colour = MENU_COLOURS[0];
-                            updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                            updateTextTexture(gameData.renderer, gameData.menus[a]);
 
                             if (a - 1 < 0)
                             {
@@ -121,7 +122,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
 
                             gameData.selected[a - 1] = 1;
                             gameData.menus[a - 1].colour = MENU_COLOURS[1];
-                            updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a - 1]);
+                            updateTextTexture(gameData.renderer, gameData.menus[a - 1]);
                             break;
                         }
                     }
