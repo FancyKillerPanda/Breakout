@@ -4,6 +4,8 @@
 
 void initMenu(GameData& gameData)
 {
+    MenuData& menuData = gameData.menuData;
+    
     // Home page init
     char* labels[NUM_ITEMS_IN_MENU] = { "Start", "Settings", "Exit" };
     int position[NUM_ITEMS_IN_MENU][2] = {
@@ -14,7 +16,7 @@ void initMenu(GameData& gameData)
 
     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
     {
-        Text& currentItem = gameData.menuData.homeMenuItems[a];
+        Text& currentItem = menuData.homeMenuItems[a];
         
         currentItem.text = labels[a];
         currentItem.size = 30;
@@ -25,16 +27,28 @@ void initMenu(GameData& gameData)
     }
 
     // Customise page init
-    gameData.menuData.ballsText.colour = MENU_COLOURS[0];
-    gameData.menuData.ballsText.text = "Ball:"; // TODO(fkp): Font does not render colon on the end
-    gameData.menuData.ballsText.size = 30; // TODO(fkp): Extract font size into constant
-	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.ballsText);
-    gameData.menuData.ballsText.rect.x = MENU_CUSTOMISE_BALL_TEXT_X;
-    gameData.menuData.ballsText.rect.y = MENU_CUSTOMISE_BALL_TEXT_CENTER_Y - gameData.menuData.ballsText.rect.h / 2;
+    menuData.ballsText.colour = MENU_COLOURS[0];
+    menuData.ballsText.text = "Ball:"; // TODO(fkp): Font does not render colon on the end
+    menuData.ballsText.size = 30; // TODO(fkp): Extract font size into constant
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.ballsText);
+    menuData.ballsText.rect.x = MENU_CUSTOMISE_BALL_TEXT_X;
+    menuData.ballsText.rect.y = MENU_CUSTOMISE_BALL_TEXT_CENTER_Y - menuData.ballsText.rect.h / 2;
     
-    ballReset(gameData.renderer, gameData.menuData.balls[0], "res/balls/default_ball.png");
-    ballReset(gameData.renderer, gameData.menuData.balls[1], "res/balls/volleyball.png");
-    ballReset(gameData.renderer, gameData.menuData.balls[2], "res/balls/basketball.png");
+    menuData.ballLeftArrow = createTexture(gameData.renderer, "res/arrow.png");
+    menuData.ballLeftArrow.rect.w = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2;
+    menuData.ballLeftArrow.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
+    menuData.ballLeftArrow.rect.x = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) - 30 - menuData.ballLeftArrow.rect.w;
+    menuData.ballLeftArrow.rect.y = MENU_CUSTOMISE_BALL_PREV_CENTER_Y - menuData.ballLeftArrow.rect.h / 2;
+    
+    menuData.ballRightArrow = createTexture(gameData.renderer, "res/arrow.png");
+    menuData.ballRightArrow.rect.w = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2;
+    menuData.ballRightArrow.rect.h = MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH;
+    menuData.ballRightArrow.rect.x = MENU_CUSTOMISE_BALL_NEXT_CENTER_X + (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) + 30;
+    menuData.ballRightArrow.rect.y = MENU_CUSTOMISE_BALL_NEXT_CENTER_Y - menuData.ballRightArrow.rect.h / 2;
+    
+    ballReset(gameData.renderer, menuData.balls[0], "res/balls/default_ball.png");
+    ballReset(gameData.renderer, menuData.balls[1], "res/balls/volleyball.png");
+    ballReset(gameData.renderer, menuData.balls[2], "res/balls/basketball.png");
 
     updateSelectedBall(gameData);
 }
@@ -152,6 +166,8 @@ void menuDraw(GameData& gameData)
         case MenuState::Customise:
         {
             drawText(gameData.renderer, gameData.menuData.ballsText);
+            drawTexture(gameData.renderer, menuData.ballLeftArrow);
+            drawTexture(gameData.renderer, menuData.ballRightArrow, 0.0, SDL_FLIP_HORIZONTAL);
             
             for (Ball& ball : menuData.balls)
             {

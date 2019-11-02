@@ -34,6 +34,8 @@ struct MenuData
 	Text ballsText = {};
 	int ballSelectedIndex = 0;
 	std::array<Ball, 3> balls = {};
+	Texture ballLeftArrow = {};
+	Texture ballRightArrow = {};
 };
 
 struct GameData
