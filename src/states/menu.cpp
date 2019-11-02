@@ -24,58 +24,70 @@ void initMenu(GameData& gameData)
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
 {
-    switch(gameData.event.type)
+    switch (gameData.menuState)
     {
-        case SDL_MOUSEMOTION:
+        case MenuState::Home:
         {
-            SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
-            
-            for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
+            switch(gameData.event.type)
             {
-                if (SDL_PointInRect(&mousePos, &gameData.menus[a].rect))
+                case SDL_MOUSEMOTION:
                 {
-                    if(!gameData.selected[a])
+                    SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
+                    
+                    for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
                     {
-                        gameData.selected[a] = 1;
-                        gameData.menus[a].colour = MENU_COLOURS[1];
-		                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                        if (SDL_PointInRect(&mousePos, &gameData.menus[a].rect))
+                        {
+                            if(!gameData.selected[a])
+                            {
+                                gameData.selected[a] = 1;
+                                gameData.menus[a].colour = MENU_COLOURS[1];
+                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                            }
+                        }
+                        else
+                        {
+                            if(gameData.selected[a])
+                            {
+                                gameData.selected[a] = 0;
+                                gameData.menus[a].colour = MENU_COLOURS[0];
+                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                            }
+                        }
                     }
-                }
-                else
+                } break;
+
+                case SDL_MOUSEBUTTONDOWN:
                 {
-                    if(gameData.selected[a])
+                    for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
                     {
-                        gameData.selected[a] = 0;
-                        gameData.menus[a].colour = MENU_COLOURS[0];
-		                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                        if(gameData.selected[a])
+                        {
+                            return (MenuButtonSelected) (a + 1);
+                        }
                     }
-                }
-            }
-        } break;
+                } break;
 
-        case SDL_MOUSEBUTTONDOWN:
-        {
-            for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
-            {
-                if(gameData.selected[a])
+                case SDL_KEYDOWN:
                 {
-                    return (MenuButtonSelected) (a + 1);
-                }
-            }
-        } break;
-
-        case SDL_KEYDOWN:
-        {
-            switch (gameData.event.key.keysym.sym)
-            {
-                case SDLK_RETURN:
-                {
-                    return MenuButtonSelected::Start;
+                    switch (gameData.event.key.keysym.sym)
+                    {
+                        case SDLK_RETURN:
+                        {
+                            return MenuButtonSelected::Start;
+                        } break;
+                    }
                 } break;
             }
         } break;
+    
+        case MenuState::Customise:
+        {
+            // TODO(fkp): Customization event handling
+        } break;
     }
 
+    // TODO(fkp): Should this be only for Home page
     return MenuButtonSelected::None;
 }
 
@@ -84,9 +96,22 @@ void menuDraw(GameData& gameData)
     SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
     SDL_RenderClear(gameData.renderer);
 
-    for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
+    switch (gameData.menuState)
     {
-        drawText(gameData.renderer, gameData.menus[a]);
+        case MenuState::Home:
+        {
+            for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
+            {
+                drawText(gameData.renderer, gameData.menus[a]);
+            }
+        } break;
+
+        case MenuState::Customise:
+        {
+            // TODO(fkp): Draw customization screen
+            SDL_SetRenderDrawColor(gameData.renderer, 255, 0, 0, 255);
+            SDL_RenderClear(gameData.renderer);
+        } break;
     }
 
     SDL_RenderPresent(gameData.renderer);

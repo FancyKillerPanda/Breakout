@@ -12,8 +12,14 @@
 
 enum class GameState
 {
-	MainMenu,
+	Menu,
 	Gameplay,
+};
+
+enum class MenuState
+{
+	Home,
+	Customise,
 };
 
 struct GameData
@@ -31,8 +37,9 @@ struct GameData
 	SDL_Event event = {};
 	const uint8_t* keyboardState = nullptr;
 
-	// TODO(lucky962): Start Screen
-	GameState gameState = GameState::MainMenu;
+	// States
+	GameState gameState = GameState::Menu;
+	MenuState menuState = MenuState::Home;
 
 	// Entities data
 	Paddle paddle = {};

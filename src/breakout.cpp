@@ -129,13 +129,18 @@ bool gameHandleEvents(GameData& gameData)
 				}
 			} break;
 			
-			case GameState::MainMenu:
+			case GameState::Menu:
 			{
 				switch(menuHandleEvents(gameData))
 				{
 					case MenuButtonSelected::Start:
 					{
 						gameData.gameState = GameState::Gameplay;
+					} break;
+
+					case MenuButtonSelected::Customise:
+					{
+						gameData.menuState = MenuState::Customise;
 					} break;
 
 					case MenuButtonSelected::Exit:

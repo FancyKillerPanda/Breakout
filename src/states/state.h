@@ -13,7 +13,7 @@ enum class MenuButtonSelected
 {
 	None,
 	Start,
-	Settings,
+	Customise,
 	Exit
 };
 
