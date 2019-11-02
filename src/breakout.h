@@ -22,6 +22,15 @@ enum class MenuState
 	Customise,
 };
 
+struct MenuData
+{
+	MenuState state;
+
+	// Menu items
+	Text homeMenuItems[NUM_ITEMS_IN_MENU] = {};
+	bool homeMenuItemSelected[NUM_ITEMS_IN_MENU] = { 0, 0, 0 };
+};
+
 struct GameData
 {
 	bool running = false;
@@ -37,9 +46,9 @@ struct GameData
 	SDL_Event event = {};
 	const uint8_t* keyboardState = nullptr;
 
-	// States
+	// State data
 	GameState gameState = GameState::Menu;
-	MenuState menuState = MenuState::Home;
+	MenuData menuData = {};
 
 	// Entities data
 	Paddle paddle = {};
@@ -49,6 +58,4 @@ struct GameData
 	// Text data
 	Text fpsText = {};
 	Text pausedText = {};
-	Text menus[NUM_ITEMS_IN_MENU] = {};
-	bool selected[NUM_ITEMS_IN_MENU] = {0, 0, 0};
 };

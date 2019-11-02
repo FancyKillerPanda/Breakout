@@ -140,7 +140,7 @@ bool gameHandleEvents(GameData& gameData)
 
 					case MenuButtonSelected::Customise:
 					{
-						gameData.menuState = MenuState::Customise;
+						gameData.menuData.state = MenuState::Customise;
 					} break;
 
 					case MenuButtonSelected::Exit:

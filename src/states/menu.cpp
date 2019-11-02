@@ -13,18 +13,18 @@ void initMenu(GameData& gameData)
 
     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
     {
-        gameData.menus[a].text = labels[a];
-		gameData.menus[a].size = 30;
-		gameData.menus[a].colour = MENU_COLOURS[0];
-		updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
-        gameData.menus[a].rect.x = position[a][0] - gameData.menus[a].rect.w / 2;
-        gameData.menus[a].rect.y = position[a][1] - gameData.menus[a].rect.h / 2;
+        gameData.menuData.homeMenuItems[a].text = labels[a];
+		gameData.menuData.homeMenuItems[a].size = 30;
+		gameData.menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
+		updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.homeMenuItems[a]);
+        gameData.menuData.homeMenuItems[a].rect.x = position[a][0] - gameData.menuData.homeMenuItems[a].rect.w / 2;
+        gameData.menuData.homeMenuItems[a].rect.y = position[a][1] - gameData.menuData.homeMenuItems[a].rect.h / 2;
     }
 }
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
 {
-    switch (gameData.menuState)
+    switch (gameData.menuData.state)
     {
         case MenuState::Home:
         {
@@ -36,22 +36,22 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     
                     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
                     {
-                        if (SDL_PointInRect(&mousePos, &gameData.menus[a].rect))
+                        if (SDL_PointInRect(&mousePos, &gameData.menuData.homeMenuItems[a].rect))
                         {
-                            if(!gameData.selected[a])
+                            if(!gameData.menuData.homeMenuItemSelected[a])
                             {
-                                gameData.selected[a] = 1;
-                                gameData.menus[a].colour = MENU_COLOURS[1];
-                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                                gameData.menuData.homeMenuItemSelected[a] = 1;
+                                gameData.menuData.homeMenuItems[a].colour = MENU_COLOURS[1];
+                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.homeMenuItems[a]);
                             }
                         }
                         else
                         {
-                            if(gameData.selected[a])
+                            if(gameData.menuData.homeMenuItemSelected[a])
                             {
-                                gameData.selected[a] = 0;
-                                gameData.menus[a].colour = MENU_COLOURS[0];
-                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menus[a]);
+                                gameData.menuData.homeMenuItemSelected[a] = 0;
+                                gameData.menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
+                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.menuData.homeMenuItems[a]);
                             }
                         }
                     }
@@ -61,7 +61,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 {
                     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
                     {
-                        if(gameData.selected[a])
+                        if(gameData.menuData.homeMenuItemSelected[a])
                         {
                             return (MenuButtonSelected) (a + 1);
                         }
@@ -96,13 +96,13 @@ void menuDraw(GameData& gameData)
     SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
     SDL_RenderClear(gameData.renderer);
 
-    switch (gameData.menuState)
+    switch (gameData.menuData.state)
     {
         case MenuState::Home:
         {
             for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
             {
-                drawText(gameData.renderer, gameData.menus[a]);
+                drawText(gameData.renderer, gameData.menuData.homeMenuItems[a]);
             }
         } break;
 
