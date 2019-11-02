@@ -23,5 +23,5 @@ constexpr int NUM_BRICKS_Y_AXIS = 3;
 // Text properties
 const int NUM_ITEMS_IN_MENU = 3;
 const SDL_Color MENU_COLOURS[3] = { {255, 255, 255, 255}, {255, 0, 0, 255}, {192, 192, 192, 255} };
-constexpr char ARIAL_FONT_PATH[] = "res/arial.ttf";
-constexpr char BAD_SIGNAL_FONT_PATH[] = "res/Bad-Signal.ttf";
+constexpr char ARIAL_FONT_PATH[] = "res/fonts/arial.ttf";
+constexpr char BAD_SIGNAL_FONT_PATH[] = "res/fonts/Bad-Signal.ttf";

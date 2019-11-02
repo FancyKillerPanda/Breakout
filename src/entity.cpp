@@ -11,7 +11,7 @@ void ballReset(SDL_Renderer* renderer, Ball& ball)
 		ball.texture.texture = nullptr;
 	}
 
-	ball.texture = createTexture(renderer, "res/ball.png");
+	ball.texture = createTexture(renderer, "res/balls/default_ball.png");
 	ball.texture.rect = SDL_Rect { (SCREEN_WIDTH - BALL_WIDTH) / 2, (SCREEN_HEIGHT  - BALL_HEIGHT) / 2, BALL_WIDTH, BALL_HEIGHT };
 	
 	ball.velocity.x = 0;
@@ -60,7 +60,7 @@ bool ballUpdate(GameData& gameData, Ball& ball)
 
 void paddleReset(SDL_Renderer* renderer, Paddle& paddle)
 {
-	paddle.texture = createTexture(renderer, "res/paddle_white.png");
+	paddle.texture = createTexture(renderer, "res/paddles/default_paddle.png");
 	paddle.texture.rect = SDL_Rect { (SCREEN_WIDTH - PADDLE_WIDTH) / 2, (SCREEN_HEIGHT * 9 / 10) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT };
 	paddle.velocity.x = 0;
 	paddle.velocity.y = 0;
@@ -101,23 +101,23 @@ void bricksReset(GameData& gameData)
 			Brick& brick = gameData.bricks[brickY * NUM_BRICKS_X_AXIS + brickX];
 
 			// TODO(fkp): Do we need to store the colour in Brick?
-			const char* brickTexturePath = "res/brick_white.png";
+			const char* brickTexturePath = "res/bricks/brick_white.png";
 
 			switch (brickY)
 			{
 				case 0:
 				{
-					brickTexturePath = "res/brick_red.png";
+					brickTexturePath = "res/bricks/brick_red.png";
 				} break;
 
 				case 1:
 				{
-					brickTexturePath = "res/brick_green.png";
+					brickTexturePath = "res/bricks/brick_green.png";
 				} break;
 
 				case 2:
 				{
-					brickTexturePath = "res/brick_blue.png";
+					brickTexturePath = "res/bricks/brick_blue.png";
 				} break;
 				
 				default:
