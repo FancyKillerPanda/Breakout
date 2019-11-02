@@ -175,9 +175,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 
                 case SDL_MOUSEBUTTONDOWN:
                 {
-                    SDL_Point mousePos = { gameData.event.button.x, gameData.event.button.y };
-
-                    if (SDL_PointInRect(&mousePos, &menuData.ballLeftArrow.rect))
+                    if (menuData.ballLeftArrowSelected)
                     {
                         if (menuData.ballSelectedIndex > 0)
                         {
@@ -185,7 +183,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                             updateSelectedBall(gameData);
                         }
                     }
-                    else if (SDL_PointInRect(&mousePos, &menuData.ballRightArrow.rect))
+                    else if (menuData.ballRightArrowSelected)
                     {
                         if (menuData.ballSelectedIndex < menuData.balls.size() - 1)
                         {
