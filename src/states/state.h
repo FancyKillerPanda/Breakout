@@ -31,6 +31,8 @@ void menuDraw(GameData& gameData);
 
 // Updates the locations and sizes of the customisable balls
 void updateSelectedBall(GameData& gameData);
+// Updates the highlighting of the left and right arrows
+void updateArrowHighlighting(SDL_Renderer* renderer, const SDL_Point& mousePos, Texture& arrow, bool& arrowSelected);
 
 // NOTE(fkp): Only call this to change states
 inline void changeState(GameData& gameData, GameState newState)

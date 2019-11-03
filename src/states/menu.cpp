@@ -163,59 +163,9 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                         updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.backButton);
                     }
 
-                    // TODO(fkp): Extract into a function
-                    // Highlighting for the left ball arrow
-                    if (SDL_PointInRect(&mousePos, &menuData.ballLeftArrow.rect))
-                    {
-                        if (!menuData.ballLeftArrowSelected)
-                        {
-                            menuData.ballLeftArrowSelected = true;
-                            destroyTexture(menuData.ballLeftArrow);
-
-                            int oldX = menuData.ballLeftArrow.rect.x;
-                            int oldY = menuData.ballLeftArrow.rect.y;
-                            arrowReset(gameData.renderer, menuData.ballLeftArrow, ARROW_HIGHLIGHT_TEXTURE_PATH, oldX, oldY);
-                        }
-                    }
-                    else
-                    {
-                        if (menuData.ballLeftArrowSelected)
-                        {
-                            menuData.ballLeftArrowSelected = false;
-                            destroyTexture(menuData.ballLeftArrow);
-
-                            int oldX = menuData.ballLeftArrow.rect.x;
-                            int oldY = menuData.ballLeftArrow.rect.y;
-                            arrowReset(gameData.renderer, menuData.ballLeftArrow, ARROW_TEXTURE_PATH, oldX, oldY);
-                        }
-                    }
-
-                    // Highlighting for the right ball arrow
-                    if (SDL_PointInRect(&mousePos, &menuData.ballRightArrow.rect))
-                    {
-                        if (!menuData.ballRightArrowSelected)
-                        {
-                            menuData.ballRightArrowSelected = true;
-                            destroyTexture(menuData.ballRightArrow);
-
-                            int oldX = menuData.ballRightArrow.rect.x;
-                            int oldY = menuData.ballRightArrow.rect.y;
-                            arrowReset(gameData.renderer, menuData.ballRightArrow, ARROW_HIGHLIGHT_TEXTURE_PATH, oldX, oldY);
-
-                        }
-                    }
-                    else
-                    {
-                        if (menuData.ballRightArrowSelected)
-                        {
-                            menuData.ballRightArrowSelected = false;
-                            destroyTexture(menuData.ballRightArrow);
-
-                            int oldX = menuData.ballRightArrow.rect.x;
-                            int oldY = menuData.ballRightArrow.rect.y;
-                            arrowReset(gameData.renderer, menuData.ballRightArrow, ARROW_TEXTURE_PATH, oldX, oldY);
-                        }
-                    }
+                    // Highlighting for the arrows
+                    updateArrowHighlighting(gameData.renderer, mousePos, menuData.ballLeftArrow, menuData.ballLeftArrowSelected);
+                    updateArrowHighlighting(gameData.renderer, mousePos, menuData.ballRightArrow, menuData.ballRightArrowSelected);
                 } break;
                 
                 case SDL_MOUSEBUTTONDOWN:
@@ -374,6 +324,34 @@ void updateSelectedBall(GameData& gameData)
         else
         {
             balls[i].visible = false;
+        }
+    }
+}
+
+void updateArrowHighlighting(SDL_Renderer* renderer, const SDL_Point& mousePos, Texture& arrow, bool& arrowSelected)
+{
+    if (SDL_PointInRect(&mousePos, &arrow.rect))
+    {
+        if (!arrowSelected)
+        {
+            arrowSelected = true;
+            destroyTexture(arrow);
+
+            int oldX = arrow.rect.x;
+            int oldY = arrow.rect.y;
+            arrowReset(renderer, arrow, ARROW_HIGHLIGHT_TEXTURE_PATH, oldX, oldY);
+        }
+    }
+    else
+    {
+        if (arrowSelected)
+        {
+            arrowSelected = false;
+            destroyTexture(arrow);
+
+            int oldX = arrow.rect.x;
+            int oldY = arrow.rect.y;
+            arrowReset(renderer, arrow, ARROW_TEXTURE_PATH, oldX, oldY);
         }
     }
 }
