@@ -42,6 +42,10 @@ void menuInit(GameData& gameData)
         currentItem.rect.y = position[a][1] - currentItem.rect.h / 2;
     }
 
+    menuData.homeMenuItems[0].colour = MENU_COLOURS[1];
+    updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.homeMenuItems[0]);
+    menuData.homeMenuItemSelected[0] = 1;
+
     // Customise page init
     menuData.ballsText.colour = MENU_COLOURS[0];
     menuData.ballsText.text = "Ball:"; // TODO(fkp): Font does not render colon on the end
@@ -92,26 +96,28 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 case SDL_MOUSEMOTION:
                 {
                     SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
-                    
+
+                    // Removes old selection(s)
+                    for (int i = 0; i < NUM_ITEMS_IN_MENU; i++)
+                    {
+                        if (menuData.homeMenuItemSelected[i] && !SDL_PointInRect(&mousePos, &menuData.homeMenuItems[i].rect))
+                        {
+                            menuData.homeMenuItemSelected[i] = 0;
+                            menuData.homeMenuItems[i].colour = MENU_COLOURS[0];
+                            updateTextTexture(gameData.renderer, menuData.homeMenuItems[i]);
+                        }
+                    }
+
                     for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
                     {
-                        if (SDL_PointInRect(&mousePos, &menuData.homeMenuItems[a].rect))
+                        if(!menuData.homeMenuItemSelected[a] && SDL_PointInRect(&mousePos, &menuData.homeMenuItems[a].rect))
                         {
-                            if(!menuData.homeMenuItemSelected[a])
-                            {
-                                menuData.homeMenuItemSelected[a] = 1;
-                                menuData.homeMenuItems[a].colour = MENU_COLOURS[1];
-                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.homeMenuItems[a]);
-                            }
-                        }
-                        else
-                        {
-                            if(menuData.homeMenuItemSelected[a])
-                            {
-                                menuData.homeMenuItemSelected[a] = 0;
-                                menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
-                                updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.homeMenuItems[a]);
-                            }
+                            // Highlights new selection
+                            menuData.homeMenuItemSelected[a] = 1;
+                            menuData.homeMenuItems[a].colour = MENU_COLOURS[1];
+                            updateTextTexture(gameData.renderer, menuData.homeMenuItems[a]);
+
+                            break;
                         }
                     }
                 } break;
@@ -133,7 +139,59 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     {
                         case SDLK_RETURN:
                         {
-                            return MenuButtonSelected::Start;
+                            for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
+                            {
+                                if(menuData.homeMenuItemSelected[a])
+                                {
+                                    return (MenuButtonSelected) (a + 1);
+                                }
+                            }
+                        } break;
+
+                        case SDLK_RIGHT:
+                        {
+                            for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
+                            {
+                                if (menuData.homeMenuItemSelected[a])
+                                {
+                                    menuData.homeMenuItemSelected[a] = 0;
+                                    menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
+                                    updateTextTexture(gameData.renderer, menuData.homeMenuItems[a]);
+
+                                    if (a + 1 >= NUM_ITEMS_IN_MENU)
+                                    {
+                                        a = -1;
+                                    }
+
+                                    menuData.homeMenuItemSelected[a + 1] = 1;
+                                    menuData.homeMenuItems[a + 1].colour = MENU_COLOURS[1];
+                                    updateTextTexture(gameData.renderer, menuData.homeMenuItems[a + 1]);
+                                    break;
+                                }
+                            }
+                        } break;
+
+                        case SDLK_LEFT:
+                        {
+                            for (int a = 0; a < NUM_ITEMS_IN_MENU; a++)
+                            {
+                                if (menuData.homeMenuItemSelected[a])
+                                {
+                                    menuData.homeMenuItemSelected[a] = 0;
+                                    menuData.homeMenuItems[a].colour = MENU_COLOURS[0];
+                                    updateTextTexture(gameData.renderer, menuData.homeMenuItems[a]);
+
+                                    if (a - 1 < 0)
+                                    {
+                                        a = NUM_ITEMS_IN_MENU;
+                                    }
+
+                                    menuData.homeMenuItemSelected[a - 1] = 1;
+                                    menuData.homeMenuItems[a - 1].colour = MENU_COLOURS[1];
+                                    updateTextTexture(gameData.renderer, menuData.homeMenuItems[a - 1]);
+                                    break;
+                                }
+                            }
                         } break;
                     }
                 } break;
