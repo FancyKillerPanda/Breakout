@@ -4,6 +4,11 @@
 
 void gameplayInit(GameData& gameData)
 {
+	if (gameData.gameplayInitialised)
+	{
+		return;
+	}
+	
 	gameData.pausedText.text = "PAUSED";
 	gameData.pausedText.colour = SDL_Colour { 255, 0, 0, 255 };
 	gameData.pausedText.size = 64;
@@ -16,6 +21,11 @@ void gameplayInit(GameData& gameData)
 	bricksReset(gameData);
 	
 	gameData.gameplayInitialised = true;
+}
+
+// Called each time entering the state
+void gameplayOnEnter(GameData& gameData)
+{
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
@@ -205,7 +215,7 @@ void gameplayDraw(GameData& gameData)
 		drawText(gameData.renderer, gameData.pausedText);
 
 	}
-	
+
 	drawText(gameData.renderer, gameData.fpsText);
 
 	SDL_RenderPresent(gameData.renderer);

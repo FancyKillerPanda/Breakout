@@ -60,9 +60,8 @@ bool gameInit(GameData& gameData)
 	gameData.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
 	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
 	
-	// Initialises states
+	// Initialises first state
 	menuInit(gameData);
-	gameplayInit(gameData);
 
 	return true;
 }
@@ -125,7 +124,7 @@ bool gameHandleEvents(GameData& gameData)
 				{
 					case MenuButtonSelected::Start:
 					{
-						gameData.gameState = GameState::Gameplay;
+						changeState(gameData, GameState::Gameplay);
 					} break;
 
 					case MenuButtonSelected::Customise:

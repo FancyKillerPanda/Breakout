@@ -4,6 +4,11 @@
 
 void menuInit(GameData& gameData)
 {
+    if (gameData.menuInitialised)
+    {
+        return;
+    }
+
     MenuData& menuData = gameData.menuData;
 
     // Back button
@@ -61,6 +66,11 @@ void menuInit(GameData& gameData)
     updateSelectedBall(gameData);
 
     gameData.menuInitialised = true;
+}
+
+// Called each time entering the state
+void menuOnEnter(GameData& gameData)
+{
 }
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
