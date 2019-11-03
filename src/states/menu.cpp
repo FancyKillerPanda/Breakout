@@ -236,8 +236,16 @@ void menuDraw(GameData& gameData)
                     // Should be highlighted
                     if (i == menuData.ballCurrentlySelectedIndex)
                     {
-                        // NOTE(fkp): Will have 5px border around ball
-                        int borderSize = 8;
+                        int borderSize;
+
+                        if (i == menuData.ballInViewIndex)
+                        {
+                            borderSize = 8;
+                        }
+                        else
+                        {
+                            borderSize = 5;
+                        }
                         menuData.circleHighlight.rect.x = ball.texture.rect.x - borderSize;
                         menuData.circleHighlight.rect.y = ball.texture.rect.y - borderSize;
                         menuData.circleHighlight.rect.w = ball.texture.rect.w + (borderSize * 2);
