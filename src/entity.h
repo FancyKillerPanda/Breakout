@@ -23,6 +23,7 @@ struct Ball
 	Texture texture = {};
 	Velocity velocity = {};
 
+	bool visible = true;
 	float rotationAngle = 0.0f;
 };
 
@@ -34,10 +35,11 @@ struct Brick
 	Velocity velocity = {};
 };
 
-void ballReset(SDL_Renderer* renderer, Ball& ball);
+void ballReset(SDL_Renderer* renderer, Ball& ball, const char* filepath);
 bool ballUpdate(GameData& gameData, Ball& ball);
 
 void paddleReset(SDL_Renderer* renderer, Paddle& paddle);
 void paddleUpdate(GameData& gameData, Paddle& paddle);
 
 void bricksReset(GameData& gameData);
+void arrowReset(SDL_Renderer* renderer, Texture& arrow, const char* texturePath, int x = 0, int y = 0);

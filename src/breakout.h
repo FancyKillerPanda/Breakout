@@ -12,8 +12,42 @@
 
 enum class GameState
 {
-	MainMenu,
+	Menu,
 	Gameplay,
+};
+
+enum class MenuState
+{
+	Home,
+	Customise,
+};
+
+struct MenuData
+{
+	MenuState state;
+
+	// Home page menu items
+	Text homeMenuItems[NUM_ITEMS_IN_MENU] = {};
+	bool homeMenuItemSelected[NUM_ITEMS_IN_MENU] = { 0, 0, 0 };
+
+	// Texture for highlighting
+	Texture circleHighlight = {};
+
+	// Arrows
+	Texture ballLeftArrow = {};
+	bool ballLeftArrowSelected = false;
+	Texture ballRightArrow = {};
+	bool ballRightArrowSelected = false;
+
+	// Back button
+	bool backButtonSelected = false;
+	Text backButton = {};
+
+	// Ball customisation
+	int ballCurrentlySelectedIndex = 0;
+	Text ballsText = {};
+	int ballInViewIndex = 0;
+	std::array<Ball, MENU_CUSTOMISE_NUMBER_OF_BALLS> balls = {};
 };
 
 struct GameData
@@ -21,6 +55,9 @@ struct GameData
 	bool running = false;
 	bool fullscreen = false;
 	bool paused = false;
+
+	bool menuInitialised = false;
+	bool gameplayInitialised = false;
 
 	// NOTE(fkp): Delta-time is in seconds
 	double deltaTime = 0.0;
@@ -31,17 +68,17 @@ struct GameData
 	SDL_Event event = {};
 	const uint8_t* keyboardState = nullptr;
 
-	// TODO(lucky962): Start Screen
-	GameState gameState = GameState::MainMenu;
+	// State data
+	GameState gameState = GameState::Menu;
+	MenuData menuData = {};
 
 	// Entities data
 	Paddle paddle = {};
+	const char* ballFilepath = "res/balls/default_ball.png";
 	Ball ball = {};
 	std::array<Brick, NUM_BRICKS_X_AXIS * NUM_BRICKS_Y_AXIS> bricks = {};
 
 	// Text data
 	Text fpsText = {};
 	Text pausedText = {};
-	Text menus[NUM_ITEMS_IN_MENU] = {};
-	bool selected[NUM_ITEMS_IN_MENU] = {0, 0, 0};
 };
