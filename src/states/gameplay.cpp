@@ -17,7 +17,7 @@ void gameplayInit(GameData& gameData)
 	gameData.pausedText.rect.y = (SCREEN_HEIGHT - gameData.pausedText.rect.h) / 2;
 
 	paddleReset(gameData.renderer, gameData.paddle);
-	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
+	ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
 	bricksReset(gameData);
 	
 	gameData.gameplayInitialised = true;
@@ -26,7 +26,7 @@ void gameplayInit(GameData& gameData)
 // Called each time entering the state
 void gameplayOnEnter(GameData& gameData)
 {
-	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
+	ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
@@ -172,7 +172,7 @@ bool gameplayUpdate(GameData& gameData)
 	{
 		// NOTE(fkp): Game over
 		// TODO(fkp): Splash screen instead of just restarting ball
-		ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
+		ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
 		paddleReset(gameData.renderer, gameData.paddle);
 		bricksReset(gameData);
 	}

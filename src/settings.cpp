@@ -29,12 +29,25 @@ Settings loadSettings()
 		result.settings[key] = value;
 	}
 
-	for (auto& pair : result.settings)
-	{
-		printf("Key: %s, value: %s\n", pair.first.c_str(), pair.second.c_str());
-	}
-
 	settingsFile.close();
 
 	return result;
+}
+
+const char* getSettingsValue(const Settings& settings, const char* key)
+{
+	const auto& result = settings.settings.find(key);
+
+	if (result != settings.settings.end())
+	{
+		return result->second.c_str();
+	}
+
+	printf("Key (%s) does not exist in settings.\n", key);
+	return "";
+}
+
+void setSettingsValue(Settings& settings, const char* key, const char* value)
+{
+	settings.settings[key] = value;
 }
