@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 				if (gameData.running) gameData.running = gameplayUpdate(gameData);
 				gameplayDraw(gameData);
 			} break;
-			case GameState::MainMenu:
+			case GameState::Menu:
 			{
 				menuDraw(gameData);
 			} break;

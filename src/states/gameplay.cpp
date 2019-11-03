@@ -2,9 +2,42 @@
 
 #include "state.h"
 
+void gameplayInit(GameData& gameData)
+{
+	if (gameData.gameplayInitialised)
+	{
+		return;
+	}
+	
+	gameData.pausedText.text = "PAUSED";
+	gameData.pausedText.colour = SDL_Colour { 255, 0, 0, 255 };
+	gameData.pausedText.size = 64;
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.pausedText);
+	gameData.pausedText.rect.x = (SCREEN_WIDTH - gameData.pausedText.rect.w) / 2;
+	gameData.pausedText.rect.y = (SCREEN_HEIGHT - gameData.pausedText.rect.h) / 2;
+
+	paddleReset(gameData.renderer, gameData.paddle);
+	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
+	bricksReset(gameData);
+	
+	gameData.gameplayInitialised = true;
+}
+
+// Called each time entering the state
+void gameplayOnEnter(GameData& gameData)
+{
+	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
+}
+
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot handle events.\n");
+		return false;
+	}
+	
 	switch (gameData.event.type)
 	{
 		case SDL_KEYDOWN:
@@ -62,6 +95,12 @@ bool gameplayHandleEvents(GameData& gameData)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayUpdate(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot update.\n");
+		return false;
+	}
+	
 	if (gameData.paused)
 	{
 		return true;
@@ -133,7 +172,7 @@ bool gameplayUpdate(GameData& gameData)
 	{
 		// NOTE(fkp): Game over
 		// TODO(fkp): Splash screen instead of just restarting ball
-		ballReset(gameData.renderer, gameData.ball);
+		ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
 		paddleReset(gameData.renderer, gameData.paddle);
 		bricksReset(gameData);
 	}
@@ -144,6 +183,12 @@ bool gameplayUpdate(GameData& gameData)
 // Draws the game state
 void gameplayDraw(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot draw.\n");
+		return;
+	}
+	
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
 
@@ -159,7 +204,6 @@ void gameplayDraw(GameData& gameData)
 
 	drawTexture(gameData.renderer, gameData.ball.texture, (double) gameData.ball.rotationAngle);
 	drawTexture(gameData.renderer, gameData.paddle.texture);
-	drawText(gameData.renderer, gameData.fpsText);
 
 	// Paused text
 	if (gameData.paused)
@@ -172,6 +216,8 @@ void gameplayDraw(GameData& gameData)
 		drawText(gameData.renderer, gameData.pausedText);
 
 	}
+
+	drawText(gameData.renderer, gameData.fpsText);
 
 	SDL_RenderPresent(gameData.renderer);
 }
