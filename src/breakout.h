@@ -71,6 +71,7 @@ struct GameData
 
 	// Entities data
 	Paddle paddle = {};
+	const char* ballFilepath = "res/balls/default_ball.png";
 	Ball ball = {};
 	std::array<Brick, NUM_BRICKS_X_AXIS * NUM_BRICKS_Y_AXIS> bricks = {};
 

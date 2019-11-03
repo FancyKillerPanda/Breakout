@@ -209,9 +209,10 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     {
                         menuData.state = MenuState::Home;
 
-
                         // Resets view for next entry into the customise state
                         menuData.ballInViewIndex = menuData.ballCurrentlySelectedIndex;
+                        // TODO(fkp): Have gameplay init separate
+                        ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
                         updateSelectedBall(gameData);
                         menuData.ballLeftArrowSelected = false;
                         menuData.ballRightArrowSelected = false;
@@ -241,6 +242,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                         SDL_PointInRect(&mousePos, &menuData.balls[menuData.ballInViewIndex].texture.rect))
                     {
                         menuData.ballCurrentlySelectedIndex = menuData.ballInViewIndex;
+                        gameData.ballFilepath = menuData.balls[menuData.ballCurrentlySelectedIndex].texture.filepath;
                     }
                 } break;
             }

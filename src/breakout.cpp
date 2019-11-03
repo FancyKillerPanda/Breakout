@@ -68,7 +68,7 @@ bool gameInit(GameData& gameData)
 	gameData.pausedText.rect.y = (SCREEN_HEIGHT - gameData.pausedText.rect.h) / 2;
 
 	paddleReset(gameData.renderer, gameData.paddle);
-	ballReset(gameData.renderer, gameData.ball);
+	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
 	bricksReset(gameData);
 	
 	// Initialises Menu
