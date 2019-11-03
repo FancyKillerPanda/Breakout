@@ -34,6 +34,24 @@ Settings loadSettings()
 	return result;
 }
 
+void writeSettingsToFile(const Settings& settings)
+{
+	// TODO(fkp): Make temp copy of settings file in case of error	
+	std::ofstream settingsFile;
+	settingsFile.open("res/settings.txt", std::ofstream::out | std::ofstream::trunc);
+
+	if (!settingsFile)
+	{
+		printf("Settings file open failed, could not write settings.\n");
+		return;
+	}
+
+	for (auto& pair : settings.settings)
+	{
+		settingsFile << pair.first << " " << pair.second << "\n";
+	}
+}
+
 const char* getSettingsValue(const Settings& settings, const char* key)
 {
 	const auto& result = settings.settings.find(key);

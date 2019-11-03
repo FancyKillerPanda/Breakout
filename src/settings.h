@@ -16,5 +16,6 @@ struct Settings
 
 
 Settings loadSettings();
+void writeSettingsToFile(const Settings& settings);
 const char* getSettingsValue(const Settings& settings, const char* key);
 void setSettingsValue(Settings& settings, const char* key, const char* value);

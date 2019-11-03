@@ -50,6 +50,9 @@ int main(int argc, char* argv[])
 			} break;
 		}
 	}
+
+	// TODO(fkp): Maybe put this on menu exit?
+	writeSettingsToFile(gameData.settings);
 	
 	return 0;
 }
