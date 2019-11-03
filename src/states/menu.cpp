@@ -179,6 +179,8 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 
                 case SDL_MOUSEBUTTONDOWN:
                 {
+                    SDL_Point mousePos = { gameData.event.button.x, gameData.event.button.y };
+                    
                     if (menuData.ballLeftArrowSelected)
                     {
                         if (menuData.ballInViewIndex > 0)
@@ -194,6 +196,13 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                             menuData.ballInViewIndex += 1;
                             updateSelectedBall(gameData);
                         }
+                    }
+
+                    // Main ball in view was clicked
+                    if (&menuData.balls[menuData.ballInViewIndex].visible && 
+                        SDL_PointInRect(&mousePos, &menuData.balls[menuData.ballInViewIndex].texture.rect))
+                    {
+                        menuData.ballCurrentlySelectedIndex = menuData.ballInViewIndex;
                     }
                 } break;
             }
