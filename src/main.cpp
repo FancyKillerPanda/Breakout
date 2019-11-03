@@ -2,6 +2,7 @@
 
 #include "states/gameplay.cpp"
 #include "states/menu.cpp"
+#include "settings.cpp"
 #include "gui.cpp"
 #include "entity.cpp"
 #include "breakout.cpp"

@@ -6,6 +6,7 @@
 #include "breakout.h"
 #include "entity.h"
 #include "states/state.h"
+#include "settings.h"
 
 // NOTE(fkp): Returns true on success, false on fail
 GameData init()
@@ -54,6 +55,8 @@ GameData init()
 // TODO(lucky962): Should this be separate for each game state?
 bool gameInit(GameData& gameData)
 {
+	Settings settings = loadSettings();
+	
 	// Text init
 	gameData.fpsText.text = "Breakout V0.1.0 | 0.00 FPS";
 	gameData.fpsText.rect.x = SCREEN_WIDTH * 4 / 5;
