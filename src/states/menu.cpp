@@ -5,6 +5,14 @@
 void initMenu(GameData& gameData)
 {
     MenuData& menuData = gameData.menuData;
+
+    // Back button
+    menuData.backButton.text = "Back";
+    menuData.backButton.size = 24;
+    menuData.backButton.colour = MENU_COLOURS[0];
+    updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.backButton);
+    menuData.backButton.rect.x = SCREEN_WIDTH / 10;
+    menuData.backButton.rect.y = SCREEN_HEIGHT * 7 / 8;
     
     // Highlighting texture
     menuData.circleHighlight = createTexture(gameData.renderer, "res/circle_highlight.png");
@@ -122,6 +130,21 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 {
                     SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
 
+                    // Back button
+                    if (!menuData.backButtonSelected && SDL_PointInRect(&mousePos, &menuData.backButton.rect))
+                    {
+                        menuData.backButtonSelected = true;
+                        menuData.backButton.colour = MENU_COLOURS[1];
+                        updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.backButton);
+                    }
+                    
+                    if (menuData.backButtonSelected && !SDL_PointInRect(&mousePos, &menuData.backButton.rect))
+                    {
+                        menuData.backButtonSelected = false;
+                        menuData.backButton.colour = MENU_COLOURS[0];
+                        updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, menuData.backButton);
+                    }
+
                     // TODO(fkp): Extract into a function
                     // Highlighting for the left ball arrow
                     if (SDL_PointInRect(&mousePos, &menuData.ballLeftArrow.rect))
@@ -181,6 +204,21 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                 {
                     SDL_Point mousePos = { gameData.event.button.x, gameData.event.button.y };
                     
+                    // Back button
+                    if (menuData.backButtonSelected)
+                    {
+                        menuData.state = MenuState::Home;
+
+
+                        // Resets view for next entry into the customise state
+                        menuData.ballInViewIndex = menuData.ballCurrentlySelectedIndex;
+                        updateSelectedBall(gameData);
+                        menuData.ballLeftArrowSelected = false;
+                        menuData.ballRightArrowSelected = false;
+                        
+                        break;
+                    }
+                    
                     if (menuData.ballLeftArrowSelected)
                     {
                         if (menuData.ballInViewIndex > 0)
@@ -232,6 +270,8 @@ void menuDraw(GameData& gameData)
 
         case MenuState::Customise:
         {
+            drawText(gameData.renderer, gameData.menuData.backButton);
+            
             drawText(gameData.renderer, gameData.menuData.ballsText);
             drawTexture(gameData.renderer, menuData.ballLeftArrow);
             drawTexture(gameData.renderer, menuData.ballRightArrow, 0.0, SDL_FLIP_HORIZONTAL);

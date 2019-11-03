@@ -39,6 +39,10 @@ struct MenuData
 	Texture ballRightArrow = {};
 	bool ballRightArrowSelected = false;
 
+	// Back button
+	bool backButtonSelected = false;
+	Text backButton = {};
+
 	// Ball customisation
 	int ballCurrentlySelectedIndex = 0;
 	Text ballsText = {};
