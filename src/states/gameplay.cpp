@@ -2,9 +2,31 @@
 
 #include "state.h"
 
+void gameplayInit(GameData& gameData)
+{
+	gameData.pausedText.text = "PAUSED";
+	gameData.pausedText.colour = SDL_Colour { 255, 0, 0, 255 };
+	gameData.pausedText.size = 64;
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.pausedText);
+	gameData.pausedText.rect.x = (SCREEN_WIDTH - gameData.pausedText.rect.w) / 2;
+	gameData.pausedText.rect.y = (SCREEN_HEIGHT - gameData.pausedText.rect.h) / 2;
+
+	paddleReset(gameData.renderer, gameData.paddle);
+	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
+	bricksReset(gameData);
+	
+	gameData.gameplayInitialised = true;
+}
+
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot handle events.\n");
+		return false;
+	}
+	
 	switch (gameData.event.type)
 	{
 		case SDL_KEYDOWN:
@@ -62,6 +84,12 @@ bool gameplayHandleEvents(GameData& gameData)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayUpdate(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot update.\n");
+		return false;
+	}
+	
 	if (gameData.paused)
 	{
 		return true;
@@ -144,6 +172,12 @@ bool gameplayUpdate(GameData& gameData)
 // Draws the game state
 void gameplayDraw(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot draw.\n");
+		return;
+	}
+	
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
 

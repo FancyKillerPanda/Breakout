@@ -2,6 +2,7 @@
 
 #include "breakout.h"
 
+void gameplayInit(GameData& gameData);
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData);
 // NOTE(fkp): Returns true if success, false if games needs to exit
@@ -18,7 +19,7 @@ enum class MenuButtonSelected
 };
 
 // Initialises menu
-void initMenu(GameData& gameData);
+void menuInit(GameData& gameData);
 MenuButtonSelected menuHandleEvents(GameData& gameData);
 // Draws menu
 void menuDraw(GameData& gameData);

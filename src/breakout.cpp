@@ -60,19 +60,9 @@ bool gameInit(GameData& gameData)
 	gameData.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
 	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
 	
-	gameData.pausedText.text = "PAUSED";
-	gameData.pausedText.colour = SDL_Colour { 255, 0, 0, 255 };
-	gameData.pausedText.size = 64;
-	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.pausedText);
-	gameData.pausedText.rect.x = (SCREEN_WIDTH - gameData.pausedText.rect.w) / 2;
-	gameData.pausedText.rect.y = (SCREEN_HEIGHT - gameData.pausedText.rect.h) / 2;
-
-	paddleReset(gameData.renderer, gameData.paddle);
-	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
-	bricksReset(gameData);
-	
-	// Initialises Menu
-	initMenu(gameData);
+	// Initialises states
+	menuInit(gameData);
+	gameplayInit(gameData);
 
 	return true;
 }

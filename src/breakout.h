@@ -56,6 +56,9 @@ struct GameData
 	bool fullscreen = false;
 	bool paused = false;
 
+	bool menuInitialised = false;
+	bool gameplayInitialised = false;
+
 	// NOTE(fkp): Delta-time is in seconds
 	double deltaTime = 0.0;
 	

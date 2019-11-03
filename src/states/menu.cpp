@@ -2,7 +2,7 @@
 
 #include "state.h"
 
-void initMenu(GameData& gameData)
+void menuInit(GameData& gameData)
 {
     MenuData& menuData = gameData.menuData;
 
@@ -59,10 +59,18 @@ void initMenu(GameData& gameData)
     ballReset(gameData.renderer, menuData.balls[3], "res/balls/basketball.png");
 
     updateSelectedBall(gameData);
+
+    gameData.menuInitialised = true;
 }
 
 MenuButtonSelected menuHandleEvents(GameData& gameData)
 {
+    if (!gameData.menuInitialised)
+    {
+        printf("Menu not initialised, cannot handle events.\n");
+        return MenuButtonSelected::Exit;
+    }
+    
     MenuData& menuData = gameData.menuData;
     
     switch (menuData.state)
@@ -255,6 +263,12 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
 
 void menuDraw(GameData& gameData)
 {
+    if (!gameData.menuInitialised)
+    {
+        printf("Menu not initialised, cannot draw.\n");
+        return;
+    }
+    
     MenuData& menuData = gameData.menuData;
     
     SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
