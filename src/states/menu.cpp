@@ -229,8 +229,6 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
 
                         // Resets view for next entry into the customise state
                         menuData.ballInViewIndex = menuData.ballCurrentlySelectedIndex;
-                        // TODO(fkp): Have gameplay init separate
-                        ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
                         updateSelectedBall(gameData);
                         menuData.ballLeftArrowSelected = false;
                         menuData.ballRightArrowSelected = false;

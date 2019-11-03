@@ -26,6 +26,7 @@ void gameplayInit(GameData& gameData)
 // Called each time entering the state
 void gameplayOnEnter(GameData& gameData)
 {
+	ballReset(gameData.renderer, gameData.ball, gameData.ballFilepath);
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
