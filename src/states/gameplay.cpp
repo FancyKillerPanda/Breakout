@@ -193,7 +193,6 @@ void gameplayDraw(GameData& gameData)
 
 	drawTexture(gameData.renderer, gameData.ball.texture, (double) gameData.ball.rotationAngle);
 	drawTexture(gameData.renderer, gameData.paddle.texture);
-	drawText(gameData.renderer, gameData.fpsText);
 
 	// Paused text
 	if (gameData.paused)
@@ -206,6 +205,8 @@ void gameplayDraw(GameData& gameData)
 		drawText(gameData.renderer, gameData.pausedText);
 
 	}
+	
+	drawText(gameData.renderer, gameData.fpsText);
 
 	SDL_RenderPresent(gameData.renderer);
 }

@@ -325,6 +325,8 @@ void menuDraw(GameData& gameData)
         } break;
     }
 
+    drawText(gameData.renderer, gameData.fpsText);
+
     SDL_RenderPresent(gameData.renderer);
 }
 
