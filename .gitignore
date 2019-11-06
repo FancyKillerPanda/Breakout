@@ -7,3 +7,5 @@
 *.iobj
 *.ipdb
 *.ilk
+
+build/res/settings.txt
