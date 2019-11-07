@@ -9,6 +9,7 @@
 #include "entity.h"
 #include "gui.h"
 #include "constants.h"
+#include "settings.h"
 
 enum class GameState
 {
@@ -59,6 +60,8 @@ struct GameData
 	bool menuInitialised = false;
 	bool gameplayInitialised = false;
 
+	Settings settings;
+
 	// NOTE(fkp): Delta-time is in seconds
 	double deltaTime = 0.0;
 	
@@ -74,7 +77,6 @@ struct GameData
 
 	// Entities data
 	Paddle paddle = {};
-	const char* ballFilepath = "res/balls/default_ball.png";
 	Ball ball = {};
 	std::array<Brick, NUM_BRICKS_X_AXIS * NUM_BRICKS_Y_AXIS> bricks = {};
 

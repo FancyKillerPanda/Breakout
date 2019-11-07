@@ -54,6 +54,8 @@ GameData init()
 // TODO(lucky962): Should this be separate for each game state?
 bool gameInit(GameData& gameData)
 {
+	gameData.settings = loadSettings();
+	
 	// Text init
 	gameData.fpsText.text = "Breakout V0.1.0 | 0.00 FPS";
 	gameData.fpsText.rect.x = SCREEN_WIDTH * 4 / 5;

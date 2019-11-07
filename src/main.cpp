@@ -2,6 +2,7 @@
 
 #include "states/gameplay.cpp"
 #include "states/menu.cpp"
+#include "settings.cpp"
 #include "gui.cpp"
 #include "entity.cpp"
 #include "breakout.cpp"
@@ -49,6 +50,9 @@ int main(int argc, char* argv[])
 			} break;
 		}
 	}
+
+	// TODO(fkp): Maybe put this on menu exit?
+	writeSettingsToFile(gameData.settings);
 	
 	return 0;
 }

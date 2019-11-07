@@ -67,6 +67,19 @@ void menuInit(GameData& gameData)
     ballReset(gameData.renderer, menuData.balls[2], "res/balls/tennisball.png");
     ballReset(gameData.renderer, menuData.balls[3], "res/balls/basketball.png");
 
+    const char* currentlySelectedFilepath = getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH");
+
+    // Sets the current ball selected based on the settings value
+    for (int i = 0; i < menuData.balls.size(); i++)
+    {
+        if (strcmp(currentlySelectedFilepath, menuData.balls[i].texture.filepath) == 0)
+        {
+            menuData.ballCurrentlySelectedIndex = i;
+            menuData.ballInViewIndex = i;
+            break;
+        }
+    }
+
     updateSelectedBall(gameData);
 
     gameData.menuInitialised = true;
@@ -292,7 +305,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                         SDL_PointInRect(&mousePos, &menuData.balls[menuData.ballInViewIndex].texture.rect))
                     {
                         menuData.ballCurrentlySelectedIndex = menuData.ballInViewIndex;
-                        gameData.ballFilepath = menuData.balls[menuData.ballCurrentlySelectedIndex].texture.filepath;
+                        setSettingsValue(gameData.settings, "BALL_TEXTURE_PATH", menuData.balls[menuData.ballCurrentlySelectedIndex].texture.filepath);
                     }
                 } break;
             }
