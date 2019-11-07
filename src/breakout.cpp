@@ -45,30 +45,25 @@ GameData init()
 	// Sets the logical size that will be used for the game
 	SDL_RenderSetLogicalSize(result.renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	// Sets the blend mode
+	SDL_SetRenderDrawBlendMode(result.renderer, SDL_BLENDMODE_BLEND);
+
 	return result;
 }
 
 // TODO(lucky962): Should this be separate for each game state?
 bool gameInit(GameData& gameData)
 {
+	gameData.settings = loadSettings();
+	
 	// Text init
 	gameData.fpsText.text = "Breakout V0.1.0 | 0.00 FPS";
 	gameData.fpsText.rect.x = SCREEN_WIDTH * 4 / 5;
 	gameData.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
 	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
 	
-	paddleReset(gameData.renderer, gameData.paddle);
-	ballReset(gameData.renderer, gameData.ball);
-	bricksReset(gameData);
-	
-	// Initialises Menu
-	initMenu(gameData);
-
-	gameData.GameOverText.text = "Game Over";
-	gameData.GameOverText.size = 50;
-	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.GameOverText);
-	gameData.GameOverText.rect.x = SCREEN_WIDTH * 1 / 2 - gameData.GameOverText.rect.w / 2;
-	gameData.GameOverText.rect.y = SCREEN_HEIGHT * 1 / 2 - gameData.GameOverText.rect.h / 2;
+	// Initialises first state
+	mainMenuInit(gameData);
 
 	return true;
 }
@@ -92,7 +87,10 @@ bool gameHandleEvents(GameData& gameData)
 				{
 					case SDLK_ESCAPE:
 					{
-						return false;
+						if (gameData.gameState != GameState::Gameplay)
+						{
+							return false;
+						}
 					} break;
 
 					case SDLK_F11:
@@ -128,7 +126,12 @@ bool gameHandleEvents(GameData& gameData)
 				{
 					case MenuButtonSelected::Start:
 					{
-						gameData.gameState = GameState::Gameplay;
+						changeState(gameData, GameState::Gameplay);
+					} break;
+
+					case MenuButtonSelected::Customise:
+					{
+						gameData.mainMenuData.state = MainMenuState::Customise;
 					} break;
 
 					case MenuButtonSelected::Exit:
@@ -141,7 +144,7 @@ bool gameHandleEvents(GameData& gameData)
 
 			case GameState::GameOver:
 			{
-				menuHandleEvents(gameData);
+				gameOverHandleEvents(gameData);
 			}
 		}
 	}

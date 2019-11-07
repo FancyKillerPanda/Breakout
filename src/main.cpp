@@ -3,6 +3,7 @@
 #include "states/gameplay.cpp"
 #include "states/menu.cpp"
 #include "states/gameover.cpp"
+#include "settings.cpp"
 #include "gui.cpp"
 #include "entity.cpp"
 #include "breakout.cpp"
@@ -47,7 +48,7 @@ int main(int argc, char* argv[])
 
 			case GameState::MainMenu:
 			{
-				menuDraw(gameData);
+				mainMenuDraw(gameData);
 			} break;
 
 			case GameState::GameOver:
@@ -56,6 +57,9 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+
+	// TODO(fkp): Maybe put this on menu exit?
+	writeSettingsToFile(gameData.settings);
 	
 	return 0;
 }

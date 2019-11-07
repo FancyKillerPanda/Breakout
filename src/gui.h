@@ -31,3 +31,13 @@ struct Text
 
 void updateTextTexture(SDL_Renderer* renderer, Text& text);
 void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text);
+
+inline void drawTexture(SDL_Renderer* renderer, Texture& texture, double angle = 0.0, SDL_RendererFlip flip = SDL_FLIP_NONE)
+{
+	SDL_RenderCopyEx(renderer, texture.texture, nullptr, &texture.rect, angle, nullptr, flip);
+}
+
+inline void drawText(SDL_Renderer* renderer, Text& text)
+{
+	SDL_RenderCopy(renderer, text.texture, nullptr, &text.rect);
+}
