@@ -67,6 +67,7 @@ struct GameData
 
 	bool mainMenuInitialised = false;
 	bool gameplayInitialised = false;
+	bool gameOverInitialised = false;
 
 	Settings settings;
 

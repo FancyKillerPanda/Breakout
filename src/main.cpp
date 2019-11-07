@@ -1,7 +1,7 @@
 #include <chrono>
 
 #include "states/gameplay.cpp"
-#include "states/menu.cpp"
+#include "states/mainmenu.cpp"
 #include "states/gameover.cpp"
 #include "settings.cpp"
 #include "gui.cpp"
