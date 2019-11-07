@@ -171,10 +171,7 @@ bool gameplayUpdate(GameData& gameData)
 	if (!ballUpdate(gameData, gameData.ball))
 	{
 		// NOTE(fkp): Game over
-		// TODO(fkp): Splash screen instead of just restarting ball
-		ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
-		paddleReset(gameData.renderer, gameData.paddle);
-		bricksReset(gameData);
+		changeState(gameData, GameState::GameOver);
 	}
 
 	return true;

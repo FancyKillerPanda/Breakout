@@ -2,6 +2,7 @@
 
 #include "states/gameplay.cpp"
 #include "states/menu.cpp"
+#include "states/gameover.cpp"
 #include "settings.cpp"
 #include "gui.cpp"
 #include "entity.cpp"
@@ -44,10 +45,16 @@ int main(int argc, char* argv[])
 				if (gameData.running) gameData.running = gameplayUpdate(gameData);
 				gameplayDraw(gameData);
 			} break;
-			case GameState::Menu:
+
+			case GameState::MainMenu:
 			{
-				menuDraw(gameData);
+				mainMenuDraw(gameData);
 			} break;
+
+			case GameState::GameOver:
+			{
+				gameoverDraw(gameData);
+			}
 		}
 	}
 

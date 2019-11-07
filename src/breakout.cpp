@@ -63,7 +63,7 @@ bool gameInit(GameData& gameData)
 	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
 	
 	// Initialises first state
-	menuInit(gameData);
+	mainMenuInit(gameData);
 
 	return true;
 }
@@ -120,7 +120,7 @@ bool gameHandleEvents(GameData& gameData)
 				}
 			} break;
 			
-			case GameState::Menu:
+			case GameState::MainMenu:
 			{
 				switch(menuHandleEvents(gameData))
 				{
@@ -131,7 +131,7 @@ bool gameHandleEvents(GameData& gameData)
 
 					case MenuButtonSelected::Customise:
 					{
-						gameData.menuData.state = MenuState::Customise;
+						gameData.mainMenuData.state = MainMenuState::Customise;
 					} break;
 
 					case MenuButtonSelected::Exit:
@@ -141,6 +141,11 @@ bool gameHandleEvents(GameData& gameData)
 					
 				}
 			} break;
+
+			case GameState::GameOver:
+			{
+				gameOverHandleEvents(gameData);
+			}
 		}
 	}
 

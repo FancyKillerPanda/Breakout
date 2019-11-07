@@ -21,10 +21,13 @@ constexpr int NUM_BRICKS_X_AXIS = 10;
 constexpr int NUM_BRICKS_Y_AXIS = 3;
 
 // Text properties
-const int NUM_ITEMS_IN_MENU = 3;
-const SDL_Color MENU_COLOURS[3] = { {255, 255, 255, 255}, {255, 0, 0, 255}, {192, 192, 192, 255} };
 constexpr char ARIAL_FONT_PATH[] = "res/fonts/arial.ttf";
 constexpr char BAD_SIGNAL_FONT_PATH[] = "res/fonts/Bad-Signal.ttf";
+
+// Menu properties
+const SDL_Color MENU_COLOURS[3] = { {255, 255, 255, 255}, {255, 0, 0, 255}, {192, 192, 192, 255} };
+const int NUM_ITEMS_IN_MAIN_MENU = 3;
+const int NUM_ITEMS_IN_GAME_OVER_MENU = 3;
 
 // Arrow properties
 constexpr char ARROW_TEXTURE_PATH[] = "res/arrow.png";

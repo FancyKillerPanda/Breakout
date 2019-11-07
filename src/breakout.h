@@ -13,23 +13,24 @@
 
 enum class GameState
 {
-	Menu,
+	MainMenu,
 	Gameplay,
+	GameOver,
 };
 
-enum class MenuState
+enum class MainMenuState
 {
 	Home,
 	Customise,
 };
 
-struct MenuData
+struct MainMenuData
 {
-	MenuState state;
+	MainMenuState state;
 
 	// Home page menu items
-	Text homeMenuItems[NUM_ITEMS_IN_MENU] = {};
-	bool homeMenuItemSelected[NUM_ITEMS_IN_MENU] = { 0, 0, 0 };
+	Text homeMenuItems[NUM_ITEMS_IN_MAIN_MENU] = {};
+	bool homeMenuItemSelected[NUM_ITEMS_IN_MAIN_MENU] = { 0, 0, 0 };
 
 	// Texture for highlighting
 	Texture circleHighlight = {};
@@ -51,13 +52,20 @@ struct MenuData
 	std::array<Ball, MENU_CUSTOMISE_NUMBER_OF_BALLS> balls = {};
 };
 
+struct GameOverData
+{
+	Text gameOverText = {};
+	Text menuItems[NUM_ITEMS_IN_GAME_OVER_MENU] = {};
+	bool menuItemSelected[NUM_ITEMS_IN_GAME_OVER_MENU] = { 0, 0, 0 };
+};
+
 struct GameData
 {
 	bool running = false;
 	bool fullscreen = false;
 	bool paused = false;
 
-	bool menuInitialised = false;
+	bool mainMenuInitialised = false;
 	bool gameplayInitialised = false;
 
 	Settings settings;
@@ -72,8 +80,9 @@ struct GameData
 	const uint8_t* keyboardState = nullptr;
 
 	// State data
-	GameState gameState = GameState::Menu;
-	MenuData menuData = {};
+	GameState gameState = GameState::MainMenu;
+	MainMenuData mainMenuData = {};
+	GameOverData gameOverData = {};
 
 	// Entities data
 	Paddle paddle = {};

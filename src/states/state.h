@@ -21,13 +21,19 @@ enum class MenuButtonSelected
 	Exit
 };
 
-// Initialises menu
-void menuInit(GameData& gameData);
+// Initialises main menu
+void mainMenuInit(GameData& gameData);
 // Called each time entering the state
-void menuOnEnter(GameData& gameData);
+void mainMenuOnEnter(GameData& gameData);
 MenuButtonSelected menuHandleEvents(GameData& gameData);
-// Draws menu
-void menuDraw(GameData& gameData);
+// Draws main menu
+void mainMenuDraw(GameData& gameData);
+
+// Initialises game over menu
+void gameOverInit(GameData& gameData);
+void gameOverHandleEvents(GameData& gameData);
+// Draws the gameover state
+void gameOverDraw(GameData& gameData);
 
 // Updates the locations and sizes of the customisable balls
 void updateSelectedBall(GameData& gameData);
@@ -47,10 +53,16 @@ inline void changeState(GameData& gameData, GameState newState)
 			gameplayInit(gameData); // Will not do anything if already initialised
 			gameplayOnEnter(gameData);
 		} break;
-		case GameState::Menu:
+
+		case GameState::MainMenu:
 		{
-			menuInit(gameData); // Will not do anything if already initialised
-			menuOnEnter(gameData);
+			mainMenuInit(gameData); // Will not do anything if already initialised
+			mainMenuOnEnter(gameData);
+		} break;
+		
+		case GameState::GameOver:
+		{
+			gameOverInit(gameData);
 		} break;
 	}
 }
