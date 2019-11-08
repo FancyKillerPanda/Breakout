@@ -23,28 +23,13 @@ void mainMenuInit(GameData& gameData)
     mainMenuData.circleHighlight = createTexture(gameData.renderer, "res/circle_highlight.png");
     
     // Home page init
-    char* labels[NUM_ITEMS_IN_MAIN_MENU] = { "Start", "Settings", "Exit" };
-    int position[NUM_ITEMS_IN_MAIN_MENU][2] = {
+    std::vector<std::string> labels = { "Start", "Settings", "Exit" };
+    std::vector<std::pair<int, int>> positions = {
         { SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
         { SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 8 * 7 }, 
-        { SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 8 * 7 }
+        { SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 8 * 7 } 
     };
-
-    for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
-    {
-        Text& currentItem = mainMenuData.homeMenuItems[a];
-        
-        currentItem.text = labels[a];
-        currentItem.size = 30;
-        currentItem.colour = MENU_COLOURS[0];
-		updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, currentItem);
-        currentItem.rect.x = position[a][0] - currentItem.rect.w / 2;
-        currentItem.rect.y = position[a][1] - currentItem.rect.h / 2;
-    }
-
-    mainMenuData.homeMenuItems[0].colour = MENU_COLOURS[1];
-    updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, mainMenuData.homeMenuItems[0]);
-    mainMenuData.homeMenuItemSelected[0] = 1;
+    mainMenuData.homePageMenu = menuConstruct(gameData.renderer, labels, positions);
 
     // Customise page init
     mainMenuData.ballsText.colour = MENU_COLOURS[0];
@@ -108,6 +93,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
             {
                 case SDL_MOUSEMOTION:
                 {
+                    /*
                     SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
 
                     // Removes old selection(s)
@@ -133,10 +119,12 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                             break;
                         }
                     }
+                    */
                 } break;
 
                 case SDL_MOUSEBUTTONDOWN:
                 {
+                    /*
                     for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
                     {
                         if(mainMenuData.homeMenuItemSelected[a])
@@ -144,6 +132,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                             return (MenuButtonSelected) (a + 1);
                         }
                     }
+                    */
                 } break;
 
                 case SDL_KEYDOWN:
@@ -152,6 +141,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     {
                         case SDLK_RETURN:
                         {
+                            /*
                             for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
                             {
                                 if(mainMenuData.homeMenuItemSelected[a])
@@ -159,10 +149,12 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                                     return (MenuButtonSelected) (a + 1);
                                 }
                             }
+                            */
                         } break;
 
                         case SDLK_RIGHT:
                         {
+                            /*
                             // Whether an item is already selected
                             bool hit = false;
                             
@@ -195,10 +187,12 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                                 mainMenuData.homeMenuItems[0].colour = MENU_COLOURS[1];
                                 updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[0]);
                             }
+                            */
                         } break;
 
                         case SDLK_LEFT:
                         {
+                            /*
                             // Whether an item is already selected
                             bool hit = false;
                             
@@ -231,6 +225,7 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                                 mainMenuData.homeMenuItems[0].colour = MENU_COLOURS[1];
                                 updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[0]);
                             }
+                            */
                         } break;
                     }
                 } break;
@@ -333,10 +328,7 @@ void mainMenuDraw(GameData& gameData)
     {
         case MainMenuState::Home:
         {
-            for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
-            {
-                drawText(gameData.renderer, mainMenuData.homeMenuItems[a]);
-            }
+            menuDraw(gameData.renderer, mainMenuData.homePageMenu);
         } break;
 
         case MainMenuState::Customise:

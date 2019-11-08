@@ -29,8 +29,7 @@ struct MainMenuData
 	MainMenuState state;
 
 	// Home page menu items
-	Text homeMenuItems[NUM_ITEMS_IN_MAIN_MENU] = {};
-	bool homeMenuItemSelected[NUM_ITEMS_IN_MAIN_MENU] = { 0, 0, 0 };
+	Menu homePageMenu = {};
 
 	// Texture for highlighting
 	Texture circleHighlight = {};

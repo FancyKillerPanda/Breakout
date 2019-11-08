@@ -41,16 +41,16 @@ void updateTextTexture(SDL_Renderer* renderer, Text& text)
 
 	if (text.font == nullptr)
 	{
-		printf("Text requires valid font (text: %s)\n", text.text);
+		printf("Text requires valid font (text: %s)\n", text.text.c_str());
 		return;
 	}
 
 	// Creates a surface for the text
-	SDL_Surface* textSurface = TTF_RenderUTF8_Solid(text.font, text.text, text.colour);
+	SDL_Surface* textSurface = TTF_RenderUTF8_Solid(text.font, text.text.c_str(), text.colour);
 
 	if (textSurface == nullptr)
 	{
-		printf("Text surface creation failed (text: %s)\n%s\n", text.text, SDL_GetError());
+		printf("Text surface creation failed (text: %s)\n%s\n", text.text.c_str(), SDL_GetError());
 		return;
 	}
 
@@ -59,7 +59,7 @@ void updateTextTexture(SDL_Renderer* renderer, Text& text)
 
 	if (text.texture == nullptr)
 	{
-		printf("Text surface to texture failed (text: %s)\n%s\n", text.text, SDL_GetError());
+		printf("Text surface to texture failed (text: %s)\n%s\n", text.text.c_str(), SDL_GetError());
 		return;
 	}
 
@@ -87,4 +87,57 @@ void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text)
 	}
 
 	updateTextTexture(renderer, text);
+}
+
+Menu menuConstruct(SDL_Renderer* renderer, std::vector<std::string> texts, std::vector<std::pair<int, int>> positions)
+{
+	Menu result = {};
+
+	if (texts.size() != positions.size())
+	{
+		printf("Error: Menu construct text size not equal position size.\n");
+		return result;
+	}
+	
+	for (int i = 0; i < texts.size(); i++)
+	{
+		result.items.push_back(Text {});
+		Text& currentItem = result.items.back();
+		
+		currentItem.text = texts[i];
+		currentItem.size = 30;
+		currentItem.colour = MENU_COLOURS[0];
+		updateTextTexture(renderer, BAD_SIGNAL_FONT_PATH, currentItem);
+		currentItem.rect.x = positions[i].first - currentItem.rect.w / 2;
+		currentItem.rect.y = positions[i].second - currentItem.rect.h / 2;
+	}
+
+	result.items[0].colour = MENU_COLOURS[1];
+	updateTextTexture(renderer, BAD_SIGNAL_FONT_PATH, result.items[0]);
+	result.itemSelected = 0;
+
+	return result;
+}
+
+void menuHandleMouseMove()
+{
+
+}
+
+void menuHandleMouseDown()
+{
+
+}
+
+void menuHandleKeyDown()
+{
+	
+}
+
+void menuDraw(SDL_Renderer* renderer, Menu& menu)
+{
+	for (int i = 0; i < menu.items.size(); i++)
+	{
+		drawText(renderer, menu.items[i]);
+	}
 }
