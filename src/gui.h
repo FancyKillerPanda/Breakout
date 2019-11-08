@@ -9,6 +9,8 @@
 
 #include "constants.h"
 
+struct GameData;
+
 struct Texture
 {
 	const char* filepath = "";
@@ -54,7 +56,7 @@ struct Menu
 
 
 Menu menuConstruct(SDL_Renderer* renderer, std::vector<std::string> texts, std::vector<std::pair<int, int>> positions);
-void menuHandleMouseMove();
-void menuHandleMouseDown();
-void menuHandleKeyDown();
+void menuHandleMouseMove(const GameData& gameData, Menu& menu);
+int menuHandlePress(const Menu& menu);
+void menuHandleKeyDown(const GameData& gameData, Menu& menu);
 void menuDraw(SDL_Renderer* renderer, Menu& menu);

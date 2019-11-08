@@ -93,46 +93,17 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
             {
                 case SDL_MOUSEMOTION:
                 {
-                    /*
-                    SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
-
-                    // Removes old selection(s)
-                    for (int i = 0; i < NUM_ITEMS_IN_MAIN_MENU; i++)
-                    {
-                        if (mainMenuData.homeMenuItemSelected[i] && !SDL_PointInRect(&mousePos, &mainMenuData.homeMenuItems[i].rect))
-                        {
-                            mainMenuData.homeMenuItemSelected[i] = 0;
-                            mainMenuData.homeMenuItems[i].colour = MENU_COLOURS[0];
-                            updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[i]);
-                        }
-                    }
-
-                    for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
-                    {
-                        if(!mainMenuData.homeMenuItemSelected[a] && SDL_PointInRect(&mousePos, &mainMenuData.homeMenuItems[a].rect))
-                        {
-                            // Highlights new selection
-                            mainMenuData.homeMenuItemSelected[a] = 1;
-                            mainMenuData.homeMenuItems[a].colour = MENU_COLOURS[1];
-                            updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[a]);
-
-                            break;
-                        }
-                    }
-                    */
+                    menuHandleMouseMove(gameData, mainMenuData.homePageMenu);
                 } break;
 
                 case SDL_MOUSEBUTTONDOWN:
                 {
-                    /*
-                    for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
+                    int buttonPressed = menuHandlePress(mainMenuData.homePageMenu);
+
+                    if (buttonPressed != -1)
                     {
-                        if(mainMenuData.homeMenuItemSelected[a])
-                        {
-                            return (MenuButtonSelected) (a + 1);
-                        }
+                        return (MenuButtonSelected) (buttonPressed + 1);
                     }
-                    */
                 } break;
 
                 case SDL_KEYDOWN:
@@ -141,91 +112,22 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
                     {
                         case SDLK_RETURN:
                         {
-                            /*
-                            for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
+                            int buttonPressed = menuHandlePress(mainMenuData.homePageMenu);
+
+                            if (buttonPressed != -1)
                             {
-                                if(mainMenuData.homeMenuItemSelected[a])
-                                {
-                                    return (MenuButtonSelected) (a + 1);
-                                }
+                                return (MenuButtonSelected) (buttonPressed + 1);
                             }
-                            */
                         } break;
 
                         case SDLK_RIGHT:
                         {
-                            /*
-                            // Whether an item is already selected
-                            bool hit = false;
-                            
-                            for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
-                            {
-                                if (mainMenuData.homeMenuItemSelected[a])
-                                {
-                                    mainMenuData.homeMenuItemSelected[a] = 0;
-                                    mainMenuData.homeMenuItems[a].colour = MENU_COLOURS[0];
-                                    updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[a]);
-
-                                    if (a + 1 >= NUM_ITEMS_IN_MAIN_MENU)
-                                    {
-                                        a = -1;
-                                    }
-
-                                    mainMenuData.homeMenuItemSelected[a + 1] = 1;
-                                    mainMenuData.homeMenuItems[a + 1].colour = MENU_COLOURS[1];
-                                    updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[a + 1]);
-
-                                    hit = true;
-                                    break;
-                                }
-                            }
-
-                            if (!hit)
-                            {
-                                // Highlights the first option
-                                mainMenuData.homeMenuItemSelected[0] = 1;
-                                mainMenuData.homeMenuItems[0].colour = MENU_COLOURS[1];
-                                updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[0]);
-                            }
-                            */
+                            menuHandleKeyDown(gameData, mainMenuData.homePageMenu);
                         } break;
 
                         case SDLK_LEFT:
                         {
-                            /*
-                            // Whether an item is already selected
-                            bool hit = false;
-                            
-                            for (int a = 0; a < NUM_ITEMS_IN_MAIN_MENU; a++)
-                            {
-                                if (mainMenuData.homeMenuItemSelected[a])
-                                {
-                                    mainMenuData.homeMenuItemSelected[a] = 0;
-                                    mainMenuData.homeMenuItems[a].colour = MENU_COLOURS[0];
-                                    updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[a]);
-
-                                    if (a - 1 < 0)
-                                    {
-                                        a = NUM_ITEMS_IN_MAIN_MENU;
-                                    }
-
-                                    mainMenuData.homeMenuItemSelected[a - 1] = 1;
-                                    mainMenuData.homeMenuItems[a - 1].colour = MENU_COLOURS[1];
-                                    updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[a - 1]);
-
-                                    hit = true;
-                                    break;
-                                }
-                            }
-
-                            if (!hit)
-                            {
-                                // Highlights the first option
-                                mainMenuData.homeMenuItemSelected[0] = 1;
-                                mainMenuData.homeMenuItems[0].colour = MENU_COLOURS[1];
-                                updateTextTexture(gameData.renderer, mainMenuData.homeMenuItems[0]);
-                            }
-                            */
+                            menuHandleKeyDown(gameData, mainMenuData.homePageMenu);
                         } break;
                     }
                 } break;

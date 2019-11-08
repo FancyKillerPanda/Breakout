@@ -119,19 +119,83 @@ Menu menuConstruct(SDL_Renderer* renderer, std::vector<std::string> texts, std::
 	return result;
 }
 
-void menuHandleMouseMove()
+void menuHandleMouseMove(const GameData& gameData, Menu& menu)
 {
+	SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
 
+	// Removes old selection(s)
+	for (int i = 0; i < menu.items.size(); i++)
+	{
+		if ((menu.itemSelected == i) && (!SDL_PointInRect(&mousePos, &menu.items[i].rect)))
+		{
+			menu.itemSelected = -1;
+			menu.items[i].colour = MENU_COLOURS[0];
+			updateTextTexture(gameData.renderer, menu.items[i]);
+		}
+	}
+
+	for (int i = 0; i < menu.items.size(); i++)
+	{
+		if ((menu.itemSelected != i) && (SDL_PointInRect(&mousePos, &menu.items[i].rect)))
+		{
+			// Highlights new selection
+			menu.itemSelected = i;
+			menu.items[i].colour = MENU_COLOURS[1];
+			updateTextTexture(gameData.renderer, menu.items[i]);
+
+			break;
+		}
+	}
 }
 
-void menuHandleMouseDown()
+int menuHandlePress(const Menu& menu)
 {
+	// TODO(fkp): Probably doesn't need to be a loop
+	for (int i = 0; i < menu.items.size(); i++)
+	{
+		if (menu.itemSelected == i)
+		{
+			return i;
+		}
+	}
 
+	return -1;
 }
 
-void menuHandleKeyDown()
+void menuHandleKeyDown(const GameData& gameData, Menu& menu)
 {
-	
+	if (menu.itemSelected != -1)
+	{
+		menu.items[menu.itemSelected].colour = MENU_COLOURS[0];
+		updateTextTexture(gameData.renderer, menu.items[menu.itemSelected]);
+	}
+
+	if (gameData.event.key.keysym.sym == SDLK_RIGHT)
+	{
+		menu.itemSelected += 1;
+
+		if (menu.itemSelected >= menu.items.size())
+		{
+			menu.itemSelected = 0;
+		}
+	}
+	else if (gameData.event.key.keysym.sym == SDLK_LEFT)
+	{
+		menu.itemSelected -= 1;
+
+		if (menu.itemSelected < 0)
+		{
+			menu.itemSelected = (int) (menu.items.size() - 1);
+		}
+	}
+	else
+	{
+		// NOTE(fkp): Should be unreachable
+		printf("Reached unreachable location (menuHandleKeyDown).");
+	}
+
+	menu.items[menu.itemSelected].colour = MENU_COLOURS[1];
+	updateTextTexture(gameData.renderer, menu.items[menu.itemSelected]);
 }
 
 void menuDraw(SDL_Renderer* renderer, Menu& menu)
