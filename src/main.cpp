@@ -1,6 +1,9 @@
 #include <chrono>
 
 #include "states/gameplay.cpp"
+#include "states/mainmenu.cpp"
+#include "states/gameover.cpp"
+#include "settings.cpp"
 #include "gui.cpp"
 #include "entity.cpp"
 #include "breakout.cpp"
@@ -42,8 +45,21 @@ int main(int argc, char* argv[])
 				if (gameData.running) gameData.running = gameplayUpdate(gameData);
 				gameplayDraw(gameData);
 			} break;
+
+			case GameState::MainMenu:
+			{
+				mainMenuDraw(gameData);
+			} break;
+
+			case GameState::GameOver:
+			{
+				gameOverDraw(gameData);
+			}
 		}
 	}
+
+	// TODO(fkp): Maybe put this on menu exit?
+	writeSettingsToFile(gameData.settings);
 	
 	return 0;
 }

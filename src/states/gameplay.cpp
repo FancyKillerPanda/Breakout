@@ -2,9 +2,81 @@
 
 #include "state.h"
 
+void gameplayInit(GameData& gameData)
+{
+	if (gameData.gameplayInitialised)
+	{
+		return;
+	}
+	
+	gameData.pausedText.text = "PAUSED";
+	gameData.pausedText.colour = SDL_Colour { 255, 0, 0, 255 };
+	gameData.pausedText.size = 64;
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameData.pausedText);
+	gameData.pausedText.rect.x = (SCREEN_WIDTH - gameData.pausedText.rect.w) / 2;
+	gameData.pausedText.rect.y = (SCREEN_HEIGHT - gameData.pausedText.rect.h) / 2;
+
+	paddleReset(gameData.renderer, gameData.paddle);
+	ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
+	bricksReset(gameData);
+	
+	gameData.gameplayInitialised = true;
+}
+
+// Called each time entering the state
+void gameplayOnEnter(GameData& gameData)
+{
+	ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
+}
+
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayHandleEvents(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot handle events.\n");
+		return false;
+	}
+	
+	switch (gameData.event.type)
+	{
+		case SDL_KEYDOWN:
+		{
+			switch (gameData.event.key.keysym.sym)
+			{
+				// Toggles paused
+				case SDLK_ESCAPE:
+				{
+					if (gameData.paused)
+					{
+						return false;
+					}
+
+					gameData.paused = true;
+				} break;
+				
+				case SDLK_p:
+				{
+					gameData.paused = !gameData.paused;
+				} break;
+
+				case SDLK_RETURN:
+				{
+					if (gameData.paused)
+					{
+						gameData.paused = false;
+					}
+				} break;
+			}
+		} break;
+	}
+
+	// Stops the rest of the function if paused
+	if (gameData.paused)
+	{
+		return true;
+	}
+
 	gameData.paddle.velocity.x = 0;
 
 	if (gameData.keyboardState[SDL_SCANCODE_RIGHT])
@@ -23,6 +95,17 @@ bool gameplayHandleEvents(GameData& gameData)
 // NOTE(fkp): Returns true if success, false if games needs to exit
 bool gameplayUpdate(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot update.\n");
+		return false;
+	}
+	
+	if (gameData.paused)
+	{
+		return true;
+	}
+	
 	if (SDL_HasIntersection(&gameData.ball.texture.rect, &gameData.paddle.texture.rect))
 	{
 		const float maxBallBounceAngle = 75;
@@ -88,10 +171,7 @@ bool gameplayUpdate(GameData& gameData)
 	if (!ballUpdate(gameData, gameData.ball))
 	{
 		// NOTE(fkp): Game over
-		// TODO(fkp): Splash screen instead of just restarting ball
-		ballReset(gameData.renderer, gameData.ball);
-		paddleReset(gameData.renderer, gameData.paddle);
-		bricksReset(gameData);
+		changeState(gameData, GameState::GameOver);
 	}
 
 	return true;
@@ -100,6 +180,12 @@ bool gameplayUpdate(GameData& gameData)
 // Draws the game state
 void gameplayDraw(GameData& gameData)
 {
+	if (!gameData.gameplayInitialised)
+	{
+		printf("Gameplay not initialised, cannot draw.\n");
+		return;
+	}
+	
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
 
@@ -110,12 +196,25 @@ void gameplayDraw(GameData& gameData)
 			continue;
 		}
 		
-		SDL_RenderCopy(gameData.renderer, brick.texture.texture, nullptr, &brick.texture.rect);
+		drawTexture(gameData.renderer, brick.texture);
 	}
 
-	SDL_RenderCopyEx(gameData.renderer, gameData.ball.texture.texture, nullptr, &gameData.ball.texture.rect, (double) gameData.ball.rotationAngle, nullptr, SDL_FLIP_NONE);
-	SDL_RenderCopy(gameData.renderer, gameData.paddle.texture.texture, nullptr, &gameData.paddle.texture.rect);
-	SDL_RenderCopy(gameData.renderer, gameData.fpsText.texture, nullptr, &gameData.fpsText.rect);
+	drawTexture(gameData.renderer, gameData.ball.texture, (double) gameData.ball.rotationAngle);
+	drawTexture(gameData.renderer, gameData.paddle.texture);
+
+	// Paused text
+	if (gameData.paused)
+	{
+		// Paused dim
+		SDL_Rect dimRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+		SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 170);
+		SDL_RenderFillRect(gameData.renderer, &dimRect);
+		
+		drawText(gameData.renderer, gameData.pausedText);
+
+	}
+
+	drawText(gameData.renderer, gameData.fpsText);
 
 	SDL_RenderPresent(gameData.renderer);
 }

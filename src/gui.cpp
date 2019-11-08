@@ -41,16 +41,16 @@ void updateTextTexture(SDL_Renderer* renderer, Text& text)
 
 	if (text.font == nullptr)
 	{
-		printf("Text requires valid font (text: %s)\n", text.text);
+		printf("Text requires valid font (text: %s)\n", text.text.c_str());
 		return;
 	}
 
 	// Creates a surface for the text
-	SDL_Surface* textSurface = TTF_RenderUTF8_Solid(text.font, text.text, text.colour);
+	SDL_Surface* textSurface = TTF_RenderUTF8_Solid(text.font, text.text.c_str(), text.colour);
 
 	if (textSurface == nullptr)
 	{
-		printf("Text surface creation failed (text: %s)\n%s\n", text.text, SDL_GetError());
+		printf("Text surface creation failed (text: %s)\n%s\n", text.text.c_str(), SDL_GetError());
 		return;
 	}
 
@@ -59,7 +59,7 @@ void updateTextTexture(SDL_Renderer* renderer, Text& text)
 
 	if (text.texture == nullptr)
 	{
-		printf("Text surface to texture failed (text: %s)\n%s\n", text.text, SDL_GetError());
+		printf("Text surface to texture failed (text: %s)\n%s\n", text.text.c_str(), SDL_GetError());
 		return;
 	}
 
@@ -87,4 +87,107 @@ void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text)
 	}
 
 	updateTextTexture(renderer, text);
+}
+
+Menu menuConstruct(SDL_Renderer* renderer, std::vector<std::string> texts, std::vector<std::pair<int, int>> positions)
+{
+	Menu result = {};
+
+	if (texts.size() != positions.size())
+	{
+		printf("Error: Menu construct text size not equal position size.\n");
+		return result;
+	}
+	
+	for (int i = 0; i < texts.size(); i++)
+	{
+		result.items.push_back(Text {});
+		Text& currentItem = result.items.back();
+		
+		currentItem.text = texts[i];
+		currentItem.size = 30;
+		currentItem.colour = MENU_COLOURS[0];
+		updateTextTexture(renderer, BAD_SIGNAL_FONT_PATH, currentItem);
+		currentItem.rect.x = positions[i].first - currentItem.rect.w / 2;
+		currentItem.rect.y = positions[i].second - currentItem.rect.h / 2;
+	}
+
+	result.items[0].colour = MENU_COLOURS[1];
+	updateTextTexture(renderer, BAD_SIGNAL_FONT_PATH, result.items[0]);
+	result.itemSelected = 0;
+
+	return result;
+}
+
+void menuHandleMouseMove(const GameData& gameData, Menu& menu)
+{
+	SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
+
+	// Removes old selection
+	if ((menu.itemSelected != -1) && (!SDL_PointInRect(&mousePos, &menu.items[menu.itemSelected].rect)))
+	{
+		menu.items[menu.itemSelected].colour = MENU_COLOURS[0];
+		updateTextTexture(gameData.renderer, menu.items[menu.itemSelected]);
+		menu.itemSelected = -1;
+	}
+
+	for (int i = 0; i < menu.items.size(); i++)
+	{
+		if ((menu.itemSelected != i) && (SDL_PointInRect(&mousePos, &menu.items[i].rect)))
+		{
+			// Highlights new selection
+			menu.itemSelected = i;
+			menu.items[i].colour = MENU_COLOURS[1];
+			updateTextTexture(gameData.renderer, menu.items[i]);
+		}
+	}
+}
+
+int menuHandlePress(const Menu& menu)
+{
+	return menu.itemSelected;
+}
+
+void menuHandleKeyDown(const GameData& gameData, Menu& menu)
+{
+	if (menu.itemSelected != -1)
+	{
+		menu.items[menu.itemSelected].colour = MENU_COLOURS[0];
+		updateTextTexture(gameData.renderer, menu.items[menu.itemSelected]);
+	}
+
+	if (gameData.event.key.keysym.sym == SDLK_RIGHT)
+	{
+		menu.itemSelected += 1;
+
+		if (menu.itemSelected >= menu.items.size())
+		{
+			menu.itemSelected = 0;
+		}
+	}
+	else if (gameData.event.key.keysym.sym == SDLK_LEFT)
+	{
+		menu.itemSelected -= 1;
+
+		if (menu.itemSelected < 0)
+		{
+			menu.itemSelected = (int) (menu.items.size() - 1);
+		}
+	}
+	else
+	{
+		// NOTE(fkp): Should be unreachable
+		printf("Reached unreachable location (menuHandleKeyDown).");
+	}
+
+	menu.items[menu.itemSelected].colour = MENU_COLOURS[1];
+	updateTextTexture(gameData.renderer, menu.items[menu.itemSelected]);
+}
+
+void menuDraw(SDL_Renderer* renderer, Menu& menu)
+{
+	for (int i = 0; i < menu.items.size(); i++)
+	{
+		drawText(renderer, menu.items[i]);
+	}
 }
