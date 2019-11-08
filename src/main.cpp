@@ -1,7 +1,7 @@
 #include <chrono>
 
 #include "states/gameplay.cpp"
-#include "states/menu.cpp"
+#include "states/mainmenu.cpp"
 #include "states/gameover.cpp"
 #include "settings.cpp"
 #include "gui.cpp"
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 
 			case GameState::GameOver:
 			{
-				gameoverDraw(gameData);
+				gameOverDraw(gameData);
 			}
 		}
 	}

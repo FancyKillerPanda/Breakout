@@ -29,8 +29,7 @@ struct MainMenuData
 	MainMenuState state;
 
 	// Home page menu items
-	Text homeMenuItems[NUM_ITEMS_IN_MAIN_MENU] = {};
-	bool homeMenuItemSelected[NUM_ITEMS_IN_MAIN_MENU] = { 0, 0, 0 };
+	Menu homePageMenu = {};
 
 	// Texture for highlighting
 	Texture circleHighlight = {};
@@ -55,8 +54,7 @@ struct MainMenuData
 struct GameOverData
 {
 	Text gameOverText = {};
-	Text menuItems[NUM_ITEMS_IN_GAME_OVER_MENU] = {};
-	bool menuItemSelected[NUM_ITEMS_IN_GAME_OVER_MENU] = { 0, 0, 0 };
+	Menu gameOverMenu = {};
 };
 
 struct GameData
@@ -67,6 +65,7 @@ struct GameData
 
 	bool mainMenuInitialised = false;
 	bool gameplayInitialised = false;
+	bool gameOverInitialised = false;
 
 	Settings settings;
 

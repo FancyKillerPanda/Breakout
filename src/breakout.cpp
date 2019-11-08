@@ -144,7 +144,10 @@ bool gameHandleEvents(GameData& gameData)
 
 			case GameState::GameOver:
 			{
-				gameOverHandleEvents(gameData);
+				if (!gameOverHandleEvents(gameData))
+				{
+					return false;
+				}
 			}
 		}
 	}
