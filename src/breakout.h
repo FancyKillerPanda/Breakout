@@ -54,8 +54,7 @@ struct MainMenuData
 struct GameOverData
 {
 	Text gameOverText = {};
-	Text menuItems[NUM_ITEMS_IN_GAME_OVER_MENU] = {};
-	bool menuItemSelected[NUM_ITEMS_IN_GAME_OVER_MENU] = { 0, 0, 0 };
+	Menu gameOverMenu = {};
 };
 
 struct GameData
