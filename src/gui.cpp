@@ -123,15 +123,12 @@ void menuHandleMouseMove(const GameData& gameData, Menu& menu)
 {
 	SDL_Point mousePos = { gameData.event.motion.x, gameData.event.motion.y };
 
-	// Removes old selection(s)
-	for (int i = 0; i < menu.items.size(); i++)
+	// Removes old selection
+	if ((menu.itemSelected != -1) && (!SDL_PointInRect(&mousePos, &menu.items[menu.itemSelected].rect)))
 	{
-		if ((menu.itemSelected == i) && (!SDL_PointInRect(&mousePos, &menu.items[i].rect)))
-		{
-			menu.itemSelected = -1;
-			menu.items[i].colour = MENU_COLOURS[0];
-			updateTextTexture(gameData.renderer, menu.items[i]);
-		}
+		menu.items[menu.itemSelected].colour = MENU_COLOURS[0];
+		updateTextTexture(gameData.renderer, menu.items[menu.itemSelected]);
+		menu.itemSelected = -1;
 	}
 
 	for (int i = 0; i < menu.items.size(); i++)
@@ -142,24 +139,13 @@ void menuHandleMouseMove(const GameData& gameData, Menu& menu)
 			menu.itemSelected = i;
 			menu.items[i].colour = MENU_COLOURS[1];
 			updateTextTexture(gameData.renderer, menu.items[i]);
-
-			break;
 		}
 	}
 }
 
 int menuHandlePress(const Menu& menu)
 {
-	// TODO(fkp): Probably doesn't need to be a loop
-	for (int i = 0; i < menu.items.size(); i++)
-	{
-		if (menu.itemSelected == i)
-		{
-			return i;
-		}
-	}
-
-	return -1;
+	return menu.itemSelected;
 }
 
 void menuHandleKeyDown(const GameData& gameData, Menu& menu)
