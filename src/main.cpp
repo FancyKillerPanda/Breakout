@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 
 			case GameState::GameOver:
 			{
-				gameoverDraw(gameData);
+				gameOverDraw(gameData);
 			}
 		}
 	}
