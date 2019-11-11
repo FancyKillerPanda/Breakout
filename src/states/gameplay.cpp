@@ -6,6 +6,9 @@ void gameplayInit(GameData& gameData)
 {
 	if (gameData.gameplayInitialised)
 	{
+		paddleReset(gameData.renderer, gameData.paddle);
+		ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
+		bricksReset(gameData);
 		return;
 	}
 	

@@ -19,10 +19,9 @@ void gameOverInit(GameData& gameData)
 	gameOverData.gameOverText.rect.y = SCREEN_HEIGHT * 3 / 10 - gameOverData.gameOverText.rect.h / 2;
 
 	// Game over menu items init
-	std::vector<std::string> labels = { "Restart", "Settings", "Exit" };
+	std::vector<std::string> labels = { "TRY AGAIN", "Exit" };
 	std::vector<std::pair<int, int>> positions = {
 		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
-		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 8 * 7 }, 
 		{ SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 8 * 7 } 
 	};
 	gameOverData.gameOverMenu = menuConstruct(gameData.renderer, labels, positions);
@@ -50,7 +49,18 @@ bool gameOverHandleEvents(GameData& gameData)
 
 		case SDL_MOUSEBUTTONDOWN:
 		{
-			menuHandlePress(gameOverData.gameOverMenu);
+			switch (menuHandlePress(gameOverData.gameOverMenu))
+			{
+				case 0:
+				{
+					changeState(gameData, GameState::Gameplay);
+				} break;
+				
+				case 1:
+				{
+					return false;
+				} break;
+			}
 		} break;
 
 		case SDL_KEYDOWN:
@@ -59,7 +69,18 @@ bool gameOverHandleEvents(GameData& gameData)
 			{
 				case SDLK_RETURN:
 				{
-					menuHandlePress(gameOverData.gameOverMenu);
+					switch (menuHandlePress(gameOverData.gameOverMenu))
+					{
+						case 0:
+						{
+							changeState(gameData, GameState::Gameplay);
+						} break;
+						
+						case 1:
+						{
+							return false;
+						} break;
+					}
 				} break;
 
 				case SDLK_RIGHT:
