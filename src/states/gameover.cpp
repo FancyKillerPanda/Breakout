@@ -19,7 +19,7 @@ void gameOverInit(GameData& gameData)
 	gameOverData.gameOverText.rect.y = SCREEN_HEIGHT * 3 / 10 - gameOverData.gameOverText.rect.h / 2;
 
 	// Game over menu items init
-	std::vector<std::string> labels = { "Retart", "Settings", "Exit" };
+	std::vector<std::string> labels = { "Restart", "Settings", "Exit" };
 	std::vector<std::pair<int, int>> positions = {
 		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
 		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 8 * 7 }, 
