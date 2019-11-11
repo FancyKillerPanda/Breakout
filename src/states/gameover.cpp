@@ -19,10 +19,11 @@ void gameOverInit(GameData& gameData)
 	gameOverData.gameOverText.rect.y = SCREEN_HEIGHT * 3 / 10 - gameOverData.gameOverText.rect.h / 2;
 
 	// Game over menu items init
-	std::vector<std::string> labels = { "TRY AGAIN", "Exit" };
+	std::vector<std::string> labels = { "TRY AGAIN", "Main Menu", "Exit" };
 	std::vector<std::pair<int, int>> positions = {
-		{ SCREEN_WIDTH / 3,     SCREEN_HEIGHT / 12 * 7 },
-		{ SCREEN_WIDTH / 3 * 2, SCREEN_HEIGHT / 12 * 7 } 
+		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 12 * 7 },
+		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 12 * 7 },
+		{ SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 12 * 7 } 
 	};
 	gameOverData.gameOverMenu = menuConstruct(gameData.renderer, labels, positions);
 
@@ -77,6 +78,11 @@ bool gameOverHandleEvents(GameData& gameData)
 						} break;
 						
 						case 1:
+						{
+							changeState(gameData, GameState::MainMenu);
+						} break;
+
+						case 2:
 						{
 							return false;
 						} break;
