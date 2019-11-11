@@ -21,8 +21,8 @@ void gameOverInit(GameData& gameData)
 	// Game over menu items init
 	std::vector<std::string> labels = { "TRY AGAIN", "Exit" };
 	std::vector<std::pair<int, int>> positions = {
-		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
-		{ SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 8 * 7 } 
+		{ SCREEN_WIDTH / 3,     SCREEN_HEIGHT / 12 * 7 },
+		{ SCREEN_WIDTH / 3 * 2, SCREEN_HEIGHT / 12 * 7 } 
 	};
 	gameOverData.gameOverMenu = menuConstruct(gameData.renderer, labels, positions);
 
