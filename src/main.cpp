@@ -13,6 +13,8 @@ int main(int argc, char* argv[])
 	GameData gameData = init();
 	gameInit(gameData);
 
+	SDL_SetWindowIcon(gameData.window, IMG_Load("res/breakoutlogo.png"));
+
 	unsigned int frameCounter = 0;
 	std::chrono::high_resolution_clock::time_point lastTime = std::chrono::high_resolution_clock::now();
 
