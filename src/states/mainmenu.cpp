@@ -23,6 +23,12 @@ void mainMenuInit(GameData& gameData)
 	mainMenuData.circleHighlight = createTexture(gameData.renderer, "res/circle_highlight.png");
 	
 	// Home page init
+	mainMenuData.title.text = "Breakout";
+	mainMenuData.title.size = 80;
+	mainMenuData.title.colour = MENU_COLOURS[0];
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, mainMenuData.title);
+	mainMenuData.title.rect.x = SCREEN_WIDTH / 2 - mainMenuData.title.rect.w / 2;
+	mainMenuData.title.rect.y = SCREEN_HEIGHT / 3 - mainMenuData.title.rect.h / 2;
 	std::vector<std::string> labels = { "Start", "Settings", "Exit" };
 	std::vector<std::pair<int, int>> positions = {
 		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
@@ -230,6 +236,7 @@ void mainMenuDraw(GameData& gameData)
 	{
 		case MainMenuState::Home:
 		{
+			drawText(gameData.renderer, mainMenuData.title);
 			menuDraw(gameData.renderer, mainMenuData.homePageMenu);
 		} break;
 

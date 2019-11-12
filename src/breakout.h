@@ -29,6 +29,7 @@ struct MainMenuData
 	MainMenuState state;
 
 	// Home page menu items
+	Text title = {};
 	Menu homePageMenu = {};
 
 	// Texture for highlighting
