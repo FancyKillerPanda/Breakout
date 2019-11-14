@@ -1,3 +1,5 @@
+#include <string>
+
 #include <SDL/SDL.h>
 
 #include "state.h"		
@@ -27,11 +29,28 @@ void gameOverInit(GameData& gameData)
 	};
 	gameOverData.gameOverMenu = menuConstruct(gameData.renderer, labels, positions);
 
+	gameOverOnEnter(gameData);
+
+	gameData.gameOverInitialised = true;
+}
+
+void gameOverOnEnter(GameData& gameData)
+{
+	GameOverData& gameOverData = gameData.gameOverData;
+	
+	// Highscore calculation
+	int highScore = std::stoi(getSettingsValue(gameData.settings, "HIGH_SCORE"));
+
+	if (highScore < gameData.score)
+	{
+		highScore = gameData.score;
+		setSettingsValue(gameData.settings, "HIGH_SCORE", std::to_string(gameData.score).c_str());
+	}
+
 	// Score text init
-	// TODO(fkp): Highscore
 	// TODO(fkp): Change font
 	char tempStr[256];
-	sprintf_s(tempStr, 256, "Score: %d I Highscore: %d", gameData.score, 0);
+	sprintf_s(tempStr, 256, "Score: %d I Highscore: %d", gameData.score, highScore);
 
 	gameOverData.scoreText.text = tempStr;
 	gameOverData.scoreText.colour = SDL_Color { 255, 255, 255, 255 };
@@ -39,8 +58,6 @@ void gameOverInit(GameData& gameData)
 	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameOverData.scoreText);
 	gameOverData.scoreText.rect.x = SCREEN_WIDTH / 2 - gameOverData.scoreText.rect.w / 2;
 	gameOverData.scoreText.rect.y = SCREEN_HEIGHT * 7 / 10 - gameOverData.scoreText.rect.h / 2;
-
-	gameData.gameOverInitialised = true;
 }
 
 bool gameOverHandleEvents(GameData& gameData)

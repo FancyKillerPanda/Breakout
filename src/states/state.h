@@ -31,6 +31,8 @@ void mainMenuDraw(GameData& gameData);
 
 // Initialises game over menu
 void gameOverInit(GameData& gameData);
+// Called each time entering the state
+void gameOverOnEnter(GameData& gameData);
 bool gameOverHandleEvents(GameData& gameData);
 // Draws the gameover state
 void gameOverDraw(GameData& gameData);
@@ -63,6 +65,7 @@ inline void changeState(GameData& gameData, GameState newState)
 		case GameState::GameOver:
 		{
 			gameOverInit(gameData); // Will not do anything if already initialised
+			gameOverOnEnter(gameData);
 		} break;
 	}
 }
