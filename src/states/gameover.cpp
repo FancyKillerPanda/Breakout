@@ -21,11 +21,24 @@ void gameOverInit(GameData& gameData)
 	// Game over menu items init
 	std::vector<std::string> labels = { "TRY AGAIN", "Main Menu", "Exit" };
 	std::vector<std::pair<int, int>> positions = {
-		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 12 * 7 },
-		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 12 * 7 },
-		{ SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 12 * 7 } 
+		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 2 },
+		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 2 },
+		{ SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 2 } 
 	};
 	gameOverData.gameOverMenu = menuConstruct(gameData.renderer, labels, positions);
+
+	// Score text init
+	// TODO(fkp): Highscore
+	// TODO(fkp): Change font
+	char tempStr[256];
+	sprintf_s(tempStr, 256, "Score: %d I Highscore: %d", gameData.score, 0);
+
+	gameOverData.scoreText.text = tempStr;
+	gameOverData.scoreText.colour = SDL_Color { 255, 255, 255, 255 };
+	gameOverData.scoreText.size = 30;
+	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, gameOverData.scoreText);
+	gameOverData.scoreText.rect.x = SCREEN_WIDTH / 2 - gameOverData.scoreText.rect.w / 2;
+	gameOverData.scoreText.rect.y = SCREEN_HEIGHT * 7 / 10 - gameOverData.scoreText.rect.h / 2;
 
 	gameData.gameOverInitialised = true;
 }
@@ -118,8 +131,9 @@ void gameOverDraw(GameData& gameData)
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
 
-	SDL_RenderCopy(gameData.renderer, gameData.gameOverData.gameOverText.texture, nullptr, &gameData.gameOverData.gameOverText.rect);
+	drawText(gameData.renderer, gameOverData.gameOverText);
 	menuDraw(gameData.renderer, gameOverData.gameOverMenu);
+	drawText(gameData.renderer, gameOverData.scoreText);
 
 	SDL_RenderPresent(gameData.renderer);
 }

@@ -30,6 +30,7 @@ void gameplayInit(GameData& gameData)
 void gameplayOnEnter(GameData& gameData)
 {
 	ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));
+	gameData.score = 0;
 }
 
 // NOTE(fkp): Returns true if success, false if games needs to exit
@@ -166,6 +167,7 @@ bool gameplayUpdate(GameData& gameData)
 		if (brickHit->numOfHitsLeft == 0)
 		{
 			destroyTexture(brickHit->texture);
+			gameData.score += 10;
 		}
 	}
 
