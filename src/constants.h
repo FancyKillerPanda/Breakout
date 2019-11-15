@@ -22,7 +22,7 @@ constexpr int NUM_BRICKS_Y_AXIS = 3;
 
 // Text properties
 constexpr char ARIAL_FONT_PATH[] = "res/fonts/arial.ttf";
-constexpr char BAD_SIGNAL_FONT_PATH[] = "res/fonts/Bad-Signal.ttf";
+constexpr char DIGITAL_DISCO_FONT_PATH[] = "res/fonts/DigitalDisco.ttf";
 
 // Menu properties
 const SDL_Color MENU_COLOURS[3] = { {255, 255, 255, 255}, {255, 0, 0, 255}, {192, 192, 192, 255} };

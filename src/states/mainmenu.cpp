@@ -15,7 +15,7 @@ void mainMenuInit(GameData& gameData)
 	mainMenuData.backButton.text = "Back";
 	mainMenuData.backButton.size = 24;
 	mainMenuData.backButton.colour = MENU_COLOURS[0];
-	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, mainMenuData.backButton);
+	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.backButton);
 	mainMenuData.backButton.rect.x = SCREEN_WIDTH / 10;
 	mainMenuData.backButton.rect.y = SCREEN_HEIGHT * 7 / 8;
 	
@@ -26,10 +26,10 @@ void mainMenuInit(GameData& gameData)
 	mainMenuData.title.text = "Breakout";
 	mainMenuData.title.size = 80;
 	mainMenuData.title.colour = MENU_COLOURS[0];
-	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, mainMenuData.title);
+	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.title);
 	mainMenuData.title.rect.x = SCREEN_WIDTH / 2 - mainMenuData.title.rect.w / 2;
 	mainMenuData.title.rect.y = SCREEN_HEIGHT / 3 - mainMenuData.title.rect.h / 2;
-	std::vector<std::string> labels = { "Start", "Settings", "Exit" };
+	std::vector<std::string> labels = { "START", "SETTINGS", "EXIT" };
 	std::vector<std::pair<int, int>> positions = {
 		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
 		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 8 * 7 }, 
@@ -39,9 +39,9 @@ void mainMenuInit(GameData& gameData)
 
 	// Customise page init
 	mainMenuData.ballsText.colour = MENU_COLOURS[0];
-	mainMenuData.ballsText.text = "Ball:"; // TODO(fkp): Font does not render colon on the end
+	mainMenuData.ballsText.text = "Ball:";
 	mainMenuData.ballsText.size = 30; // TODO(fkp): Extract font size into constant
-	updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, mainMenuData.ballsText);
+	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.ballsText);
 	mainMenuData.ballsText.rect.x = MENU_CUSTOMISE_BALL_TEXT_X;
 	mainMenuData.ballsText.rect.y = MENU_CUSTOMISE_BALL_TEXT_CENTER_Y - mainMenuData.ballsText.rect.h / 2;
 	
@@ -153,14 +153,14 @@ MenuButtonSelected menuHandleEvents(GameData& gameData)
 					{
 						mainMenuData.backButtonSelected = true;
 						mainMenuData.backButton.colour = MENU_COLOURS[1];
-						updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, mainMenuData.backButton);
+						updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.backButton);
 					}
 					
 					if (mainMenuData.backButtonSelected && !SDL_PointInRect(&mousePos, &mainMenuData.backButton.rect))
 					{
 						mainMenuData.backButtonSelected = false;
 						mainMenuData.backButton.colour = MENU_COLOURS[0];
-						updateTextTexture(gameData.renderer, BAD_SIGNAL_FONT_PATH, mainMenuData.backButton);
+						updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.backButton);
 					}
 
 					// Highlighting for the arrows
