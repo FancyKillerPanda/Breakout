@@ -89,6 +89,11 @@ bool gameOverHandleEvents(GameData& gameData)
 				
 				case 1:
 				{
+					changeState(gameData, GameState::MainMenu);
+				} break;
+				
+				case 2:
+				{
 					return false;
 				} break;
 			}
