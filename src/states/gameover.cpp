@@ -1,3 +1,5 @@
+#include <string>
+
 #include <SDL/SDL.h>
 
 #include "state.h"		
@@ -21,13 +23,41 @@ void gameOverInit(GameData& gameData)
 	// Game over menu items init
 	std::vector<std::string> labels = { "TRY AGAIN", "MAIN MENU", "EXIT" };
 	std::vector<std::pair<int, int>> positions = {
-		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 12 * 7 },
-		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 12 * 7 },
-		{ SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 12 * 7 } 
+		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 2 },
+		{ SCREEN_WIDTH / 4 * 2, SCREEN_HEIGHT / 2 },
+		{ SCREEN_WIDTH / 4 * 3, SCREEN_HEIGHT / 2 } 
 	};
 	gameOverData.gameOverMenu = menuConstruct(gameData.renderer, labels, positions);
 
+	gameOverOnEnter(gameData);
+
 	gameData.gameOverInitialised = true;
+}
+
+void gameOverOnEnter(GameData& gameData)
+{
+	GameOverData& gameOverData = gameData.gameOverData;
+	
+	// Highscore calculation
+	int highScore = std::stoi(getSettingsValue(gameData.settings, "HIGH_SCORE"));
+
+	if (highScore < gameData.score)
+	{
+		highScore = gameData.score;
+		setSettingsValue(gameData.settings, "HIGH_SCORE", std::to_string(gameData.score).c_str());
+	}
+
+	// Score text init
+	// TODO(fkp): Change font
+	char tempStr[256];
+	sprintf_s(tempStr, 256, "Score: %d  |  Highscore: %d", gameData.score, highScore);
+
+	gameOverData.scoreText.text = tempStr;
+	gameOverData.scoreText.colour = SDL_Color { 255, 255, 255, 255 };
+	gameOverData.scoreText.size = 30;
+	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, gameOverData.scoreText);
+	gameOverData.scoreText.rect.x = SCREEN_WIDTH / 2 - gameOverData.scoreText.rect.w / 2;
+	gameOverData.scoreText.rect.y = SCREEN_HEIGHT * 7 / 10 - gameOverData.scoreText.rect.h / 2;
 }
 
 bool gameOverHandleEvents(GameData& gameData)
@@ -118,8 +148,9 @@ void gameOverDraw(GameData& gameData)
 	SDL_SetRenderDrawColor(gameData.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(gameData.renderer);
 
-	SDL_RenderCopy(gameData.renderer, gameData.gameOverData.gameOverText.texture, nullptr, &gameData.gameOverData.gameOverText.rect);
+	drawText(gameData.renderer, gameOverData.gameOverText);
 	menuDraw(gameData.renderer, gameOverData.gameOverMenu);
+	drawText(gameData.renderer, gameOverData.scoreText);
 
 	SDL_RenderPresent(gameData.renderer);
 }

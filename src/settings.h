@@ -11,6 +11,7 @@ struct Settings
 	// Put default settings in here
 	std::unordered_map<std::string, std::string> settings = {
 		{ "BALL_TEXTURE_PATH", "res/balls/default_ball.png" },
+		{ "HIGH_SCORE", "0" },
 	};
 };
 

@@ -55,6 +55,7 @@ struct MainMenuData
 struct GameOverData
 {
 	Text gameOverText = {};
+	Text scoreText = {};
 	Menu gameOverMenu = {};
 };
 
@@ -92,4 +93,6 @@ struct GameData
 	// Text data
 	Text fpsText = {};
 	Text pausedText = {};
+
+	int score = 0;
 };
