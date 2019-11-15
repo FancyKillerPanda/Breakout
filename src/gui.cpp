@@ -107,13 +107,13 @@ Menu menuConstruct(SDL_Renderer* renderer, std::vector<std::string> texts, std::
 		currentItem.text = texts[i];
 		currentItem.size = 30;
 		currentItem.colour = MENU_COLOURS[0];
-		updateTextTexture(renderer, BAD_SIGNAL_FONT_PATH, currentItem);
+		updateTextTexture(renderer, DIGITAL_DISCO_FONT_PATH, currentItem);
 		currentItem.rect.x = positions[i].first - currentItem.rect.w / 2;
 		currentItem.rect.y = positions[i].second - currentItem.rect.h / 2;
 	}
 
 	result.items[0].colour = MENU_COLOURS[1];
-	updateTextTexture(renderer, BAD_SIGNAL_FONT_PATH, result.items[0]);
+	updateTextTexture(renderer, DIGITAL_DISCO_FONT_PATH, result.items[0]);
 	result.itemSelected = 0;
 
 	return result;
