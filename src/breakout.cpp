@@ -56,11 +56,8 @@ bool gameInit(GameData& gameData)
 {
 	gameData.settings = loadSettings();
 	
-	// Text init
-	gameData.fpsText.text = "Breakout V0.1.0 | 0.00 FPS";
-	gameData.fpsText.rect.x = SCREEN_WIDTH * 4 / 5;
-	gameData.fpsText.rect.y = SCREEN_HEIGHT * 15 / 16;
-	updateTextTexture(gameData.renderer, ARIAL_FONT_PATH, gameData.fpsText);
+	// FPS text init
+	gameData.fpsText = createText(gameData.renderer, "Breakout V0.1.0 | 0.00 FPS", 14, SCREEN_WIDTH * 9 / 10, SCREEN_HEIGHT * 31 / 32, ARIAL_FONT_PATH, SDL_Color { 255, 255, 255, 255 });
 	
 	// Initialises first state
 	mainMenuInit(gameData);

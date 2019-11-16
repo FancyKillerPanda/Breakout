@@ -2,6 +2,7 @@
 
 #include <utility>
 #include <vector>
+#include <string>
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -34,11 +35,13 @@ struct Text
 	SDL_Texture* texture = nullptr;
 	SDL_Rect rect = {};
 	
-	std::string text = "Text";
+	std::string text = "";
 	unsigned int size = 14;
-	SDL_Color colour = SDL_Color { 255, 0, 0, 255 };
+	SDL_Color colour = SDL_Color { 255, 255, 255, 255 };
 };
 
+Text createText(SDL_Renderer* renderer, std::string text, int size, int centerX, int centerY);
+Text createText(SDL_Renderer* renderer, std::string text, int size, int centerX, int centerY, const char* fontPath, SDL_Color colour);
 void updateTextTexture(SDL_Renderer* renderer, Text& text);
 void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text);
 

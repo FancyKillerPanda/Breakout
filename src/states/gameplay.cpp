@@ -12,12 +12,7 @@ void gameplayInit(GameData& gameData)
 		return;
 	}
 	
-	gameData.pausedText.text = "PAUSED";
-	gameData.pausedText.colour = SDL_Colour { 255, 0, 0, 255 };
-	gameData.pausedText.size = 64;
-	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, gameData.pausedText);
-	gameData.pausedText.rect.x = (SCREEN_WIDTH - gameData.pausedText.rect.w) / 2;
-	gameData.pausedText.rect.y = (SCREEN_HEIGHT - gameData.pausedText.rect.h) / 2;
+	gameData.pausedText = createText(gameData.renderer, "PAUSED", 64, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, DIGITAL_DISCO_FONT_PATH, SDL_Color { 255, 0, 0, 255 });
 
 	paddleReset(gameData.renderer, gameData.paddle);
 	ballReset(gameData.renderer, gameData.ball, getSettingsValue(gameData.settings, "BALL_TEXTURE_PATH"));

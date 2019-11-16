@@ -89,6 +89,24 @@ void updateTextTexture(SDL_Renderer* renderer, const char* fontPath, Text& text)
 	updateTextTexture(renderer, text);
 }
 
+Text createText(SDL_Renderer* renderer, std::string text, int size, int centerX, int centerY)
+{
+	return createText(renderer, text, size, centerX, centerY, DIGITAL_DISCO_FONT_PATH, SDL_Color { 255, 255, 255, 255 });
+}
+
+Text createText(SDL_Renderer* renderer, std::string text, int size, int centerX, int centerY, const char* fontPath, SDL_Color colour)
+{
+	Text result;
+	result.text = text;
+	result.size = size;
+	result.colour = colour;
+	updateTextTexture(renderer, fontPath, result);
+	result.rect.x = centerX - (result.rect.w / 2);
+	result.rect.y = centerY - (result.rect.h / 2);
+
+	return result;
+}
+
 Menu menuConstruct(SDL_Renderer* renderer, std::vector<std::string> texts, std::vector<std::pair<int, int>> positions)
 {
 	Menu result = {};
@@ -101,15 +119,7 @@ Menu menuConstruct(SDL_Renderer* renderer, std::vector<std::string> texts, std::
 	
 	for (int i = 0; i < texts.size(); i++)
 	{
-		result.items.push_back(Text {});
-		Text& currentItem = result.items.back();
-		
-		currentItem.text = texts[i];
-		currentItem.size = 30;
-		currentItem.colour = MENU_COLOURS[0];
-		updateTextTexture(renderer, DIGITAL_DISCO_FONT_PATH, currentItem);
-		currentItem.rect.x = positions[i].first - currentItem.rect.w / 2;
-		currentItem.rect.y = positions[i].second - currentItem.rect.h / 2;
+		result.items.push_back(createText(renderer, texts[i], 30, positions[i].first, positions[i].second, DIGITAL_DISCO_FONT_PATH, MENU_COLOURS[0]));
 	}
 
 	result.items[0].colour = MENU_COLOURS[1];

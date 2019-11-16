@@ -34,7 +34,7 @@ constexpr char ARROW_TEXTURE_PATH[] = "res/arrow.png";
 constexpr char ARROW_HIGHLIGHT_TEXTURE_PATH[] = "res/arrow_highlight.png";
 
 // Menu properties
-constexpr int MENU_CUSTOMISE_BALL_TEXT_X = SCREEN_WIDTH / 4;
+constexpr int MENU_CUSTOMISE_BALL_TEXT_CENTER_X = SCREEN_WIDTH * 3 / 10;
 constexpr int MENU_CUSTOMISE_BALL_TEXT_CENTER_Y = SCREEN_HEIGHT / 3;
 
 constexpr int MENU_CUSTOMISE_NUMBER_OF_BALLS = 4;

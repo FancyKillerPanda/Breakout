@@ -12,23 +12,14 @@ void mainMenuInit(GameData& gameData)
 	MainMenuData& mainMenuData = gameData.mainMenuData;
 
 	// Back button
-	mainMenuData.backButton.text = "Back";
-	mainMenuData.backButton.size = 24;
-	mainMenuData.backButton.colour = MENU_COLOURS[0];
-	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.backButton);
-	mainMenuData.backButton.rect.x = SCREEN_WIDTH / 10;
-	mainMenuData.backButton.rect.y = SCREEN_HEIGHT * 7 / 8;
+	mainMenuData.backButton = createText(gameData.renderer, "<-- BACK", 24, SCREEN_WIDTH / 10, SCREEN_HEIGHT * 15 / 16, DIGITAL_DISCO_FONT_PATH, MENU_COLOURS[0]);
 	
 	// Highlighting texture
 	mainMenuData.circleHighlight = createTexture(gameData.renderer, "res/circle_highlight.png");
 	
 	// Home page init
-	mainMenuData.title.text = "Breakout";
-	mainMenuData.title.size = 80;
-	mainMenuData.title.colour = MENU_COLOURS[0];
-	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.title);
-	mainMenuData.title.rect.x = SCREEN_WIDTH / 2 - mainMenuData.title.rect.w / 2;
-	mainMenuData.title.rect.y = SCREEN_HEIGHT / 3 - mainMenuData.title.rect.h / 2;
+	mainMenuData.title = createText(gameData.renderer, "BREAKOUT", 80, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3, DIGITAL_DISCO_FONT_PATH, MENU_COLOURS[0]);
+
 	std::vector<std::string> labels = { "START", "SETTINGS", "EXIT" };
 	std::vector<std::pair<int, int>> positions = {
 		{ SCREEN_WIDTH / 4,     SCREEN_HEIGHT / 8 * 7 },
@@ -38,12 +29,7 @@ void mainMenuInit(GameData& gameData)
 	mainMenuData.homePageMenu = menuConstruct(gameData.renderer, labels, positions);
 
 	// Customise page init
-	mainMenuData.ballsText.colour = MENU_COLOURS[0];
-	mainMenuData.ballsText.text = "Ball:";
-	mainMenuData.ballsText.size = 30; // TODO(fkp): Extract font size into constant
-	updateTextTexture(gameData.renderer, DIGITAL_DISCO_FONT_PATH, mainMenuData.ballsText);
-	mainMenuData.ballsText.rect.x = MENU_CUSTOMISE_BALL_TEXT_X;
-	mainMenuData.ballsText.rect.y = MENU_CUSTOMISE_BALL_TEXT_CENTER_Y - mainMenuData.ballsText.rect.h / 2;
+	mainMenuData.ballsText = createText(gameData.renderer, "Ball:", 30, MENU_CUSTOMISE_BALL_TEXT_CENTER_X, MENU_CUSTOMISE_BALL_TEXT_CENTER_Y);
 	
 	arrowReset(gameData.renderer, mainMenuData.ballLeftArrow, ARROW_TEXTURE_PATH);
 	mainMenuData.ballLeftArrow.rect.x = MENU_CUSTOMISE_BALL_PREV_CENTER_X - (MENU_CUSTOMISE_BALL_NOT_IN_VIEW_WIDTH / 2) - 30 - mainMenuData.ballLeftArrow.rect.w;
